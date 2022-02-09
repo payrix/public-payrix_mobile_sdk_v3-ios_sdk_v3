@@ -6,10 +6,10 @@
 
 ## SDK Process Map of SDK Functions (Methods and Callbacks)
 
-![](SDKDocumentation/PayrixSDK_Process_Map_Pg1.png)
+![](sdkdocumentation/PayrixSDK_Process_Map_Pg1.png)
 
-![](SDKDocumentation/PayrixSDK_Process_Map_Pg2.png)
+![](sdkdocumentation/PayrixSDK_Process_Map_Pg2.png)
 
-![](SDKDocumentation/PayrixSDK_Process_Map_Pg3.png)
+![](sdkdocumentation/PayrixSDK_Process_Map_Pg3.png)
 
-![](SDKDocumentation/PayrixSDK_Process_Map_Pg4.png)
+![](sdkdocumentation/PayrixSDK_Process_Map_Pg4.png)
