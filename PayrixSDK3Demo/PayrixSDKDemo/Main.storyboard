@@ -178,9 +178,10 @@
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8lV-bA-fuw">
-                                <rect key="frame" x="10" y="624" width="394" height="30"/>
+                                <rect key="frame" x="77" y="621" width="260" height="30"/>
                                 <color key="backgroundColor" red="0.76470588240000004" green="0.31764705879999999" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="260" id="6OM-fY-48I"/>
                                     <constraint firstAttribute="height" constant="30" id="Fdn-Q4-0Wc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
@@ -201,7 +202,6 @@
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="syh-fQ-upV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="11" id="5Yb-O4-kZy"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8lV-bA-fuw" secondAttribute="trailing" constant="10" id="7sM-6U-aXO"/>
                             <constraint firstItem="c5i-kC-efj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="A52-2s-VZF"/>
                             <constraint firstItem="aAp-Wg-YNG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Azu-05-J65"/>
                             <constraint firstItem="hey-hy-9J2" firstAttribute="top" secondItem="1pT-Xk-vyU" secondAttribute="bottom" constant="30" id="Dnz-AC-9Hl"/>
@@ -214,11 +214,10 @@
                             <constraint firstItem="1pT-Xk-vyU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QwW-w3-r1C"/>
                             <constraint firstItem="VD3-mz-Vyh" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="UAy-uL-9Ev"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Fbb-EB-b7m" secondAttribute="trailing" constant="16" id="Wbs-8f-kee"/>
-                            <constraint firstItem="8lV-bA-fuw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="YEz-LI-rpL"/>
                             <constraint firstItem="lcC-0y-ii1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Yps-Ya-BGg"/>
+                            <constraint firstItem="8lV-bA-fuw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Zrt-DM-sR2"/>
                             <constraint firstItem="VD3-mz-Vyh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="aly-Up-M9J"/>
                             <constraint firstItem="lcC-0y-ii1" firstAttribute="top" secondItem="hey-hy-9J2" secondAttribute="bottom" constant="30" id="bhe-4L-Vvs"/>
-                            <constraint firstItem="8lV-bA-fuw" firstAttribute="top" secondItem="6X0-FQ-rBZ" secondAttribute="bottom" constant="21" id="dQ4-Sh-1uF"/>
                             <constraint firstItem="erv-8I-tEf" firstAttribute="top" secondItem="XhX-Qg-B5O" secondAttribute="bottom" constant="30" id="dn4-oF-vNN"/>
                             <constraint firstItem="XhX-Qg-B5O" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="faX-4s-Tss"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6X0-FQ-rBZ" secondAttribute="trailing" constant="16" id="hE2-Tc-uc4"/>
@@ -232,6 +231,7 @@
                             <constraint firstItem="Fbb-EB-b7m" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="qf1-dT-t1t"/>
                             <constraint firstItem="hey-hy-9J2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qsL-Ur-d6E"/>
                             <constraint firstItem="XhX-Qg-B5O" firstAttribute="top" secondItem="lcC-0y-ii1" secondAttribute="bottom" constant="30" id="qwA-Pm-OVv"/>
+                            <constraint firstItem="8lV-bA-fuw" firstAttribute="top" secondItem="6X0-FQ-rBZ" secondAttribute="bottom" constant="18" id="rVS-g6-eCO"/>
                         </constraints>
                     </view>
                     <connections>
