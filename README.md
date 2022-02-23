@@ -32,3 +32,5 @@
 ![](sdkdocumentation/PayrixSDK_Process_Map_Pg3.png)
 
 ![](sdkdocumentation/PayrixSDK_Process_Map_Pg4.png)
+
+![](sdkdocumentation/PayrixSDK_Process_Map_Pg5.png)

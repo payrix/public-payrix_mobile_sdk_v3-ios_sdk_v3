@@ -11,54 +11,51 @@ import PayrixSDK
 
 class DemoDevices: UIViewController
 {
-
-  let sharedUtils = SharedUtilities.init()
+    let sharedUtils = SharedUtilities.init()
     var bbposDevices : [PayDevice] = []
-  var payDevice = PayDevice.sharedInstance
+    var payDevice = PayDevice.sharedInstance
     var scanTimer: Timer!
-  /**
-  * Instantiate PayCardRDRMgr  (Step 1)
-  * This is the 1st step of the Bluetooth scanning process.
-  * PayCard handles communication with the Bluetooth reader device.
-  */
+    
+    /**
+     * Instantiate PayCardRDRMgr  (Step 1)
+     * This is the 1st step of the Bluetooth scanning process.
+     * PayCard handles communication with the Bluetooth reader device.
+     * */
+    
     let payrixOTA = PayrixOTA.sharedInstance
     let payrixSDK = PayrixSDK.sharedInstance
     
     var deviceDetails : [String : Any] = [:]
     
-//    let deviceControllerBBPOS = DeviceControllerBBPOS.sharedInstance
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var deviceListTable: UITableView!
     
-  
-  
-  override func viewDidLoad()
-  {
-    super.viewDidLoad()
-    
-    /*
-    * Start PayrixSDK  (Step 2)
-    * This step establishes the necessary connections for Callback processing and
-    * initializes key PayrixSDK parameters.
-    */
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        /*
+         * Start PayrixSDK  (Step 2)
+         * This step establishes the necessary connections for Callback processing and
+         * initializes key PayrixSDK parameters.
+         */
         
-    payrixOTA.delegate = self
-      payrixSDK.delegate = self
-      
-    let isSandBox =  sharedUtils.getSandBoxOn()!
-    let theEnv =  sharedUtils.getEnvSelection()!
-    payrixSDK.doSetPayrixPlatform(platform: theEnv, demoSandbox: isSandBox, deviceManfg: nil)
-      
-      
-      
-      activityIndicator.startAnimating()
-      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5)
-      {
-          self.doScanReaders()
-          self.startScanTimer()
-      }
-  }
+        let isSandBox =  sharedUtils.getSandBoxOn()!
+        let theEnv =  sharedUtils.getEnvSelection()!
+        payrixSDK.doSetPayrixPlatform(platform: theEnv, demoSandbox: isSandBox, deviceManfg: nil)
+    }
+    
+    func setUpOTA()
+    {
+        payrixOTA.delegate = self
+        payrixSDK.delegate = self
+        activityIndicator.startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5)
+        {
+            self.doScanReaders()
+            self.startScanTimer()
+        }
+    }
     /**
      **startScanTimer**
      
@@ -68,7 +65,7 @@ class DemoDevices: UIViewController
      */
     func startScanTimer()
     {
-      scanTimer = Timer.scheduledTimer(timeInterval: 25, target: self, selector: #selector(scanTimeExpired), userInfo: nil, repeats: false)
+        scanTimer = Timer.scheduledTimer(timeInterval: 25, target: self, selector: #selector(scanTimeExpired), userInfo: nil, repeats: false)
     }
     
     
@@ -81,15 +78,14 @@ class DemoDevices: UIViewController
      */
     @objc func scanTimeExpired()
     {
-      payrixSDK.doStopBTScan()
+        payrixSDK.doStopBTScan()
     }
     
     
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        payrixSDK.doDisconnectBTReader()
-//        deviceControllerBBPOS.disconnectBTReader()
+        setUpOTA()
     }
     
     @IBAction func goback(_ sender: Any)
@@ -109,7 +105,7 @@ class DemoDevices: UIViewController
     
     
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
@@ -117,12 +113,12 @@ class DemoDevices: UIViewController
         if segue.identifier == "segueUpdateBBPos"
         {
             let destination : DemoUpdate = segue.destination as! DemoUpdate
-//            destination.connectedDevice  = payDevice
+            //            destination.connectedDevice  = payDevice
             destination.deviceDetails = deviceDetails
         }
     }
     
-
+    
 }
 
 extension DemoDevices : UITableViewDataSource, UITableViewDelegate
@@ -216,7 +212,7 @@ extension DemoDevices : OTAUpdateDelegate
         {
             if let useDevices = payDevices
             {
-              let rdrDevices = useDevices as! [PayDevice]
+                let rdrDevices = useDevices as! [PayDevice]
                 
                 
                 self.bbposDevices.removeAll()
@@ -232,72 +228,32 @@ extension DemoDevices : OTAUpdateDelegate
             sharedUtils.showMessage(theController: self, theTitle: "OTAScanResults", theMessage: scanMsg)
         }
         activityIndicator.stopAnimating()
-          
+        
     }
     
     func didReceiveOTAConnectResults(success: Bool!, theDevice: String!)
-     {
-         print("device conneted")
-      if success
-      {
-          payrixSDK.delegate = self
-       payrixSDK.doGetDeviceInfo()
-      }
-      else
-      {
-          activityIndicator.stopAnimating()
-       sharedUtils.showMessage(theController: self, theTitle: "OTAConnectResults", theMessage: "Device not connected.")
-      }
-     }
+    {
+        if success
+        {
+            payrixSDK.delegate = self
+            payrixSDK.doGetDeviceInfo()
+        }
+        else
+        {
+            activityIndicator.stopAnimating()
+            sharedUtils.showMessage(theController: self, theTitle: "OTAConnectResults", theMessage: "Device not connected.")
+        }
+    }
 }
 
-//extension DemoDevices : DeviceControlBBPOSDelegate
-//{
-//    func didBTConnect()
-//    {
-//        print("device connected")
-//    }
-//
-//    func didBTDisconnect()
-//    {
-//        activityIndicator.stopAnimating()
-//        deviceListTable.isUserInteractionEnabled = true
-//        sharedUtils.showMessage(theController: self, theTitle: "Device dis connected", theMessage: "")
-//    }
-//
-//    func didBTTimeout()
-//    {
-//        activityIndicator.stopAnimating()
-//        deviceListTable.isUserInteractionEnabled = true
-//        sharedUtils.showMessage(theController: self, theTitle: "Device time out.", theMessage: "")
-//    }
-//
-//    func didReturnDeviceData(deviceInfo: [AnyHashable : Any]!)
-//    {
-//        activityIndicator.stopAnimating()
-//        deviceListTable.isUserInteractionEnabled = true
-//        deviceDetails = deviceInfo as? [String : AnyObject] ?? [:]
-//        print("device details: \(deviceDetails)")
-//        self.performSegue(withIdentifier: "segueUpdateBBPos", sender: nil)
-//    }
-//
-//    func didReturnDevError(errorType: Int, errorMessage: String)
-//    {
-//        activityIndicator.stopAnimating()
-//        deviceListTable.isUserInteractionEnabled = true
-//        sharedUtils.showMessage(theController: self, theTitle: "Error from Device", theMessage: errorMessage)
-//    }
-//}
 
 extension DemoDevices : PayrixSDKDelegate
 {
     func didReceiveOTADeviceData(deviceInfo: [AnyHashable : Any]!)
     {
-        
         activityIndicator.stopAnimating()
         deviceListTable.isUserInteractionEnabled = true
         deviceDetails = deviceInfo as? [String : AnyObject] ?? [:]
-        print("device details: \(deviceDetails)")
         self.performSegue(withIdentifier: "segueUpdateBBPos", sender: nil)
     }
 }

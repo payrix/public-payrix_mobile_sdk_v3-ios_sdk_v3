@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="id5-E8-7C4">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -107,10 +108,9 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vvq-Ts-JNI">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vvq-Ts-JNI">
                                                 <rect key="frame" x="339" y="0.0" width="45" height="21"/>
                                                 <color key="tintColor" red="0.76470588240000004" green="0.31764705879999999" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="info.circle" catalog="system"/>
                                                 <connections>
                                                     <action selector="doShowConfigInfo:" destination="may-TS-U2e" eventType="touchUpInside" id="W7x-jx-3tZ"/>
@@ -203,10 +203,9 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N44-Av-hIG">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N44-Av-hIG">
                                                 <rect key="frame" x="339" y="0.0" width="45" height="21"/>
                                                 <color key="tintColor" red="0.76470588240000004" green="0.31764705879999999" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="info.circle" catalog="system"/>
                                                 <connections>
                                                     <action selector="doShowFirmwareInfo:" destination="may-TS-U2e" eventType="touchUpInside" id="7VF-t2-4SL"/>
@@ -299,10 +298,9 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VWG-Yq-9Bq">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VWG-Yq-9Bq">
                                                 <rect key="frame" x="339" y="0.0" width="45" height="21"/>
                                                 <color key="tintColor" red="0.76470588240000004" green="0.31764705879999999" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="info.circle" catalog="system"/>
                                                 <connections>
                                                     <action selector="doShowKeyInjectionInfo:" destination="may-TS-U2e" eventType="touchUpInside" id="vlD-kr-Ws7"/>
@@ -392,7 +390,7 @@
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="T2V-RA-jHl"/>
-                        <color key="backgroundColor" red="0.76470588240000004" green="0.31764705879999999" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="tR9-Fx-RcR" firstAttribute="top" secondItem="pXt-Lq-sXh" secondAttribute="bottom" constant="30" id="8C9-uP-fC2"/>
                             <constraint firstItem="tR9-Fx-RcR" firstAttribute="leading" secondItem="T2V-RA-jHl" secondAttribute="leading" constant="15" id="Fie-4C-B4w"/>
@@ -451,37 +449,83 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updating Firmware" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B26-em-Eel">
-                                <rect key="frame" x="20" y="127" width="374" height="30"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hIe-pX-w0L">
+                                <rect key="frame" x="20" y="313" width="374" height="270"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updating Firmware" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B26-em-Eel">
+                                        <rect key="frame" x="0.0" y="9" width="374" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="2sb-Vy-DxJ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <color key="textColor" red="0.76470588235294112" green="0.31764705882352939" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updating Firmware" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RY8-2p-mNh">
+                                        <rect key="frame" x="0.0" y="45" width="374" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Q3Z-0l-K79"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <color key="textColor" red="0.76470588235294112" green="0.31764705882352939" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3oY-Km-0Re">
+                                        <rect key="frame" x="10" y="96" width="354" height="15"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="15" id="mYp-k1-qBA"/>
+                                        </constraints>
+                                        <color key="progressTintColor" red="0.76470588240000004" green="0.31764705879999999" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="trackTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </progressView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DO NOT EXIT THE APP OR TURN OFF THE READER DEVICE" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ml-Zw-IfP">
+                                        <rect key="frame" x="6" y="210" width="362" height="45"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="ajl-u7-HQX"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <color key="textColor" red="0.76470588240000004" green="0.31764705879999999" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warningSign.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="z7a-Uy-sG7">
+                                        <rect key="frame" x="157" y="150" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="eRp-Na-WFr"/>
+                                            <constraint firstAttribute="width" constant="60" id="oXX-R0-ND2"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="2sb-Vy-DxJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="3ml-Zw-IfP" secondAttribute="bottom" constant="15" id="0ui-Q8-cI5"/>
+                                    <constraint firstItem="B26-em-Eel" firstAttribute="leading" secondItem="hIe-pX-w0L" secondAttribute="leading" id="1Nm-0n-FXx"/>
+                                    <constraint firstItem="z7a-Uy-sG7" firstAttribute="centerX" secondItem="hIe-pX-w0L" secondAttribute="centerX" id="5Bk-AJ-9LB"/>
+                                    <constraint firstItem="RY8-2p-mNh" firstAttribute="leading" secondItem="hIe-pX-w0L" secondAttribute="leading" id="JpK-sm-QMt"/>
+                                    <constraint firstAttribute="height" constant="270" id="Ox3-jK-dIH"/>
+                                    <constraint firstAttribute="trailing" secondItem="B26-em-Eel" secondAttribute="trailing" id="QjS-sB-If7"/>
+                                    <constraint firstItem="3oY-Km-0Re" firstAttribute="leading" secondItem="hIe-pX-w0L" secondAttribute="leading" constant="10" id="ZFM-JT-Y9M"/>
+                                    <constraint firstItem="3oY-Km-0Re" firstAttribute="top" secondItem="RY8-2p-mNh" secondAttribute="bottom" constant="21" id="ht6-xG-DwP"/>
+                                    <constraint firstAttribute="trailing" secondItem="3oY-Km-0Re" secondAttribute="trailing" constant="10" id="tCu-PM-EEj"/>
+                                    <constraint firstItem="B26-em-Eel" firstAttribute="top" secondItem="hIe-pX-w0L" secondAttribute="top" constant="9" id="tri-BZ-gfz"/>
+                                    <constraint firstItem="RY8-2p-mNh" firstAttribute="top" secondItem="B26-em-Eel" secondAttribute="bottom" constant="6" id="vhT-y1-g4B"/>
+                                    <constraint firstAttribute="trailing" secondItem="3ml-Zw-IfP" secondAttribute="trailing" constant="6" id="wf3-6i-20A"/>
+                                    <constraint firstItem="3ml-Zw-IfP" firstAttribute="leading" secondItem="hIe-pX-w0L" secondAttribute="leading" constant="6" id="xTd-e5-FUe"/>
+                                    <constraint firstItem="3ml-Zw-IfP" firstAttribute="top" secondItem="z7a-Uy-sG7" secondAttribute="bottom" id="xXg-7L-fxC"/>
+                                    <constraint firstAttribute="trailing" secondItem="RY8-2p-mNh" secondAttribute="trailing" id="zRg-Ul-1ms"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3oY-Km-0Re">
-                                <rect key="frame" x="20" y="187" width="374" height="15"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="15" id="mYp-k1-qBA"/>
-                                </constraints>
-                                <color key="progressTintColor" red="0.76470588240000004" green="0.31764705879999999" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="trackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </progressView>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="z0V-h4-fN0"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="B26-em-Eel" firstAttribute="leading" secondItem="z0V-h4-fN0" secondAttribute="leading" constant="20" id="MX4-TC-YC2"/>
-                            <constraint firstItem="3oY-Km-0Re" firstAttribute="top" secondItem="B26-em-Eel" secondAttribute="bottom" constant="30" id="VEG-eY-0n6"/>
-                            <constraint firstItem="z0V-h4-fN0" firstAttribute="trailing" secondItem="B26-em-Eel" secondAttribute="trailing" constant="20" id="hEr-ur-BK3"/>
-                            <constraint firstItem="3oY-Km-0Re" firstAttribute="leading" secondItem="z0V-h4-fN0" secondAttribute="leading" constant="20" id="ij0-04-4o9"/>
-                            <constraint firstItem="z0V-h4-fN0" firstAttribute="trailing" secondItem="3oY-Km-0Re" secondAttribute="trailing" constant="20" id="jBC-vs-dzj"/>
-                            <constraint firstItem="B26-em-Eel" firstAttribute="top" secondItem="z0V-h4-fN0" secondAttribute="top" constant="83" id="t6B-gQ-pgf"/>
+                            <constraint firstItem="hIe-pX-w0L" firstAttribute="centerY" secondItem="JHY-L1-YIn" secondAttribute="centerY" id="GAL-YE-cfE"/>
+                            <constraint firstItem="hIe-pX-w0L" firstAttribute="leading" secondItem="z0V-h4-fN0" secondAttribute="leading" constant="20" id="c2a-HO-fTx"/>
+                            <constraint firstItem="z0V-h4-fN0" firstAttribute="trailing" secondItem="hIe-pX-w0L" secondAttribute="trailing" constant="20" id="etH-S7-aSL"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="lblUpdateItem" destination="B26-em-Eel" id="TJc-8C-NKq"/>
+                        <outlet property="lblUpdateProgress" destination="RY8-2p-mNh" id="3Vk-Qh-xU9"/>
                         <outlet property="updateProgress" destination="3oY-Km-0Re" id="W4o-oe-HkS"/>
                     </connections>
                 </viewController>
@@ -586,6 +630,7 @@
     <resources>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="info.circle" catalog="system" width="128" height="121"/>
+        <image name="warningSign.jpg" width="500" height="500"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

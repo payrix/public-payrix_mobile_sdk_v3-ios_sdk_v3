@@ -25,6 +25,7 @@ class DemoOTAProgress: UIViewController
 {
     
     @IBOutlet weak var lblUpdateItem: UILabel!
+    @IBOutlet weak var lblUpdateProgress: UILabel!
     @IBOutlet weak var updateProgress: UIProgressView!
     
     let otaUpdate = PayrixOTA.sharedInstance
@@ -41,7 +42,7 @@ class DemoOTAProgress: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-            
+        
         otaUpdate.delegate = self
         if updateItem == .config
         {
@@ -63,21 +64,22 @@ class DemoOTAProgress: UIViewController
         updateProgress.progress = percentUpdate/100
         if updateItem == .config
         {
-            lblUpdateItem.text = "Updating Configuration: \(percentUpdate)%"
+            lblUpdateItem.text = "Updating Configuration"
         }
         else if updateItem == .firmware
         {
-            lblUpdateItem.text = "Updating Firmware: \(percentUpdate)%"
+            lblUpdateItem.text = "Updating Firmware"
         }
         else if updateItem == .encryptionKey
         {
-            lblUpdateItem.text = "Updating Encryption Key: \(percentUpdate)%"
+            lblUpdateItem.text = "Updating Encryption Key"
         }
         else
         {
             self.lblUpdateItem.text = "Updating..."
             self.dismiss(animated: true, completion: nil)
         }
+        lblUpdateProgress.text = " \(Int(percentUpdate))%"
     }
     
     func doUpdateConfig()
@@ -96,23 +98,23 @@ class DemoOTAProgress: UIViewController
     }
     
     
-    func showAlert(title : String, message : String)
+    func doOTACompleted(title : String, message : String)
     {
         self.dismiss(animated: true) {
             self.delegateOTACompleted.otaCompleted(message: title, info: message)
         }
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 
@@ -120,14 +122,13 @@ extension DemoOTAProgress : OTAUpdateDelegate
 {
     func didReceiveRemoteFirmwareUpdate(success: Bool, otaResult: BBDeviceOTAResult, otaMessage: String!)
     {
-        print("didReceiveRemoteFirmwareUpdate message : \(otaMessage) \n result: \(otaResult) \n isSuccess : \(success)")
         if success
         {
-            self.showAlert(title: "Firmware Updated successfully.", message: "")
+            self.doOTACompleted(title: "Firmware Updated successfully.", message: "")
         }
         else
         {
-            self.showAlert(title: "Firmware NOT Updated.", message: otaMessage)
+            self.doOTACompleted(title: "Firmware NOT Updated.", message: otaMessage)
         }
         
     }
@@ -136,36 +137,31 @@ extension DemoOTAProgress : OTAUpdateDelegate
     {
         if success
         {
-            self.showAlert(title: "Configuration Updated successfully.", message: "")
+            self.doOTACompleted(title: "Configuration Updated successfully.", message: "")
         }
         else
         {
-            self.showAlert(title: "Configuration NOT Updated.", message: otaMessage)
+            self.doOTACompleted(title: "Configuration NOT Updated.", message: otaMessage)
         }
-        
-        print("didReceiveRemoteConfigUpdate message : \(otaMessage) \n result: \(otaResult) \n isSuccess : \(success)")
     }
     
     
     func didReceiveRemoteKeyInjectionResult(success: Bool, otaResult: BBDeviceOTAResult, otaMessage: String!)
     {
         
-            if success
-            {
-                self.showAlert(title: "Encryption Key Updated successfully.", message: "")
-            }
-            else
-            {
-                self.showAlert(title: "Encryption Key NOT Updated.", message: otaMessage)
-            }
-            
-            print("didReceiveRemoteKeyInjectionResult message : \(otaMessage) \n result: \(otaResult) \n isSuccess : \(success)")
+        if success
+        {
+            self.doOTACompleted(title: "Encryption Key Updated successfully.", message: "")
+        }
+        else
+        {
+            self.doOTACompleted(title: "Encryption Key NOT Updated.", message: otaMessage)
+        }
         
     }
     
     func didReceiveOTAProgress(percentProgress: Float)
     {
-        print("didReceiveOTAProgress percentage : \(percentProgress)")
         self.updateLabelWithPrecentage(percentUpdate: percentProgress)
     }
     
@@ -173,17 +169,14 @@ extension DemoOTAProgress : OTAUpdateDelegate
     
     func didReceiveOTAConnectResults(success: Bool!, theDevice: String!)
     {
-        print("didReceiveOTAConnectResults thedevice : \(theDevice) \n isSuccess : \(success)")
     }
     
     func didReceiveOTADisconnectResults(success: Bool!)
     {
-        print("didReceiveOTADisconnectResults : \(success)")
         
     }
     func didReceiveOTAScanResults(success: Bool!, scanMsg: String!, payDevices: [AnyObject]?)
     {
-        print("didReceiveOTAScanResults scanMsg : \(scanMsg) \n payDevices: \(payDevices) \n isSuccess : \(success)")
     }
     
     
