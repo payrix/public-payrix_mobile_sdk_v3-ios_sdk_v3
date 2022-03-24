@@ -1974,7 +1974,7 @@ public protocol PayCoreRDRTransMgrDelegate {
   public static let sharedInstance: PayrixSDK.PayCoreMaster
   public func validateLoginCredentials(userName: Swift.String, password: Swift.String, completion: @escaping (Swift.Bool, Swift.String?) -> Swift.Void)
   public func verifySessionKey(sessionKey: Swift.String, completion: @escaping (Swift.Bool) -> Swift.Void)
-  public func getMerchantId(sessionKey: Swift.String, completion: @escaping (Swift.Bool, Swift.String?, Swift.String?) -> Swift.Void)
+  public func getMerchantId(sessionKey: Swift.String, completion: @escaping (Swift.Bool, [PayrixSDK.PayCoreMerchant]?) -> Swift.Void)
   public func processTransaction(merchantID: Swift.String, sessionKey: Swift.String?, amount: Swift.Int?, taxPercent: Swift.Int?, tipPercent: Swift.Int?, tipAmt: Swift.Int?, calcTotAmt: Swift.Int?, ccName: Swift.String?, ccNumber: Swift.String?, ccCardType: PayrixSDK.PayCoreCCType?, ccCVV: Swift.String?, ccExp: Swift.String?, ccOrigin: PayrixSDK.PayCoreTxnOrigin?, zip: Swift.String?, payRequest: PayrixSDK.PayRequest?, completion: @escaping (Swift.Bool, Swift.String?, Swift.String?, [Swift.String]?, PayrixSDK.PayCoreTxn?) -> Swift.Void)
   public func addSignatureToTransaction(transactionID: Swift.String?, signatureBase64Enc: Swift.String?, sessionKey: Swift.String?, completion: @escaping (Swift.Bool, [Swift.String]?) -> Swift.Void)
   public func retrieveSpecificTxnsFor(merchantID: Swift.String, transactionID: Swift.String, completion: @escaping ([PayrixSDK.PayCoreTxn]?, PayrixSDK.PayCoreResponseDetails?, [PayrixSDK.PayCoreError]?) -> Swift.Void)
