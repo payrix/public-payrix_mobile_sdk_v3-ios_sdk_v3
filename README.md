@@ -2,7 +2,8 @@
 
 ## Release Note Summary:
 - Version 3.0.1 (EMV Certified)
-  This revision includes updates to provide a Bitcode Enabled version of the PayrixSDK.
+  * This revision includes updates to provide a Bitcode Enabled version of the PayrixSDK.
+  * Resolves issue with Multi-Merchants retrieved during Authentication.
   
 - Version 3.0.0 (EMV Certified)
   This release of the Payrix iOS SDK is completely restructured under a single framework that give the user full access to all of the services provided by previous SDK versions.
