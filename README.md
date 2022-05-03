@@ -2,6 +2,7 @@
 
 ## Release Note Summary:
 - Version 3.0.1 (EMV Certified)
+  * This latest patch is to provide a work-around of an Apple Swift bug that does not allow the SDK name and a Class name to be the same.  To resolve the issue Payrix has changed the class name from PayrixSDK to PayrixSDKMaster.  The only change to the customer app is whenever the SDK is instantiated.  let payrixSDK = PayrixSDKMaster.sharedInstance.
   * This revision includes updates to provide a Bitcode Enabled version of the PayrixSDK.
   * Resolves issue with Multi-Merchants retrieved during Authentication.
   

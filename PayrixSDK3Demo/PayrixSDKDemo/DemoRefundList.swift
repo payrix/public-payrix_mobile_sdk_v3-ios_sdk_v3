@@ -20,7 +20,7 @@ class DemoRefundList: UIViewController {
     //selectedTxn to pass to detailview
     var selectedTxn : PayCoreTxn!
     
-    var payrixSDK = PayrixSDK.sharedInstance
+    var payrixSDK = PayrixSDKMaster.sharedInstance
     
     override func viewDidLoad()
     {

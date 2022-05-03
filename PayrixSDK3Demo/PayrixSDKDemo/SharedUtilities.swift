@@ -37,6 +37,9 @@ class SharedUtilities: NSObject
   // BT Device Key
   let btDeviceKey = "CurrentBTReader"
   let btManufacturerKey = "CurrentBTManfg"
+    
+    //Merchant Selected Key
+    let merchantSelectedKey = "MerchantSelected"
   
   let userDefaults = UserDefaults.standard
   
@@ -162,6 +165,16 @@ class SharedUtilities: NSObject
     return foundValue
   }
   
+    public func setIsMerchantSelected(selected: Bool)
+    {
+      userDefaults.set(selected, forKey: merchantSelectedKey)
+    }
+    
+    public func getIsMerchantSelected() -> Bool
+    {
+      let foundValue = userDefaults.bool(forKey: merchantSelectedKey)
+      return foundValue
+    }
   
   public func doWriteLogFile(fileName: String, fileData: String)
   {

@@ -39,7 +39,7 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
   * Instantiate PayrixSDK class - Which handles the transactional requests and responses with the Payrix gateway API's.
   */
   
-  var payrixSDK = PayrixSDK.sharedInstance
+  var payrixSDK = PayrixSDKMaster.sharedInstance
   
   var theMerchantID: String!
   var theMerchantDBA: String = ""
@@ -526,30 +526,6 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
       useCardType = nil
     }
     
-//    var dblTaxRate:Double = 0.00
-//    if let intTaxRate = currentTransaction.taxPercentage
-//    {
-//      dblTaxRate = Double(intTaxRate)
-//      dblTaxRate = dblTaxRate / 100
-//    }
-//
-//    var dblAmount:Double = 0.00
-//    if let intAmount = currentTransaction.amount
-//    {
-//      dblAmount = Double(intAmount)
-//      dblAmount = dblAmount / 100
-//    }
-//
-//    var dblTip:Double = 0.00
-//    if let intTip = currentTransaction.tipAbsoluteAmount
-//    {
-//      dblTip = Double(intTip)
-//      dblTip = dblTip / 100
-//    }
-//
-//    let calcTax = dblAmount * dblTaxRate
-//    let calcTotal = dblAmount + calcTax + dblTip
-    
     var decResult: Decimal = 0
     var decTaxRate: Decimal = 0
     if let intTaxRate = currentTransaction.taxPercentage
@@ -571,6 +547,7 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
     }
     
     decResult = 0
+    var decTipRate: Decimal = 0.00
     var decTip: Decimal = 0.00
     if let intTip = currentTransaction.tipAbsoluteAmount
     {
@@ -578,9 +555,11 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
       decTip = decTip / 100
       NSDecimalRound(&decResult, &decTip, 2, .up)
       decTip = decResult
+      decTipRate = decTip / decAmount
     }
     
     let calcTax = decAmount * decTaxRate
+    let icalcTax = calcTax * 100
     let calcTotal = (decAmount + calcTax + decTip) * 100
     
     currentTransaction.receiptEMVChipInd = "Manual Entry"
@@ -595,18 +574,15 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
     payRequest.paySessionKey = sessionKey
     
     payRequest.payTotalAmt = NSDecimalNumber(decimal: calcTotal).intValue
-    payRequest.payTaxAmt = NSDecimalNumber(decimal: calcTax).intValue
-//    payRequest.payTotalAmt = Int((calcTotal * 100).rounded()) // calcTotal
-//    payRequest.payTaxAmt = Int((calcTax * 100).rounded()) // calcTax
+    payRequest.payTaxAmt = NSDecimalNumber(decimal: icalcTax).intValue
+
     payRequest.payTipAmt = currentTransaction.tipAbsoluteAmount
     payRequest.payAmount = currentTransaction.amount
-//    payRequest.payAmount = Int((currentTransaction.amount ?? 0.00 * 100).rounded()) // currentTransaction.amount
-//    payRequest.payTaxPercent = Int((useTax * 100).rounded()) // useTax
-//    payRequest.payTipPercent = Int((currentTransaction.tipPercentage ?? 0.00 * 100).rounded())
-//    payRequest.payTipAmt = Int((currentTransaction.tipAbsoluteAmount ?? 0.00 * 100).rounded())
-//    payRequest.payTotalAmt = Int((calcTotal * 100).rounded()) // calcTotal
     
     payRequest.payManualEntry = true
+    
+    payRequest.payTaxPercent = NSDecimalNumber(decimal: decTaxRate * 100).intValue
+    payRequest.payTipPercent = NSDecimalNumber(decimal: decTipRate * 100).intValue
     payRequest.payCardHolder = currentTransaction.ccName
     payRequest.payCCNumber = currentTransaction.ccNumber
     payRequest.payCardType = useCardType

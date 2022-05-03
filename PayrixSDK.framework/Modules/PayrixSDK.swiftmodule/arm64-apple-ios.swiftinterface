@@ -434,8 +434,8 @@ public protocol PayrixSDKDelegate {
   func didReceiveTxnDataResults(success: Swift.Bool!, responseCode: Swift.Int!, txnMsg: Swift.String!, txnResponse: Swift.AnyObject?)
   func didReceiveOTADeviceData(deviceInfo: [Swift.AnyHashable : Any]!)
 }
-@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayrixSDK : ObjectiveC.NSObject, PayrixSDK.PayCoreRDRTransMgrDelegate, PayrixSDK.PayCardRDRMgrDelegate, PayrixSDK.PayCardMasterDelegate {
-  public static let sharedInstance: PayrixSDK.PayrixSDK
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayrixSDKMaster : ObjectiveC.NSObject, PayrixSDK.PayCoreRDRTransMgrDelegate, PayrixSDK.PayCardRDRMgrDelegate, PayrixSDK.PayCardMasterDelegate {
+  public static let sharedInstance: PayrixSDK.PayrixSDKMaster
   public var delegate: PayrixSDK.PayrixSDKDelegate?
   public func doSetPayrixPlatform(platform: Swift.String, demoSandbox: Swift.Bool, deviceManfg: PayrixSDK.PaySharedAttributes.PaySupportedReaders?)
   public func doDebugEnable(enableDebug: Swift.Bool) -> Swift.String?
