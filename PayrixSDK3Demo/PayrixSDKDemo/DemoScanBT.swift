@@ -29,7 +29,7 @@ class DemoScanBT: UIViewController, PayrixSDKDelegate
   * This is the 1st step of the Bluetooth scanning process.
   * PayCard handles communication with the Bluetooth reader device.
   */
-  let payrixSDK = PayrixSDK.sharedInstance
+  let payrixSDK = PayrixSDKMaster.sharedInstance
   
   override func viewDidLoad()
   {

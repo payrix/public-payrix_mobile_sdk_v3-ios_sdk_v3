@@ -448,8 +448,8 @@ SWIFT_CLASS("_TtC9PayrixSDK9PayrixOTA")
 /// <em>PayrixSDK is the Primary API Access Point for using the Payrix SDK functions</em>
 /// This is a Singleton Design Pattern so only 1 instance should ever existing to process
 /// any requests from other classes.
-SWIFT_CLASS("_TtC9PayrixSDK9PayrixSDK")
-@interface PayrixSDK : NSObject
+SWIFT_CLASS("_TtC9PayrixSDK15PayrixSDKMaster")
+@interface PayrixSDKMaster : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end

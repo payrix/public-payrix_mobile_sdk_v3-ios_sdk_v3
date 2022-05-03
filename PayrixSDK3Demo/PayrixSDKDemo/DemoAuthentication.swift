@@ -19,11 +19,12 @@ class DemoAuthentication: UIViewController, UITextFieldDelegate, PayrixSDKDelega
   @IBOutlet weak var btnAuthenticate: UIButton!
   
   let sharedUtils = SharedUtilities.init()
+    var payMerchants : [PayMerchant] = []
   
   /**
   * Step 1: Instantiate the PayCoreMaster instance.  This class handles authentication.
   */
-  let payrixSDK = PayrixSDK.sharedInstance
+  let payrixSDK = PayrixSDKMaster.sharedInstance
   
   override func viewDidLoad()
   {
@@ -46,11 +47,19 @@ class DemoAuthentication: UIViewController, UITextFieldDelegate, PayrixSDKDelega
     payrixSDK.doSetPayrixPlatform(platform: theEnv, demoSandbox: isSandBox, deviceManfg: nil)
         
     sharedUtils.setDemoMode(modeKey: isSandBox)
+      if sharedUtils.getIsMerchantSelected()
+      {
+          let logMsg = "Authentication Successful: \n" + "- Merchant ID: " + sharedUtils.getMerchantID()! + "\n- Merchant DBA: " + sharedUtils.getMerchantDBA()!
+          updateLog(newMessage: logMsg)
+          sharedUtils.setIsMerchantSelected(selected: false)
+      }
+      else
+      {
+          lblResults.text = ""
 
-    lblResults.text = ""
-
-    txtUserID.text = ""
-    txtUserPwd.text = ""
+          txtUserID.text = ""
+          txtUserPwd.text = ""
+      }
     
     txtUserID.delegate = self
     txtUserPwd.delegate = self
@@ -86,23 +95,27 @@ class DemoAuthentication: UIViewController, UITextFieldDelegate, PayrixSDKDelega
   
   public func didReceiveLoginResults(loginSuccess: Bool!, theSessionKey: String?, theMerchants: [AnyObject]?, theMessage: String!)
   {
-    var payMerchant = PayMerchant.sharedInstance
-    
-    if let useMerchants = theMerchants as? [PayMerchant]
-    {
-      payMerchant = useMerchants[0] 
-    }
-    
     if loginSuccess
     {
       sharedUtils.setSessionKey(sessionKey: theSessionKey!)
-      
-      // Save Merchant Info
-      sharedUtils.setMerchantID(merchantKey: payMerchant.merchantID!)
-      sharedUtils.setMerchantDBA(merchantDBA: payMerchant.merchantDBA!)
-      
-      let logMsg = "Authentication Successful: \n" + "- Merchant ID: " + payMerchant.merchantID! + "\n- Merchant DBA: " + payMerchant.merchantDBA!
-      updateLog(newMessage: logMsg)
+        var payMerchant = PayMerchant.sharedInstance
+        if let useMerchants = theMerchants as? [PayMerchant]
+        {
+            if useMerchants.count > 1
+            {
+                self.payMerchants = useMerchants
+                self.performSegue(withIdentifier: "SegToMerchants", sender: nil)
+            }
+            else
+            {
+                payMerchant = useMerchants[0]
+                // Save Merchant Info
+                sharedUtils.setMerchantID(merchantKey: payMerchant.merchantID!)
+                sharedUtils.setMerchantDBA(merchantDBA: payMerchant.merchantDBA!)
+                let logMsg = "Authentication Successful: \n" + "- Merchant ID: " + payMerchant.merchantID! + "\n- Merchant DBA: " + payMerchant.merchantDBA!
+                updateLog(newMessage: logMsg)
+            }
+        }
       hideKeyboard()
     }
     else
@@ -115,6 +128,16 @@ class DemoAuthentication: UIViewController, UITextFieldDelegate, PayrixSDKDelega
     }
   }
   
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        guard let segID = segue.identifier else { return }
+        if segID == "SegToMerchants"
+        {
+            // Prep for Authentication Processing
+            let merchantLists : DemoMerchantsList = segue.destination as! DemoMerchantsList
+            merchantLists.payMerchants = payMerchants
+        }
+    }
   
   /**
   **updateLog**

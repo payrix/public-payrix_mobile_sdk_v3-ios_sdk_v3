@@ -82,7 +82,7 @@
 		</data>
 		<key>Headers/PayrixSDK-Swift.h</key>
 		<data>
-		TDWpTrLqQ9cIRAAgmTQbIMHrxK8=
+		EgEanqsOIxMStcnZ8WpuRksWrZo=
 		</data>
 		<key>Headers/PayrixSDK.h</key>
 		<data>
@@ -166,39 +166,39 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		RYIQ66Z1YYrWFZMwTjG3lAHHCcA=
+		3KGkO7Ru7Y0Auo18k7pY16WKBmA=
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<data>
-		11QlBveKPtLbbqJZR6naE2yyQvQ=
+		ZqmRYFEXnIZvDb4Tt/yMU1IpxJI=
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/Project/arm64.swiftsourceinfo</key>
 		<data>
-		11QlBveKPtLbbqJZR6naE2yyQvQ=
+		ZqmRYFEXnIZvDb4Tt/yMU1IpxJI=
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		Pa3gaa6SYR+Mtz6ivhWgFcZ1sAo=
+		RifmHGBwHiOPHSuB+QmqQtjiiwY=
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		fXkF+hlORoH9ou/Zahga90zIj98=
+		EYU9b/SGMHgmCDuVWSq22xzrVqc=
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		TolmF/Zd33gDLxRayaIKt7DyImA=
+		A3ss5u6LdzGPcvgqDG/JLq29YNQ=
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		Pa3gaa6SYR+Mtz6ivhWgFcZ1sAo=
+		RifmHGBwHiOPHSuB+QmqQtjiiwY=
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/arm64.swiftinterface</key>
 		<data>
-		fXkF+hlORoH9ou/Zahga90zIj98=
+		EYU9b/SGMHgmCDuVWSq22xzrVqc=
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		TolmF/Zd33gDLxRayaIKt7DyImA=
+		A3ss5u6LdzGPcvgqDG/JLq29YNQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -344,7 +344,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			JTBy78UOumR9VsCYnvmX3RJnCIsbsWEC6+TECnL2b8s=
+			DMey4eFZFyway19z54o3RYiH3JdqHhc6rqdSxB+OcGE=
 			</data>
 		</dict>
 		<key>Headers/PayrixSDK.h</key>
@@ -491,56 +491,56 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZfXmjdLj+PA4pYbddlY2635pPLe5Jrs3ztG59Pboczk=
+			GSEJbz8f48dAp8qU349/GwoNTO9j413iQv18tCUvxR8=
 			</data>
 		</dict>
 		<key>Modules/PayrixSDK.swiftmodule/Project/arm64.swiftsourceinfo</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZfXmjdLj+PA4pYbddlY2635pPLe5Jrs3ztG59Pboczk=
+			GSEJbz8f48dAp8qU349/GwoNTO9j413iQv18tCUvxR8=
 			</data>
 		</dict>
 		<key>Modules/PayrixSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			eD7R+ePLbeKql5pts2/+F00+31YccyWXM4c2SZhU9No=
+			nlCMxvDyqBwbsDs39z72l4YJ5TkIG4msxaiwbAswCSk=
 			</data>
 		</dict>
 		<key>Modules/PayrixSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			OnibrM0pAh7+fu+vKV1ETA7Ze2h3RotaEErLlJBktJI=
+			GSDsPzHVG60s8Q1aOpbsUisubOUyhVOemE+LkBnb68k=
 			</data>
 		</dict>
 		<key>Modules/PayrixSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jUlOLb6v7Mv/IHHvWiLbiw56DUVoppDDhw4SXff7qAY=
+			UTuHEXPJ8YmYkz4m19xc3yIMKPUOG9SE3vnWbDCkOgI=
 			</data>
 		</dict>
 		<key>Modules/PayrixSDK.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			eD7R+ePLbeKql5pts2/+F00+31YccyWXM4c2SZhU9No=
+			nlCMxvDyqBwbsDs39z72l4YJ5TkIG4msxaiwbAswCSk=
 			</data>
 		</dict>
 		<key>Modules/PayrixSDK.swiftmodule/arm64.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			OnibrM0pAh7+fu+vKV1ETA7Ze2h3RotaEErLlJBktJI=
+			GSDsPzHVG60s8Q1aOpbsUisubOUyhVOemE+LkBnb68k=
 			</data>
 		</dict>
 		<key>Modules/PayrixSDK.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jUlOLb6v7Mv/IHHvWiLbiw56DUVoppDDhw4SXff7qAY=
+			UTuHEXPJ8YmYkz4m19xc3yIMKPUOG9SE3vnWbDCkOgI=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

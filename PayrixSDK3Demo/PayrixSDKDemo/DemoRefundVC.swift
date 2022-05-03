@@ -21,7 +21,7 @@ class DemoRefundVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     let sharedUtils = SharedUtilities.init()
-    var payrixSDK = PayrixSDK.sharedInstance
+    var payrixSDK = PayrixSDKMaster.sharedInstance
     
     //second section is for "Sale Amount:", "Tax:", "Total:", these values are only available when the transaction is not a refund from previous class
     var showSecondSection = true

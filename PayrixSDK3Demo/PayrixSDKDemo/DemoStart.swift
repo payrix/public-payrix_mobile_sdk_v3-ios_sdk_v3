@@ -21,7 +21,7 @@ class DemoStart: UIViewController, PayrixSDKDelegate
   @IBOutlet weak var sgmOpsEnv: UISegmentedControl!
   
   let sharedUtils = SharedUtilities.init()
-  let payrixSDK = PayrixSDK.sharedInstance
+  let payrixSDK = PayrixSDKMaster.sharedInstance
   
   override func viewDidLoad()
   {
