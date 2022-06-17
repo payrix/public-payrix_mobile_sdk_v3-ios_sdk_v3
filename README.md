@@ -1,6 +1,8 @@
 # Payrix iOS SDK Version 3.0
 
 ## Release Note Summary:
+- Version 3.0.3 (EMV Certified)
+  * This enhancement is to provide support for multiple currencies.  The initial currencies supported are: USD, EUR, AUD, GBP, CAD.
 - Version 3.0.2 (EMV Certified)
   * This patch is to resolve an issue with Manual Card Entry where the some txns data was not being returned correctly, specifically "creation date".
 - Version 3.0.1 (EMV Certified)
