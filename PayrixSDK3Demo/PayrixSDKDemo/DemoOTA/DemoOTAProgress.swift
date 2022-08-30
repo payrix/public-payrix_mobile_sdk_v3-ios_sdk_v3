@@ -46,18 +46,26 @@ class DemoOTAProgress: UIViewController
         otaUpdate.delegate = self
         if updateItem == .config
         {
+            lblUpdateItem.text = "Updating Configuration"
             self.doUpdateConfig()
         }
         else if updateItem == .firmware
         {
-//            self.dummyCodeForFirmware()
+            lblUpdateItem.text = "Updating Firmware"
             self.doUpdateFirmware()
         }
         else if updateItem == .encryptionKey
         {
+            lblUpdateItem.text = "Updating Encryption Key"
             self.doUpdateKeyInjection()
         }
+        else
+        {
+            self.lblUpdateItem.text = "Updating" + "..."
+            self.dismiss(animated: true, completion: nil)
+        }
         updateLabelWithPrecentage(percentUpdate: 0)
+        
     }
     
 //    var lastPercent = 0.0
@@ -81,25 +89,10 @@ class DemoOTAProgress: UIViewController
     
     func updateLabelWithPrecentage(percentUpdate : Float)
     {
-        updateProgress.progress = percentUpdate/100
-        if updateItem == .config
-        {
-            lblUpdateItem.text = "Updating Configuration"
-        }
-        else if updateItem == .firmware
-        {
-            lblUpdateItem.text = "Updating Firmware"
-        }
-        else if updateItem == .encryptionKey
-        {
-            lblUpdateItem.text = "Updating Encryption Key"
-        }
-        else
-        {
-            self.lblUpdateItem.text = "Updating..."
-            self.dismiss(animated: true, completion: nil)
-        }
-        lblUpdateProgress.text = " \(percentUpdate)%"
+        let progressValue = percentUpdate/100
+        updateProgress.progress = progressValue
+        let percentString = String(format: "%.1f", (progressValue * 100))
+        lblUpdateProgress.text = "\(percentString) %"
     }
     
     func doUpdateConfig()

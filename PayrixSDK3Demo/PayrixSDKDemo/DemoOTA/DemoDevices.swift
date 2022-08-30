@@ -13,9 +13,10 @@ class DemoDevices: UIViewController
 {
 
   let sharedUtils = SharedUtilities.init()
-    var bbposDevices : [PayDevice] = []
-  var payDevice = PayDevice.sharedInstance
+   var payDevices : [PayDevice] = []
+   
     var scanTimer: Timer!
+    var secondsCount : Int = 0
   /**
   * Instantiate PayCardRDRMgr  (Step 1)
   * This is the 1st step of the Bluetooth scanning process.
@@ -31,7 +32,7 @@ class DemoDevices: UIViewController
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var deviceListTable: UITableView!
     
-  
+    @IBOutlet weak var lblDeviceStatus: UILabel!
   
   override func viewDidLoad()
   {
@@ -50,15 +51,36 @@ class DemoDevices: UIViewController
     let theEnv =  sharedUtils.getEnvSelection()!
     payrixSDK.doSetPayrixPlatform(platform: theEnv, demoSandbox: isSandBox, deviceManfg: nil)
       
-      
-      
-      activityIndicator.startAnimating()
-      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5)
-      {
-          self.doScanReaders()
-          self.startScanTimer()
-      }
+      self.lblDeviceStatus.text = "Searching for Readers"
   }
+    /**
+     Setting up PayrixOTA
+        Adding the delegate methods so that we can get events triggered from PayrixOTA class
+            Start activity indicator till payrixOTA disconnect any other connected devices
+     */
+    func setUpOTA()
+    {
+        activityIndicator.startAnimating()
+        payrixOTA.doOTADisconnectAnyDevice()
+        payrixOTA.delegate = self
+//till app is not getting list of devices we need to clan the tableview so that user wont click on previous set of devices what may be disconnected
+        self.payDevices.removeAll()
+        self.deviceListTable.reloadData()
+    }
+    /**
+     Scanning for all devices what are nearby
+     */
+    func scanForReaders()
+    {
+        self.deviceListTable.isHidden = true
+        self.lblDeviceStatus.isHidden = false
+        self.lblDeviceStatus.text = "Searching for Readers"
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5)
+        {
+            self.payrixOTA.doOTAScanForReaders()
+            self.startScanTimer()
+        }
+    }
     /**
      **startScanTimer**
      
@@ -68,28 +90,45 @@ class DemoDevices: UIViewController
      */
     func startScanTimer()
     {
-      scanTimer = Timer.scheduledTimer(timeInterval: 25, target: self, selector: #selector(scanTimeExpired), userInfo: nil, repeats: false)
+        
+          scanTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(doCountSeconds), userInfo: nil, repeats: true)
     }
-    
     
     /**
      **scanTimeExpired**
-     
-     This method is triggered when the Scan timer expires.
-     The expiration message is displayed
+     This method is triggered when the with each seconds elapsed and we can make code by counting seconds
      
      */
-    @objc func scanTimeExpired()
+    @objc func doCountSeconds()
     {
-      payrixSDK.doStopBTScan()
+        secondsCount += 1
+        updateInfoMessage()
+    }
+    
+    func updateInfoMessage()
+    {
+        var infoMessage = "Searching for Readers"
+        if secondsCount > 19
+        {
+            infoMessage =  "No Readers Located. Tap Refresh in upper right to search again"
+            scanTimer.invalidate()
+            secondsCount = 0
+            activityIndicator.stopAnimating()
+            payrixSDK.doStopBTScan()
+        }
+        else if secondsCount > 9
+        {
+            infoMessage =  "Please confirm that Card Readers are on, charged and in range"
+        }
+        lblDeviceStatus.text = infoMessage
     }
     
     
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        payrixSDK.doDisconnectBTReader()
-//        deviceControllerBBPOS.disconnectBTReader()
+        secondsCount = 0
+        setUpOTA()
     }
     
     @IBAction func goback(_ sender: Any)
@@ -99,12 +138,8 @@ class DemoDevices: UIViewController
     
     @IBAction func doReloadDevices(_ sender: Any)
     {
-        doScanReaders()
-    }
-    
-    func doScanReaders()
-    {
-        payrixOTA.doOTAScanForReaders()
+        secondsCount = 0
+        setUpOTA()
     }
     
     
@@ -133,12 +168,12 @@ extension DemoDevices : UITableViewDataSource, UITableViewDelegate
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return bbposDevices.count
+        return payDevices.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
-        let device : PayDevice = bbposDevices[indexPath.row]
+        let device : PayDevice = payDevices[indexPath.row]
         cell.textLabel?.text = device.deviceSerial
         return cell
     }
@@ -148,9 +183,8 @@ extension DemoDevices : UITableViewDataSource, UITableViewDelegate
         activityIndicator.startAnimating()
         deviceListTable.isUserInteractionEnabled = false
         
-        let aDevice = bbposDevices[indexPath.row]
-        payDevice = aDevice
-        payrixOTA.doOTAConnectReader(payDeviceObj: payDevice)
+        let aDevice = payDevices[indexPath.row]
+        payrixOTA.doOTAConnectReader(payDeviceObj: aDevice)
         
         deviceListTable.deselectRow(at: indexPath, animated: true)
     }
@@ -205,7 +239,8 @@ extension DemoDevices : OTAUpdateDelegate
     }
     
     func didReceiveOTADisconnectResults(success: Bool!) {
-        
+        print("disconnected")
+        self.scanForReaders()
     }
     
     
@@ -219,11 +254,16 @@ extension DemoDevices : OTAUpdateDelegate
               let rdrDevices = useDevices as! [PayDevice]
                 
                 
-                self.bbposDevices.removeAll()
+                self.payDevices.removeAll()
                 for aDevice in rdrDevices
                 {
-                    self.bbposDevices.append(aDevice)
+                    self.payDevices.append(aDevice)
                 }
+                self.lblDeviceStatus.isHidden = true
+                self.deviceListTable.isHidden = false
+                self.deviceListTable.isUserInteractionEnabled = true
+                self.scanTimer.invalidate()
+                
                 self.deviceListTable.reloadData()
             }
         }

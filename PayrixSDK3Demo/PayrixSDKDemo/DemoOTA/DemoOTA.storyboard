@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="id5-E8-7C4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="id5-E8-7C4">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,7 +19,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="agB-9a-f5l">
                                 <rect key="frame" x="0.0" y="88" width="414" height="808"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="1cG-df-wlz" style="IBUITableViewCellStyleDefault" id="7c8-wK-epa">
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
@@ -37,6 +37,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -51,15 +52,27 @@
                                     <constraint firstAttribute="width" constant="50" id="v88-ao-NvD"/>
                                 </constraints>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching for Readers" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ck-zs-9IQ">
+                                <rect key="frame" x="16" y="100" width="382" height="51"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="51" id="XGA-y3-cFL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3iX-Tf-CgX"/>
-                        <color key="backgroundColor" red="0.76470588240000004" green="0.31764705879999999" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="agB-9a-f5l" firstAttribute="top" secondItem="3iX-Tf-CgX" secondAttribute="top" id="G52-RZ-5ii"/>
                             <constraint firstItem="Z1I-el-sfz" firstAttribute="centerY" secondItem="y7M-rR-ueE" secondAttribute="centerY" id="J3J-bC-Ggg"/>
+                            <constraint firstItem="3iX-Tf-CgX" firstAttribute="trailing" secondItem="9ck-zs-9IQ" secondAttribute="trailing" constant="16" id="N7u-mX-SWR"/>
                             <constraint firstAttribute="bottom" secondItem="agB-9a-f5l" secondAttribute="bottom" id="OSY-R7-1LD"/>
                             <constraint firstItem="agB-9a-f5l" firstAttribute="leading" secondItem="3iX-Tf-CgX" secondAttribute="leading" id="VAV-Hg-RcW"/>
+                            <constraint firstItem="9ck-zs-9IQ" firstAttribute="top" secondItem="3iX-Tf-CgX" secondAttribute="top" constant="12" id="aWD-0b-nWy"/>
                             <constraint firstItem="Z1I-el-sfz" firstAttribute="centerX" secondItem="y7M-rR-ueE" secondAttribute="centerX" id="gnD-JC-kuo"/>
+                            <constraint firstItem="9ck-zs-9IQ" firstAttribute="leading" secondItem="3iX-Tf-CgX" secondAttribute="leading" constant="16" id="jpa-py-Uvw"/>
                             <constraint firstItem="3iX-Tf-CgX" firstAttribute="trailing" secondItem="agB-9a-f5l" secondAttribute="trailing" id="mIi-iK-xZi"/>
                         </constraints>
                     </view>
@@ -81,6 +94,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="Z1I-el-sfz" id="pXU-qh-gwK"/>
                         <outlet property="deviceListTable" destination="agB-9a-f5l" id="nT9-wg-MIF"/>
+                        <outlet property="lblDeviceStatus" destination="9ck-zs-9IQ" id="p2y-fB-zGd"/>
                         <segue destination="may-TS-U2e" kind="show" identifier="segueUpdateBBPos" id="92H-57-waz"/>
                     </connections>
                 </viewController>
@@ -147,7 +161,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3NZ-jm-aOd">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3NZ-jm-aOd">
                                         <rect key="frame" x="102" y="120" width="180" height="30"/>
                                         <color key="backgroundColor" red="0.76470588240000004" green="0.31764705879999999" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -162,7 +176,7 @@
                                             <action selector="doUpdateConfig:" destination="may-TS-U2e" eventType="touchUpInside" id="ga1-7e-WCI"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Recommended)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfz-xe-e2J">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Recommended)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfz-xe-e2J">
                                         <rect key="frame" x="15" y="153" width="354" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="16A-cu-EXk"/>
@@ -242,7 +256,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9wl-NK-3mB">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9wl-NK-3mB">
                                         <rect key="frame" x="102" y="120" width="180" height="30"/>
                                         <color key="backgroundColor" red="0.76470588240000004" green="0.31764705879999999" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -257,7 +271,7 @@
                                             <action selector="doUpdateFirmware:" destination="may-TS-U2e" eventType="touchUpInside" id="ZnF-jD-b0x"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Recommended)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hAD-EI-djg">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Recommended)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hAD-EI-djg">
                                         <rect key="frame" x="15" y="153" width="354" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="ICS-qb-5cB"/>
@@ -337,7 +351,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AE0-SB-Y36">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AE0-SB-Y36">
                                         <rect key="frame" x="102" y="120" width="180" height="30"/>
                                         <color key="backgroundColor" red="0.76470588240000004" green="0.31764705879999999" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -352,7 +366,7 @@
                                             <action selector="doUpdateKeyInjection:" destination="may-TS-U2e" eventType="touchUpInside" id="W3G-7c-1Pf"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Recommended)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBi-d4-VpY">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Recommended)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBi-d4-VpY">
                                         <rect key="frame" x="15" y="153" width="354" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="NDq-oU-Ilc"/>

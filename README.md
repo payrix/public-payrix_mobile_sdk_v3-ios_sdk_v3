@@ -1,6 +1,10 @@
 # Payrix iOS SDK Version 3.0
 
 ## Release Note Summary:
+- Version 3.0.4 (EMV Certified)
+  * Added support for Cancel Transaction in SDK. Note: Cancel only works when the device is waiting for the card to be presented as a Tap, Chip Insert, or Swipe.  The SDK ignores all other Cancel requests once the card is presented.
+  * OTA (Over the Air) Defect Update to Encryption Key Profile Management: In case of OTA Target key profile is set to an invalid value on bbPOS' TMS, the SDK will set the target key profile to Sandbox key profile.
+  * Added new object PaymentDevice to provide a non-singleton device object, until PayDevice can be depricated or revised.
 - Version 3.0.3 (EMV Certified)
   * This enhancement is to provide support for multiple currencies.  The initial currencies supported are: USD, EUR, AUD, GBP, CAD.
 - Version 3.0.2 (EMV Certified)
@@ -11,7 +15,7 @@
   * Resolves issue with Multi-Merchants retrieved during Authentication.
   
 - Version 3.0.0 (EMV Certified)
-  This release of the Payrix iOS SDK is completely restructured under a single framework that give the user full access to all of the services provided by previous SDK versions.
+  * This release of the Payrix iOS SDK is completely restructured under a single framework that give the user full access to all of the services provided by previous SDK versions.
   
 ## Integrating the PayrixSDK into your Payment App
 
