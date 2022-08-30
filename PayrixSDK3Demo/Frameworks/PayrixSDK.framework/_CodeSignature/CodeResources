@@ -166,7 +166,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		n9paPxnopaUJZJLMfRR4ENI0gvg=
+		3KGkO7Ru7Y0Auo18k7pY16WKBmA=
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
@@ -178,7 +178,7 @@
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		BaZPvTNqf74s4EoK8aT5xFjDESo=
+		bWcaxFtnS4a4Cq442Wdivqm38sY=
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/arm64.swiftdoc</key>
 		<data>
@@ -190,7 +190,7 @@
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		BaZPvTNqf74s4EoK8aT5xFjDESo=
+		bWcaxFtnS4a4Cq442Wdivqm38sY=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -497,7 +497,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			nrCScUIgbnPzL6t9mbZmDmDCfTeQnibbsvGnDsThq4Q=
+			ezw15ctXN6krRk7BwmPkz9zT0K+CscWFPZ51kOybqrI=
 			</data>
 		</dict>
 		<key>Modules/PayrixSDK.swiftmodule/arm64.swiftdoc</key>
@@ -518,7 +518,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			nrCScUIgbnPzL6t9mbZmDmDCfTeQnibbsvGnDsThq4Q=
+			ezw15ctXN6krRk7BwmPkz9zT0K+CscWFPZ51kOybqrI=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

@@ -30,62 +30,137 @@ class DemoUpdate: UIViewController
     
     
     var deviceDetails : [String : Any] = [:]
-    
-    let otaUpdate = PayrixOTA.sharedInstance
+    let payrixSDK = PayrixSDKMaster.sharedInstance
+    let payrixOTA = PayrixOTA.sharedInstance
     let sharedUtils = SharedUtilities.init()
+    
+    //the item app will update for ex- config, firmware or encryptionKey
     var updatingItem : OTAUpdateItem!
-    
+    //setting the Device Setting version fecthed from API
     var latestDeviceSettingVersion : String = ""
+    //setting the Device Firmware version fecthed from API
     var latestFirmwareVersion : String = ""
+    //setting the Device Terminal version fecthed from API
     var latestTerminalSettingVersion : String = ""
+    //setting the Encryption Key fecthed from API
     var latestEncryptionKey : String = ""
-    
+    //setting the Device Settings version fecthed from API
     var currentDeviceSettingVersion : String = ""
+    //setting the Device Firmware version fecthed from API
     var currentFirmwareVersion : String = ""
+    //setting the Device Terminal Settings version fecthed from API
     var currentTerminalSettingVersion : String = ""
+    //setting the Encryption Key fecthed from Device Details
     var currentEncryptionKey : String = ""
+    
+    let configInfo = "The Configuration is a set of parameters that reside on the bbPOS device that specifies the requirements that Payrix has when performing transactions.  A example is the maximum transaction limit when using such a device.  This and many more make up the device configuration."
+    let firmwareInfo = "Firmware is special hardware related software that is managed by the hardware manufacturer (bbPOS).  Occasionally the hardware manufacturer has minor fixes or enhancements that allow the device to perform better or to meet a specific regulatory requirement."
+    let encryptionInfo = "The payment device reader is a highly secured device.  Part of that is due to the use of encryption keys.  When working with Payrix there are basically 2 types of keys.  A Sandbox Key which is used for testing in the Payrix Sandbox environment, and a Live Production Key for use by merchants performing transactions on Payrix's Live Production platform."
+    
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
+        payrixOTA.doOTAStartup()
+        payrixOTA.delegate = self
+
+        setUpVersionLabels()
+//        setUpBatteryStatusInfo()
+        payrixOTA.doGetTargetVersion()
+    }
+    
+    func enableButtons(enable : Bool)
+    {
+        btnUpdateConfig.isEnabled = enable
+        btnUpdateFirmware.isEnabled = enable
+        btnUpdateKeyInjection.isEnabled = enable
+    }
+    //Updating UI with the info avilable for current and target settings
+    func setUpVersionLabels()
+    {
         currentFirmwareVersion = deviceDetails["firmwareVersion"] as? String ?? ""
-        lblCurrentVersionFirmware.text = "Current Version: \(currentFirmwareVersion)"
+        lblCurrentVersionFirmware.text = "Current Version" + ": \(currentFirmwareVersion)"
         
         currentDeviceSettingVersion = deviceDetails["deviceSettingVersion"] as? String ?? ""
         currentTerminalSettingVersion = deviceDetails["terminalSettingVersion"] as? String ?? ""
-        lblCurrentVersionConfig.text = "Current Version: \(currentTerminalSettingVersion)"
-        
+        lblCurrentVersionConfig.text = "Current Version" + ": \(currentTerminalSettingVersion)"
         
         currentEncryptionKey = deviceDetails["PayrixCurrentKeyProfileName"] as? String ?? ""
-        lblCurrentVersionKeyInjection.text = "Current Version: \(currentEncryptionKey)"
+        lblCurrentVersionKeyInjection.text = "Current Version" + ": \(currentEncryptionKey)"
         
-        
-        otaUpdate.doOTAStartup()
-        otaUpdate.delegate = self
-
         self.title = deviceDetails["serialNumber"] as? String ?? ""
-        
-        doHideUpdateConfig(hide: true)
-        doHideUpdateFirmware(hide: true)
-        doHideUpdateEncryptionKey(hide: true)
-        
-        otaUpdate.doGetTargetVersion()
     }
     
-    func doHideUpdateConfig(hide : Bool)
+//    func setUpBatteryStatusInfo()
+//    {
+//        btnStatusInfo.setTitle("", for: .normal)
+//        let batteryPercent = NSString(string: (deviceDetails["batteryPercentage"] as? String ?? "0")).intValue
+//        if batteryPercent > 70
+//        {
+//            imageViewStatus.image = UIImage(named: "MoreThan70.png")
+//            lblStatus.text = NSLocalizedString("!rdrChargedAndReady", comment: "Reader Device Charged and Ready")
+//            enableButtons(enable: true)
+//        }
+//        else if batteryPercent > 35
+//        {
+//            imageViewStatus.image = UIImage(named: "LessThan70.png")
+//            lblStatus.text = NSLocalizedString("!chargingRecommended", comment: "Charging Reader Before Continuing is Recommended")
+//            enableButtons(enable: true)
+//        }
+//        else
+//        {
+//            imageViewStatus.image = UIImage(named: "LessThan36.png")
+//            lblStatus.text = NSLocalizedString("!chargeReader", comment: "Charge Reader Device Before Continuing")
+//            enableButtons(enable: false)
+//        }
+//    }
+    
+    
+    //fetching the details of device
+    func doGetDeviceDetails()
     {
-        self.btnUpdateConfig.isHidden = hide
-        self.lblRecommendedConfig.isHidden = hide
+        payrixSDK.delegate = self
+        payrixSDK.doGetDeviceInfo()
     }
-    
-    func doHideUpdateFirmware(hide : Bool)
+    //Fetch the latest version of OTA update available
+    func doGetOTAVersions()
     {
-        self.btnUpdateFirmware.isHidden = hide//false//
-        self.lblRecommendedFirmware.isHidden = hide//false//
+        payrixOTA.delegate = self
+        payrixOTA.doGetTargetVersion()
     }
     
-    func doHideUpdateEncryptionKey(hide : Bool)
+    
+    
+    func doHideUpdateConfig()
+    {
+        if (currentTerminalSettingVersion == latestTerminalSettingVersion) || latestTerminalSettingVersion.isEmpty
+        {
+            self.btnUpdateConfig.isHidden = true
+            self.lblRecommendedConfig.isHidden = true
+        }
+        else
+        {
+            self.btnUpdateConfig.isHidden = false
+            self.lblRecommendedConfig.isHidden = false
+        }
+    }
+    
+    func doHideUpdateFirmware()
+    {
+        if (currentFirmwareVersion == latestFirmwareVersion) || latestFirmwareVersion.isEmpty
+        {
+            self.btnUpdateFirmware.isHidden = true
+            self.lblRecommendedFirmware.isHidden = true
+        }
+        else
+        {
+            self.btnUpdateFirmware.isHidden = true
+            self.lblRecommendedFirmware.isHidden = true
+        }
+    }
+    
+    func doHideUpdateEncryptionKey()
     {
         if latestEncryptionKey.isEmpty || latestEncryptionKey == "Profile Not Supported by Payrix"
         {
@@ -108,38 +183,35 @@ class DemoUpdate: UIViewController
     
     @IBAction func doShowConfigInfo(_ sender: Any)
     {
-        sharedUtils.showMessage(theController: self, theTitle: "Configuration Version", theMessage: "")
+        sharedUtils.showMessage(theController: self, theTitle: "Configuration Version", theMessage: configInfo)
     }
     
     @IBAction func doShowFirmwareInfo(_ sender: Any)
     {
-        sharedUtils.showMessage(theController: self, theTitle: "Firmware Version", theMessage: "")
+        sharedUtils.showMessage(theController: self, theTitle: "Firmware Version", theMessage: firmwareInfo)
     }
     
     @IBAction func doShowKeyInjectionInfo(_ sender: Any)
     {
-        sharedUtils.showMessage(theController: self, theTitle: "Encrytpion Key Version", theMessage: "")
+        sharedUtils.showMessage(theController: self, theTitle: "Encrytpion Key Version", theMessage: encryptionInfo)
     }
     
     @IBAction func doUpdateConfig(_ sender: Any)
     {
         updatingItem = .config
         showAlertForUpdate()
-//        otaUpdate.doOTAConfigUpdate(deviceSettingVersion: latestDeviceSettingVersion, terminalSettingVersion: latestTerminalSettingVersion)
     }
     
     @IBAction func doUpdateFirmware(_ sender: Any)
     {
         updatingItem = .firmware
         showAlertForUpdate()
-//        otaUpdate.doOTAFirmwareUpdate(firmwareVersion: latestFirmwareVersion)
     }
     
     @IBAction func doUpdateKeyInjection(_ sender: Any)
     {
         updatingItem = .encryptionKey
         showAlertForUpdate()
-//        otaUpdate.doOTAKeyInjection(keyProfile: latestEncryptionKey)
     }
     
     func showAlertForUpdate()
@@ -263,34 +335,21 @@ extension DemoUpdate : OTAUpdateDelegate
             return
         }
         
-        latestDeviceSettingVersion  = otaDataDict["deviceSettingVersion"] as? String ?? ""//"PIZZ_Generic_v2"
-        latestTerminalSettingVersion = otaDataDict["terminalSettingVersion"] as? String ?? ""//"PIZZ_Generic_v2"
-        lbllatestVersionConfig.text = "Latest Payrix Version: \(latestDeviceSettingVersion)"
         
-        latestFirmwareVersion = otaDataDict["firmwareVersion"] as? String ?? ""//"1.00.03.47"
-        lbllatestVersionFirmware.text = "Latest Payrix Version: \(latestFirmwareVersion)"
+        latestDeviceSettingVersion  = otaDataDict["deviceSettingVersion"] as? String ?? ""
+        latestTerminalSettingVersion = otaDataDict["terminalSettingVersion"] as? String ?? ""
         
-        latestEncryptionKey = otaDataDict["PayrixTargetKeyProfileName"] as? String ?? ""//"Payrix MSR"
-        lbllatestVersionKeyInjection.text = "Latest Payrix Version: \(latestEncryptionKey)"
-        if (currentTerminalSettingVersion != latestTerminalSettingVersion)
-        {
-            doHideUpdateConfig(hide: false)
-        }
-        else
-        {
-            doHideUpdateConfig(hide: true)
-        }
+        lbllatestVersionConfig.text = "Latest Payrix Version" + ": \(latestDeviceSettingVersion)"
         
-        if (currentFirmwareVersion != latestFirmwareVersion)
-        {
-            doHideUpdateFirmware(hide: false)
-        }
-        else
-        {
-            doHideUpdateFirmware(hide: true)
-        }
+        latestFirmwareVersion = otaDataDict["firmwareVersion"] as? String ?? ""
+        lbllatestVersionFirmware.text = "Latest Payrix Version" + ": \(latestFirmwareVersion)"
         
-        doHideUpdateEncryptionKey(hide: false)
+        latestEncryptionKey = otaDataDict["PayrixTargetKeyProfileName"] as? String ?? ""
+        lbllatestVersionKeyInjection.text = "Latest Payrix Version" + ": \(latestEncryptionKey)"
+        
+        doHideUpdateConfig()
+        doHideUpdateFirmware()
+        doHideUpdateEncryptionKey()
         
     }
     
@@ -344,7 +403,23 @@ extension DemoUpdate : OTACompleteDelegate
     {
         sharedUtils.showMessage(theController: self, theTitle: message, theMessage: info)
         activityIndicator.startAnimating()
-        otaUpdate.delegate = self
-        otaUpdate.doGetTargetVersion()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5)
+        {
+            self.doGetDeviceDetails()
+        }
+    }
+}
+extension DemoUpdate : PayrixSDKDelegate
+{
+    func didReceiveOTADeviceData(deviceInfo: [AnyHashable : Any]!)
+    {
+        deviceDetails = deviceInfo as? [String : AnyObject] ?? [:]
+        setUpVersionLabels()
+        
+        doHideUpdateConfig()
+        doHideUpdateFirmware()
+        doHideUpdateEncryptionKey()
+        
+        doGetOTAVersions()
     }
 }
