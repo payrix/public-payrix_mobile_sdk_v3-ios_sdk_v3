@@ -1,5 +1,10 @@
-# Payrix iOS SDK Version 3.0.5
+# Payrix iOS SDK Version 3.0.6
 ## Release Note Summary:
+- Version 3.0.6 (EMV Certified)
+  * Added orderNumber funtionality:
+    New SDK function will accept order as element in PayRequest object.
+  * Fix the crash on Swipe for faulty cards.
+  
 - Version 3.0.5 (EMV Certified)
   * Added new Single Merchant Retieval funtionality:
     New SDK Method: doGetSingleMerchant(merchantID, sessionKey) | New Callback:  didReceiveSingleMerchantRetrievalResults(...)
@@ -22,12 +27,12 @@
 
 ## SDK Process Map of SDK Functions (Methods and Callbacks)
 
-![](sdkdocumentation/PayrixSDK_Process_Map_Pg1.png)
+![](SDKDocumentation/PayrixSDK_Process_Map_Pg1.png)
 
-![](sdkdocumentation/PayrixSDK_Process_Map_Pg2.png)
+![](SDKDocumentation/PayrixSDK_Process_Map_Pg2.png)
 
-![](sdkdocumentation/PayrixSDK_Process_Map_Pg3.png)
+![](SDKDocumentation/PayrixSDK_Process_Map_Pg3.png)
 
-![](sdkdocumentation/PayrixSDK_Process_Map_Pg4.png)
+![](SDKDocumentation/PayrixSDK_Process_Map_Pg4.png)
 
-![](sdkdocumentation/PayrixSDK_Process_Map_Pg5.png)
+![](SDKDocumentation/PayrixSDK_Process_Map_Pg5.png)

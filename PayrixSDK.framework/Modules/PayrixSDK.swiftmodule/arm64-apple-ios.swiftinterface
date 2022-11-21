@@ -1608,6 +1608,7 @@ public enum PayCorePaymentMethod : Swift.Int, Swift.Decodable {
   public var payrixMerchantID: Swift.String!
   public var payrixSandoxDemoMode: Swift.Bool!
   public var payManualEntry: Swift.Bool?
+  public var order: Swift.String?
   public var payAmount: Swift.Int?
   public var payTaxPercent: Swift.Int?
   public var payTipPercent: Swift.Int?
