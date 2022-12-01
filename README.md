@@ -1,5 +1,9 @@
-# Payrix iOS SDK Version 3.0.6
+# Payrix iOS SDK Version 3.0.7
 ## Release Note Summary:
+- Version 3.0.7 (EMV Certified)
+  * Return the name printed on card as ccName on PayResponse:
+    This only works if BBPos SDK returns the name printed on card and the payDeviceMode is set to PaySharedAttributes.PayDeviceMode.cardDeviceMode_Swipe
+    
 - Version 3.0.6 (EMV Certified)
   * Added orderNumber funtionality:
     New SDK function will accept order as element in PayRequest object.
