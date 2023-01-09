@@ -13,8 +13,8 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
 {
   @IBOutlet weak var btnBack: UIButton!
   @IBOutlet weak var btnStartTxn: UIButton!
-    @IBOutlet weak var btnReceipt: UIButton!
-    
+  @IBOutlet weak var btnReceipt: UIButton!
+  
   @IBOutlet weak var txtItemCost: UITextField!
   @IBOutlet weak var txtTaxRate: UITextField!
   @IBOutlet weak var txtTipAmt: UITextField!
@@ -34,10 +34,10 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
   @IBOutlet weak var lblActionMessage: UILabel!
   
   let sharedUtils = SharedUtilities.init()
-    
+  
   /** (Step 1)
-  * Instantiate PayrixSDK class - Which handles the transactional requests and responses with the Payrix gateway API's.
-  */
+   * Instantiate PayrixSDK class - Which handles the transactional requests and responses with the Payrix gateway API's.
+   */
   
   var payrixSDK = PayrixSDKMaster.sharedInstance
   
@@ -56,7 +56,7 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
   var debitCreditType:String? = String()
   
   var cardEntryMode:String = ""  // SWIPE or EMV or TAP
-    //Path for receiptFile Name, if this file has no name, then hide the Report button
+  //Path for receiptFile Name, if this file has no name, then hide the Report button
   var transactionFileName = ""
   var payResponse : PayResponse!
   
@@ -65,20 +65,20 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
   //passing payResponse appSelection object to ApplicationSelection Viewcontroller
   var appsSelectionArray : [[String : Int]] = []
   var paymentStatus : String!
-    
+  
   override func viewDidLoad()
   {
     super.viewDidLoad()
-
+    
     payrixSDK.delegate = self
     
     numberFmt.maximumFractionDigits = 2
     
     /* (Step 2)
-    * Start doSetPayrixPlatform
-    * This step establishes the necessary connections for Callback processing and
-    * initializes the PayrixSDK parameters.
-    */
+     * Start doSetPayrixPlatform
+     * This step establishes the necessary connections for Callback processing and
+     * initializes the PayrixSDK parameters.
+     */
   }
   
   
@@ -91,17 +91,17 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
     lblProcessLog.isHidden = false
     
     /*
-    * Step X:
-    * a. Set the host URL
-    * b. Set Demo - Sandbox mode
-    * TODO: Add to Documentation
-    */
+     * Step X:
+     * a. Set the host URL
+     * b. Set Demo - Sandbox mode
+     * TODO: Add to Documentation
+     */
     
     let useManfg = doDetermineManfg()
     let isSandBox =  sharedUtils.getSandBoxOn()!
     let theEnv =  sharedUtils.getEnvSelection()!
     payrixSDK.doSetPayrixPlatform(platform: theEnv, demoSandbox: isSandBox, deviceManfg: useManfg)
-  
+    
     sharedUtils.setDemoMode(modeKey: isSandBox)
     
     // Sample Test Values
@@ -110,13 +110,13 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
     txtTaxRate.text = "0.0"
     txtTipAmt.text = "0.00"
     
-//  Test Data for Manual Entry Transactions
-//    txtCardNumber.text = "4111111111111111"
-//    txtCardHolder.text = "John Doe"
-//    txtExpMM.text = "12"
-//    txtExpYY.text = "23"
-//    txtCVV.text = "357"
-//    txtZip.text = "33027"
+    //  Test Data for Manual Entry Transactions
+    //    txtCardNumber.text = "4111111111111111"
+    //    txtCardHolder.text = "John Doe"
+    //    txtExpMM.text = "12"
+    //    txtExpYY.text = "23"
+    //    txtCVV.text = "357"
+    //    txtZip.text = "33027"
     
     // ****************************************
     
@@ -133,19 +133,19 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
   {
-      if segue.identifier ==  "SegToReceipt"
-      {
-          let receiptVC : ReceiptVC   =   segue.destination as! ReceiptVC
-          receiptVC.fileName      =   self.transactionFileName
-          receiptVC.payResponse   =   payResponse
-          receiptVC.status    =   paymentStatus
-      }
-      else if segue.identifier   ==  "SegToAppSelection"
-      {
-          let appSelectionVC : ApplicationSelectionVC   =   segue.destination as! ApplicationSelectionVC
-          appSelectionVC.appsSelectionArray =   appsSelectionArray
-          appSelectionVC.delegateAppSelection =   self
-      }
+    if segue.identifier ==  "SegToReceipt"
+    {
+      let receiptVC : ReceiptVC   =   segue.destination as! ReceiptVC
+      receiptVC.fileName      =   self.transactionFileName
+      receiptVC.payResponse   =   payResponse
+      receiptVC.status    =   paymentStatus
+    }
+    else if segue.identifier   ==  "SegToAppSelection"
+    {
+      let appSelectionVC : ApplicationSelectionVC   =   segue.destination as! ApplicationSelectionVC
+      appSelectionVC.appsSelectionArray =   appsSelectionArray
+      appSelectionVC.delegateAppSelection =   self
+    }
   }
   
   private func doDetermineManfg() -> PaySharedAttributes.PaySupportedReaders
@@ -166,13 +166,13 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
   
   
   /**
-  **doSetCurrentTransaction**
-  (Step 3a)
-  This method prepares to perform a transaction.
-  The demo app uses an object called CurrentTransaction to capture and hold the payment transaction information
-  throughout the lifecycle of the transaction.
-  In the demo, information created during the Authentication and BT Scan steps are used here and elsewhere in this class.
-  */
+   **doSetCurrentTransaction**
+   (Step 3a)
+   This method prepares to perform a transaction.
+   The demo app uses an object called CurrentTransaction to capture and hold the payment transaction information
+   throughout the lifecycle of the transaction.
+   In the demo, information created during the Authentication and BT Scan steps are used here and elsewhere in this class.
+   */
   private func doSetCurrentTransaction()
   {
     theMerchantDBA = sharedUtils.getMerchantDBA() ?? ""
@@ -192,11 +192,11 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
   
   
   /**
-  **doBuildTxnAmts**
-  (Step 3b)
-  This is a utility method to calculate values as needed and then store them in the
-  CurrentTransaction object.
-  */
+   **doBuildTxnAmts**
+   (Step 3b)
+   This is a utility method to calculate values as needed and then store them in the
+   CurrentTransaction object.
+   */
   private func doBuildTxnAmts()
   {
     let nbrCost = numberFmt.number(from: String(txtItemCost.text!))
@@ -239,7 +239,7 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
     self.currentTransaction.amount = NSDecimalNumber(decimal: intCost).intValue
     
     self.currentTransaction.tipPercentage = 0
-
+    
     let calcTax = decCost * decTaxRate
     let calcTotal = decCost + calcTax + decTip
     
@@ -264,18 +264,27 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
   
   @IBAction func goToReceipt(_ sender: Any)
   {
-      self.performSegue(withIdentifier: "SegToReceipt", sender: self)
+    self.performSegue(withIdentifier: "SegToReceipt", sender: self)
   }
-    
+
+  @IBAction func doCancelCard(_ sender: Any)
+  {
+    /**
+    **cancelCheckCard**
+    * This method cancels the checking of card while in Cancel the check card process at onWaitingForCard.
+    */
+    payrixSDK.delegate = self
+    payrixSDK.doCancelCheckCard()
+  }
   
   /**
-  **goStartTxn**
-  * (Step 4)
+   **goStartTxn**
+   * (Step 4)
    This method listens for the Start Transaction button to be tapped.
    The information provided is used to start transaction processing.
    In this demo if the Card Number is the provided then the transaction is managed as
    a manual entry transaction.  Otherwise the transaction will require a BT card reader be used.
-  */
+   */
   @IBAction func goStartTxn(_ sender: Any)
   {
     hideKeyboard()
@@ -300,11 +309,11 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
     appsSelectionArray = response.appSelection ?? []
     if !appsSelectionArray.isEmpty
     {
-        self.performSegue(withIdentifier: "SegToAppSelection", sender: nil)
+      self.performSegue(withIdentifier: "SegToAppSelection", sender: nil)
     }
     else
     {
-        sharedUtils.showMessage(theController: self, theTitle: "Transaction", theMessage: "No Apps provided for App Selection")
+      sharedUtils.showMessage(theController: self, theTitle: "Transaction", theMessage: "No Apps provided for App Selection")
     }
   }
   
@@ -320,31 +329,31 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
     }
     else
     {
-        print("response is nil")
+      print("response is nil")
     }
   }
   
   func updateForReceipt(response : PayResponse)
   {
-      btnReceipt.isHidden =   false
-      let dateFmt = DateFormatter()
-      dateFmt.dateFormat = "yy-MM-dd_HHmmss"
-      let useTimeStamp = dateFmt.string(from: Date())
-      let transactionIdPrefix =   (response.transactionID ?? "") + "_"
-      let fName =  transactionIdPrefix + useTimeStamp + "_" + "Receipt"
-      let logData = sharedUtils.doGenLogString(source: response)
-      sharedUtils.doWriteLogFile(fileName: fName, fileData: logData)
-      self.transactionFileName = fName
-      self.payResponse = response
+    btnReceipt.isHidden =   false
+    let dateFmt = DateFormatter()
+    dateFmt.dateFormat = "yy-MM-dd_HHmmss"
+    let useTimeStamp = dateFmt.string(from: Date())
+    let transactionIdPrefix =   (response.transactionID ?? "") + "_"
+    let fName =  transactionIdPrefix + useTimeStamp + "_" + "Receipt"
+    let logData = sharedUtils.doGenLogString(source: response)
+    sharedUtils.doWriteLogFile(fileName: fName, fileData: logData)
+    self.transactionFileName = fName
+    self.payResponse = response
   }
-    
-    
+  
+  
   /**
-  **doPrepCardReader**
-  * (Step 5a)
+   **doPrepCardReader**
+   * (Step 5a)
    Prepare the card reader by connecting to the Bluetooth Reader.
    If the reader connects successfully then the transaction processing will be triggered
-  */
+   */
   private func doPrepCardReader()
   {
     payrixSDK.delegate = self
@@ -357,10 +366,10 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
   
   
   /**
-  **didReceiveBTConnectResults**
-  (Step 6a)
-  This is the callback for the BT Connect request.  Once the device is connected the transaction can be processed.
-  */
+   **didReceiveBTConnectResults**
+   (Step 6a)
+   This is the callback for the BT Connect request.  Once the device is connected the transaction can be processed.
+   */
   public func didReceiveBTConnectResults(connectSuccess: Bool!, theDevice: String!)
   {
     // Handle Successful Connection
@@ -378,9 +387,9 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
   
   
   /**
-  **didReceiveBTScanTimeOut**
-  This is the callback for the BT Connect request.
-  */
+   **didReceiveBTScanTimeOut**
+   This is the callback for the BT Connect request.
+   */
   public func didReceiveBTScanTimeOut()
   {
     updateLog(newMessage: "The automatic connection of the Card Reader was unsuccessful.")
@@ -400,14 +409,14 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
   }
   
   /**
-  **doCardReaderTxn**
-  * (Step 7a)
+   **doCardReaderTxn**
+   * (Step 7a)
    Started Card Reading (Swipe) process with PayCard doReadCard request passing the transaction information.
-  */
+   */
   private func doCardReaderTxn()
   {
     cardEntryMode = "EMV"
-
+    
     var decResult: Decimal = 0
     var decTaxRate: Decimal = 0
     if let intTaxRate = currentTransaction.taxPercentage
@@ -443,7 +452,7 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
     let calcTaxI = calcTax * 100
     
     let payRequest = PayRequest.sharedInstance
-//    payRequest.doPayInit()
+    //    payRequest.doPayInit()
     
     payRequest.payTotalAmt = NSDecimalNumber(decimal: calcTotal).intValue
     payRequest.payTaxAmt = NSDecimalNumber(decimal: calcTaxI).intValue
@@ -455,6 +464,11 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
     payRequest.paySessionKey = sharedUtils.getSessionKey()
     payRequest.payrixMerchantID = sharedUtils.getMerchantID()
     payRequest.payrixSandoxDemoMode = true
+    
+    //code to add order number, here is demo app code, we are using time stamp as orderNumber. client can use their order number here
+    let timeStamp = Date().timeIntervalSince1970
+    payRequest.order = NSNumber(floatLiteral: timeStamp).stringValue
+    
     
     doWriteToLog(logType: "Sale-Request", inObj: payRequest)
     payrixSDK.doPaymentTransaction(payRequestObj: payRequest)
@@ -475,10 +489,10 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
   
   
   /**
-  **doManualTxn**
-  * (Step 5b)
+   **doManualTxn**
+   * (Step 5b)
    Prepare the transaction for processing using the manually entered card information.
-  */
+   */
   private func doManualTxn()
   {
     currentTransaction.ccName = txtCardHolder.text
@@ -495,25 +509,25 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
   func determineCardType()
   {
     let inputValue = currentTransaction.ccNumber ?? ""
-      currentTransaction.ccCardType = nil
-      for ccType in SharedUtilities.ccTypeRegex.keys {
-          if let regex = SharedUtilities.ccTypeRegex[ccType],
-             let _ = inputValue.range(of: regex,
-                                      options: .regularExpression) {
-              currentTransaction.ccCardType = ccType
-          }
+    currentTransaction.ccCardType = nil
+    for ccType in SharedUtilities.ccTypeRegex.keys {
+      if let regex = SharedUtilities.ccTypeRegex[ccType],
+         let _ = inputValue.range(of: regex,
+                                  options: .regularExpression) {
+        currentTransaction.ccCardType = ccType
       }
+    }
   }
   
   
   /**
-  **doProcessManualCard**
-  * (Step 6b)
+   **doProcessManualCard**
+   * (Step 6b)
    This method prepares and starts the manual card processing using the
    PayCoreMaster method: doManualCardTransaction
    
    The callback is: didReceiveTransactionResponse
-  */
+   */
   private func doProcessManualCard()
   {
     let useCardType:PaySharedAttributes.CCType?
@@ -575,7 +589,7 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
     
     payRequest.payTotalAmt = NSDecimalNumber(decimal: calcTotal).intValue
     payRequest.payTaxAmt = NSDecimalNumber(decimal: icalcTax).intValue
-
+    
     payRequest.payTipAmt = currentTransaction.tipAbsoluteAmount
     payRequest.payAmount = currentTransaction.amount
     
@@ -591,6 +605,10 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
     payRequest.payOrigin = PaySharedAttributes.PayTxnOrigin.eCommerceSystem
     payRequest.payPostalCodeZip = currentTransaction.zip
     payRequest.payDeviceMode = PaySharedAttributes.PayDeviceMode.cardDeviceMode_Unknown
+    
+    //code to add order number, here is demo app code, we are using time stamp as orderNumber. client can use their order number here
+    let timeStamp = Date().timeIntervalSince1970
+    payRequest.order = NSNumber(floatLiteral: timeStamp).stringValue
     
     doWriteToLog(logType: "Manual-Request", inObj: payRequest)
     payrixSDK.doPaymentTransaction(payRequestObj: payRequest)
@@ -612,89 +630,89 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
     
     switch responseType
     {
-    case 0:
-      // Transaction Complete
-      doWriteToLog(logType: "Sale-Response", inObj: payResponse)
-      sharedUtils.showMessage(theController: self, theTitle: "Transaction Complete - " + (usePayResponse?.receiptApprovedDeclined ?? "") + " -", theMessage: infoMsg ?? "")
-      
-      let useMsg = "Transaction Complete - \n" + (usePayResponse?.receiptApprovedDeclined ?? "") + "\n" + (infoMsg ?? "")
-      updateLog(newMessage: useMsg)
-      
-      paymentStatus = usePayResponse?.receiptApprovedDeclined ?? ""
-      verifyResponse(payResponse: usePayResponse, isForReceipt: true)
-
-      var debugLog = ""
-      if let useLogMsg = usePayResponse?.debugSDKData
-      {
-        debugLog = doDumpDebugInfo(debugLog: useLogMsg)
-      }
-      else
-      {
-        debugLog = "No Log Data"
-      }
-      
-      updateLog(newMessage: debugLog)
-      print(debugLog)
-      break
-    case 1:
-      // Take Action
-      sleep(1)
-      lblActionMessage.text = actionMsg
-      let useMsg = "Action Message: " + (actionMsg ?? " - ")
-      updateLog(newMessage: useMsg)
-      paymentStatus = actionMsg
-      print(useMsg)
-      break
-    case 2:
-      // Information Message
-      sleep(1)
-      lblActionMessage.text = ""
-      let useMsg = "Info Message: " + (infoMsg ?? " - ") + (actionMsg ?? "")
-      updateLog(newMessage: useMsg)
-      print(useMsg)
-      break
-    case 3:
-      // PIN Entry Required
-      sleep(3)
-      txtPINEntry.isHidden = false
-      let useMsg = "PIN Entry Required: "
-      lblActionMessage.text = useMsg
-      updateLog(newMessage: useMsg)
-      print(useMsg)
-      break
-    case 4:
-      // App Selection Needed
-      let useMsg = "App Selection Needed: "
-      lblActionMessage.text = useMsg
-      updateLog(newMessage: useMsg)
-      print(useMsg)
-      doAppSelection(response: usePayResponse)
-      
-      // verifyResponse(payResponse: usePayResponse, isForReceipt: false)
-      break
-    case 5:
-      // Final EMV Batch Data Sent
-      doWriteToLog(logType: "Sale-Final EMV Data", inObj: payResponse)
-      txtPINEntry.isHidden = true
-      let useMsg = "EMV Final Batch Data Received"
-      lblActionMessage.text = useMsg
-      updateLog(newMessage: useMsg)
-      print(useMsg)
-      break
-    case 9:
-      // Take Action
-      sharedUtils.showMessage(theController: self, theTitle: "Action Message", theMessage: actionMsg ?? "")
-      break
-      
-    case 99:
-      // Simulation of App Selection Complete
-      sharedUtils.showMessage(theController: self, theTitle: "Simulation Completed", theMessage: "App Selection - Simulation Completed")
-      paymentStatus = infoMsg
-      break
-      
-    default:
-      sharedUtils.showMessage(theController: self, theTitle: "Info Message", theMessage: infoMsg ?? "")
-      break
+      case 0:
+        // Transaction Complete
+        doWriteToLog(logType: "Sale-Response", inObj: payResponse)
+        sharedUtils.showMessage(theController: self, theTitle: "Transaction Complete - " + (usePayResponse?.receiptApprovedDeclined ?? "") + " -", theMessage: infoMsg ?? "")
+        
+        let useMsg = "Transaction Complete - \n" + (usePayResponse?.receiptApprovedDeclined ?? "") + "\n" + (infoMsg ?? "")
+        updateLog(newMessage: useMsg)
+        
+        paymentStatus = usePayResponse?.receiptApprovedDeclined ?? ""
+        verifyResponse(payResponse: usePayResponse, isForReceipt: true)
+        
+        var debugLog = ""
+        if let useLogMsg = usePayResponse?.debugSDKData
+        {
+          debugLog = doDumpDebugInfo(debugLog: useLogMsg)
+        }
+        else
+        {
+          debugLog = "No Log Data"
+        }
+        
+        updateLog(newMessage: debugLog)
+        print(debugLog)
+        break
+      case 1:
+        // Take Action
+        sleep(1)
+        lblActionMessage.text = actionMsg
+        let useMsg = "Action Message: " + (actionMsg ?? " - ")
+        updateLog(newMessage: useMsg)
+        paymentStatus = actionMsg
+        print(useMsg)
+        break
+      case 2:
+        // Information Message
+        sleep(1)
+        lblActionMessage.text = ""
+        let useMsg = "Info Message: " + (infoMsg ?? " - ") + (actionMsg ?? "")
+        updateLog(newMessage: useMsg)
+        print(useMsg)
+        break
+      case 3:
+        // PIN Entry Required
+        sleep(3)
+        txtPINEntry.isHidden = false
+        let useMsg = "PIN Entry Required: "
+        lblActionMessage.text = useMsg
+        updateLog(newMessage: useMsg)
+        print(useMsg)
+        break
+      case 4:
+        // App Selection Needed
+        let useMsg = "App Selection Needed: "
+        lblActionMessage.text = useMsg
+        updateLog(newMessage: useMsg)
+        print(useMsg)
+        doAppSelection(response: usePayResponse)
+        
+        // verifyResponse(payResponse: usePayResponse, isForReceipt: false)
+        break
+      case 5:
+        // Final EMV Batch Data Sent
+        doWriteToLog(logType: "Sale-Final EMV Data", inObj: payResponse)
+        txtPINEntry.isHidden = true
+        let useMsg = "EMV Final Batch Data Received"
+        lblActionMessage.text = useMsg
+        updateLog(newMessage: useMsg)
+        print(useMsg)
+        break
+      case 9:
+        // Take Action
+        sharedUtils.showMessage(theController: self, theTitle: "Action Message", theMessage: actionMsg ?? "")
+        break
+        
+      case 99:
+        // Simulation of App Selection Complete
+        sharedUtils.showMessage(theController: self, theTitle: "Simulation Completed", theMessage: "App Selection - Simulation Completed")
+        paymentStatus = infoMsg
+        break
+        
+      default:
+        sharedUtils.showMessage(theController: self, theTitle: "Info Message", theMessage: infoMsg ?? "")
+        break
     }
   }
   
@@ -762,10 +780,11 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
 
 extension DemoTransaction : AppSelectedDelegate
 {
-    func selected(app: [String : Int])
-    {
-        payrixSDK.doProcessAppSelection(appIndex: app.values.first!, appName: app.keys.first!)
-    }
+  func selected(app: [String : Int])
+  {
+    payrixSDK.doProcessAppSelection(appIndex: app.values.first!, appName: app.keys.first!)
+  }
 }
+
 
 

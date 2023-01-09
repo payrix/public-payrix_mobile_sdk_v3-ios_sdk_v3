@@ -460,6 +460,7 @@ public protocol PayrixSDKDelegate {
   public func doStopBTScan()
   public func didSuccessfulBTConnect()
   public func didReceiveBTConnectIssue(theError: Swift.String)
+  public func didReceiveCardReaderError(errNumber: Swift.Int, errMessage: Swift.String)
   public func doDisconnectBTReader()
   public func didReceiveBTDisconnect()
   public func doGetDeviceInfo()
@@ -473,7 +474,9 @@ public protocol PayrixSDKDelegate {
   public func doVerifySessionKey(sessionKey: Swift.String, completion: @escaping (Swift.Bool) -> Swift.Void)
   public func doAddSignatureToTransaction(sessionKey: Swift.String, transactionID: Swift.String?, signatureBase64Enc: Swift.String?, completion: @escaping (Swift.Bool, [Swift.String]?) -> Swift.Void)
   public func doPaymentTransaction(payRequestObj: Swift.AnyObject)
+  public func doInitiatePaymentRefund(payRequestObj: Swift.AnyObject)
   public func doPaymentRefund(refundRequestObj: Swift.AnyObject)
+  public func doSwipePaymentRefund(payRequestObj: Swift.AnyObject, refundRequestObj: Swift.AnyObject)
   public func doPaymentReversal(refundRequestObj: Swift.AnyObject)
   public func doTransactionDataRequest(txnRequestObj: Swift.AnyObject)
   public func doRefundTransaction(refundRequestObj: Swift.AnyObject, gatewayData: [Swift.String : Any]?)
@@ -848,6 +851,7 @@ public class PayCoreAccountDetails : Swift.Codable {
     case devErrorType_PairingError
     case devErrorType_PairingError_IncorrectPasskey
     case devErrorType_PairingError_AlreadyPairedWithAnotherDevice
+    case devErrorType_PairingError_RemovedPairingInformation
     public init?(rawValue: Swift.Int)
     public typealias RawValue = Swift.Int
     public var rawValue: Swift.Int {
@@ -1438,6 +1442,7 @@ public protocol PayCardMasterDelegate {
   public static let sharedInstance: PayrixSDK.PayCardMaster
   public var delegate: PayrixSDK.PayCardMasterDelegate?
   public func doReadCard(withTotalAmt: Swift.Int, withTax: Swift.Int, withTip: Swift.Int, withCurrency: Swift.String, withURL: Swift.String, posMode: PayrixSDK.PayCardSharedAttr.PayCardDeviceMode)
+  public func doCollectRefundData(forDevice: PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders?, posMode: PayrixSDK.PayCardSharedAttr.PayCardDeviceMode)
   public func doReadCard(withTotalAmt: Swift.Int, withTax: Swift.Int, withTip: Swift.Int, withCurrency: Swift.String, withURL: Swift.String, posMode: PayrixSDK.PayCardSharedAttr.PayCardDeviceMode, forDevice: PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders?)
   public func didWait(checkCardMode: Swift.Int)
   public func didRequestPinEntry(pinEntrySource: PayrixSDK.BBDevicePinEntrySource)
@@ -1844,6 +1849,7 @@ public enum PayCoreTxnReserved : Swift.Int, Swift.Decodable {
   public var merchant: PayrixSDK.PayCoreMerchant?
   public var token: Swift.String?
   public var fortxn: Swift.String?
+  public var forTxn: Swift.String?
   public var fromtxn: PayrixSDK.PayCoreTxn?
   public var batch: PayrixSDK.PayCoreBatch?
   public var subscription: PayrixSDK.PayCoreSubscription?
