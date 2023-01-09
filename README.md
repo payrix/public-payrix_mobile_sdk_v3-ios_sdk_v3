@@ -1,14 +1,22 @@
-# Payrix iOS SDK Version 3.0.7
+# Payrix iOS SDK Version 3.0.9
 ## Release Note Summary:
+- Version 3.0.9 (EMV Certified)
+  * Fixed the callback for "Device Error: 28 - Peer removed pairing information" error. didReceiveBTConnectResults method is called with message for the error.
+  
+- Version 3.0.8 (EMV Certified)
+  * Fixed issue with Refund
+  * Updated message fromm SDK in case of No merchants can be fetched for the logged in user.
+  
 - Version 3.0.7 (EMV Certified)
   * Return the name printed on card as ccName on PayResponse:
     This only works if BBPos SDK returns the name printed on card and the payDeviceMode is set to PaySharedAttributes.PayDeviceMode.cardDeviceMode_Swipe
-    
+
 - Version 3.0.6 (EMV Certified)
   * Added orderNumber funtionality:
-    New SDK function will accept order as element in PayRequest object.
-  * Fix the crash on Swipe for faulty cards.
-  
+    New SDK code will accept order as parameter in PayRequest.
+  * Fix the crash on Magstripe for faulty cards.
+
+
 - Version 3.0.5 (EMV Certified)
   * Added new Single Merchant Retieval funtionality:
     New SDK Method: doGetSingleMerchant(merchantID, sessionKey) | New Callback:  didReceiveSingleMerchantRetrievalResults(...)

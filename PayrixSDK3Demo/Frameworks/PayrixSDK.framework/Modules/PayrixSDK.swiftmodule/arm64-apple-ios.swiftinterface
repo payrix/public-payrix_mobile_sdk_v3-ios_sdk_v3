@@ -267,6 +267,7 @@ public protocol TransactionControlBBPOSDelegate {
   func didRequestPinEntry(pinEntrySource: PayrixSDK.BBDevicePinEntrySource)
   func didReceiveMessage(deviceMessage: Swift.String)
   func didReturnCardResult(cardResult: Swift.Int, cardData: [Swift.AnyHashable : Any]!)
+  func didCancelCheckCardResult(isSuccess: Swift.Bool)
   func didRequestFinalConfirm()
   func didRequestOnlineProcess(tlv: Swift.String!, cardData: [Swift.AnyHashable : Any]?)
   func didReturnBatchData(tlv: Swift.String)
@@ -287,6 +288,8 @@ public protocol TransactionControlBBPOSDelegate {
   @objc public func onRequestSelectApplication(_ applicationArray: [Any])
   public func doHandleSelectAppResponse(appIndex: Swift.Int, appName: Swift.String)
   public func doCancelSelectAppResponse()
+  public func doCancelCheckCardProcess()
+  @objc public func onReturnCancelCheckCardResult(_ isSuccess: Swift.Bool)
   @objc public func onReturn(_ result: PayrixSDK.BBDeviceCheckCardResult, cardData: [Swift.AnyHashable : Any]!)
   @objc public func onRequestPinEntry(_ pinEntrySource: PayrixSDK.BBDevicePinEntrySource)
   public func doPinEntry(pinData: Swift.String)
@@ -360,6 +363,14 @@ public enum PayCoreAccountStatus : Swift.Int, Swift.Decodable {
   override public func encode(to encoder: Swift.Encoder) throws
   @objc deinit
 }
+@objc @_inheritsConvenienceInitializers public class PaymentDevice : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  public var readerDevice: Swift.String?
+  public var deviceUUID: Swift.String?
+  public var deviceManfg: Swift.String?
+  public var deviceSerial: Swift.String?
+  @objc deinit
+}
 @_inheritsConvenienceInitializers public class PayCoreLogin : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
   public typealias Model = PayrixSDK.PayCoreLogin
   final public let methodPath: Swift.String
@@ -429,6 +440,7 @@ public protocol PayrixSDKDelegate {
   func didReceiveBTConnectResults(connectSuccess: Swift.Bool!, theDevice: Swift.String!)
   func didReceiveBTDisconnectResults(disconnectSuccess: Swift.Bool!)
   func didReceiveLoginResults(loginSuccess: Swift.Bool!, theSessionKey: Swift.String?, theMerchants: [Swift.AnyObject]?, theMessage: Swift.String!)
+  func didReceiveSingleMerchantRetrievalResults(fetchSuccess: Swift.Bool!, theMerchant: PayrixSDK.PayMerchant?, theMessage: Swift.String!)
   func didReceivePayResults(responseType: Swift.Int!, actionMsg: Swift.String?, infoMsg: Swift.String?, payResponse: Swift.AnyObject?)
   func didReceiveRefundResults(success: Swift.Bool!, responseCode: Swift.Int!, refundMsg: Swift.String!, refundResponse: Swift.AnyObject?)
   func didReceiveTxnDataResults(success: Swift.Bool!, responseCode: Swift.Int!, txnMsg: Swift.String!, txnResponse: Swift.AnyObject?)
@@ -454,7 +466,10 @@ public protocol PayrixSDKDelegate {
   public func didReceiveDeviceInfo(deviceInfo: [Swift.AnyHashable : Any]!)
   public func didReceiveAppSelection(forApps: [[Swift.String : Swift.Int]])
   public func doProcessAppSelection(appIndex: Swift.Int, appName: Swift.String)
+  public func doCancelCheckCard()
+  public func didCancelledCheckCard(success: Swift.Bool)
   public func doValidateCredentials(userID: Swift.String, password: Swift.String)
+  public func doGetSingleMerchant(merchantID: Swift.String, sessionKey: Swift.String)
   public func doVerifySessionKey(sessionKey: Swift.String, completion: @escaping (Swift.Bool) -> Swift.Void)
   public func doAddSignatureToTransaction(sessionKey: Swift.String, transactionID: Swift.String?, signatureBase64Enc: Swift.String?, completion: @escaping (Swift.Bool, [Swift.String]?) -> Swift.Void)
   public func doPaymentTransaction(payRequestObj: Swift.AnyObject)
@@ -500,6 +515,7 @@ extension PayrixSDK.PayrixSDKDelegate {
   public func didReceiveBTConnectResults(connectSuccess: Swift.Bool!, theDevice: Swift.String!)
   public func didReceiveBTDisconnectResults(disconnectSuccess: Swift.Bool!)
   public func didReceiveLoginResults(loginSuccess: Swift.Bool!, theSessionKey: Swift.String?, theMerchants: [Swift.AnyObject]?, theMessage: Swift.String!)
+  public func didReceiveSingleMerchantRetrievalResults(fetchSuccess: Swift.Bool!, theMerchant: PayrixSDK.PayMerchant?, theMessage: Swift.String!)
   public func didReceivePayResults(responseType: Swift.Int!, actionMsg: Swift.String?, infoMsg: Swift.String?, payResponse: Swift.AnyObject?)
   public func didReceiveRefundResults(success: Swift.Bool!, responseCode: Swift.Int!, refundMsg: Swift.String!, refundResponse: Swift.AnyObject?)
   public func didReceiveTxnDataResults(success: Swift.Bool!, responseCode: Swift.Int!, txnMsg: Swift.String!, txnResponse: Swift.AnyObject?)
@@ -1426,6 +1442,8 @@ public protocol PayCardMasterDelegate {
   public func didWait(checkCardMode: Swift.Int)
   public func didRequestPinEntry(pinEntrySource: PayrixSDK.BBDevicePinEntrySource)
   public func doHandlePINEntry(enteredPIN: Swift.String)
+  public func doCancelCheckCardResult()
+  public func didCancelCheckCardResult(isSuccess: Swift.Bool)
   public func didRequestAppSelection(forApps: [[Swift.String : Swift.Int]]!)
   public func doSelectedAppResponse(appIndex: Swift.Int, appName: Swift.String)
   public func doCancelSelectedApp()
@@ -1590,6 +1608,7 @@ public enum PayCorePaymentMethod : Swift.Int, Swift.Decodable {
   public var payrixMerchantID: Swift.String!
   public var payrixSandoxDemoMode: Swift.Bool!
   public var payManualEntry: Swift.Bool?
+  public var order: Swift.String?
   public var payAmount: Swift.Int?
   public var payTaxPercent: Swift.Int?
   public var payTipPercent: Swift.Int?
@@ -1975,6 +1994,7 @@ public protocol PayCoreRDRTransMgrDelegate {
   public func validateLoginCredentials(userName: Swift.String, password: Swift.String, completion: @escaping (Swift.Bool, Swift.String?) -> Swift.Void)
   public func verifySessionKey(sessionKey: Swift.String, completion: @escaping (Swift.Bool) -> Swift.Void)
   public func getMerchantId(sessionKey: Swift.String, completion: @escaping (Swift.Bool, [PayrixSDK.PayCoreMerchant]?) -> Swift.Void)
+  public func getSingleMerchant(merchantId: Swift.String, sessionKey: Swift.String, completion: @escaping (Swift.Bool, PayrixSDK.PayCoreMerchant?) -> Swift.Void)
   public func processTransaction(merchantID: Swift.String, sessionKey: Swift.String?, amount: Swift.Int?, taxPercent: Swift.Int?, tipPercent: Swift.Int?, tipAmt: Swift.Int?, calcTotAmt: Swift.Int?, ccName: Swift.String?, ccNumber: Swift.String?, ccCardType: PayrixSDK.PayCoreCCType?, ccCVV: Swift.String?, ccExp: Swift.String?, ccOrigin: PayrixSDK.PayCoreTxnOrigin?, zip: Swift.String?, payRequest: PayrixSDK.PayRequest?, completion: @escaping (Swift.Bool, Swift.String?, Swift.String?, [Swift.String]?, PayrixSDK.PayCoreTxn?) -> Swift.Void)
   public func addSignatureToTransaction(transactionID: Swift.String?, signatureBase64Enc: Swift.String?, sessionKey: Swift.String?, completion: @escaping (Swift.Bool, [Swift.String]?) -> Swift.Void)
   public func retrieveSpecificTxnsFor(merchantID: Swift.String, transactionID: Swift.String, completion: @escaping ([PayrixSDK.PayCoreTxn]?, PayrixSDK.PayCoreResponseDetails?, [PayrixSDK.PayCoreError]?) -> Swift.Void)
@@ -1994,6 +2014,13 @@ public protocol PayCoreRDRTransMgrDelegate {
   public func setSavedEMV(origVal: Swift.String)
   public func getSavedEMV() -> Swift.String?
   public func delSavedEMV()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayrixOTAConfigData : ObjectiveC.NSObject {
+  public var encryptionKey: Swift.String
+  public var firmwareVersion: Swift.String
+  public var deviceSettingVersion: Swift.String
+  public var terminalSettingVersion: Swift.String
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers public class PDeviceLoader : ObjectiveC.NSObject {
@@ -2040,11 +2067,7 @@ public protocol OTAUpdateDelegate {
   func didReceiveRemoteKeyInjectionResult(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
   func didReceiveRemoteFirmwareUpdate(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
   func didReceiveRemoteConfigUpdate(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
-  func didReceiveLocalFirmwareUpdate(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
-  func didReceiveLocalConfigUpdate(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
-  func didReceiveTargetVersionResult(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaData: [Swift.AnyHashable : Any]!)
-  func didReceiveSetTargetVersionResult(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
-  func didReceiveTargetVersionListResult(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaList: [Any]!, otaMessage: Swift.String!)
+  func didReceiveTargetVersionResult(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, passOTAConfigData: PayrixSDK.PayrixOTAConfigData!, passBBPOSConfigData: PayrixSDK.PayrixOTAConfigData!)
   func didReceiveOTAProgress(percentProgress: Swift.Float)
   func didReceiveOTAScanResults(success: Swift.Bool!, scanMsg: Swift.String!, payDevices: [Swift.AnyObject]?)
   func didReceiveOTAConnectResults(success: Swift.Bool!, theDevice: Swift.String!)
@@ -2067,15 +2090,22 @@ extension PayrixSDK.PayrixOTA : PayrixSDK.BBDeviceOTAControllerDelegate, PayrixS
   @objc dynamic public func onReturnRemoteKeyInjectionResult(_ result: PayrixSDK.BBDeviceOTAResult, responseMessage: Swift.String!)
   @objc dynamic public func onReturnRemoteFirmwareUpdate(_ result: PayrixSDK.BBDeviceOTAResult, responseMessage: Swift.String!)
   @objc dynamic public func onReturnRemoteConfigUpdate(_ result: PayrixSDK.BBDeviceOTAResult, responseMessage: Swift.String!)
-  @objc dynamic public func onReturnLocalFirmwareUpdate(_ result: PayrixSDK.BBDeviceOTAResult, responseMessage: Swift.String!)
-  @objc dynamic public func onReturnLocalConfigUpdate(_ result: PayrixSDK.BBDeviceOTAResult, responseMessage: Swift.String!)
   @objc dynamic public func onReturnTargetVersionResult(_ result: PayrixSDK.BBDeviceOTAResult, data: [Swift.AnyHashable : Any]!)
   @objc dynamic public func onReturnSetTargetVersionResult(_ result: PayrixSDK.BBDeviceOTAResult, responseMessage: Swift.String!)
-  @objc dynamic public func onReturnTargetVersionListResult(_ result: PayrixSDK.BBDeviceOTAResult, list: [Any]!, responseMessage: Swift.String!)
   @objc dynamic public func onReturnOTAProgress(_ percentage: Swift.Float)
   public func didReceiveScanResults(scanSuccess: Swift.Bool!, scanMsg: Swift.String!, payDevices: [Swift.AnyObject]?)
   public func didReceiveBTConnectResults(connectSuccess: Swift.Bool!, theDevice: Swift.String!)
   public func didReceiveBTDisconnectResults(disconnectSuccess: Swift.Bool!)
+}
+extension PayrixSDK.OTAUpdateDelegate {
+  public func didReceiveRemoteKeyInjectionResult(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
+  public func didReceiveRemoteFirmwareUpdate(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
+  public func didReceiveRemoteConfigUpdate(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
+  public func didReceiveTargetVersionResult(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, passOTAConfigData: PayrixSDK.PayrixOTAConfigData!, passBBPOSConfigData: PayrixSDK.PayrixOTAConfigData!)
+  public func didReceiveOTAProgress(percentProgress: Swift.Float)
+  public func didReceiveOTAScanResults(success: Swift.Bool!, scanMsg: Swift.String!, payDevices: [Swift.AnyObject]?)
+  public func didReceiveOTAConnectResults(success: Swift.Bool!, theDevice: Swift.String!)
+  public func didReceiveOTADisconnectResults(success: Swift.Bool!)
 }
 @_inheritsConvenienceInitializers public class PayCoreSampleModelObject : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
   public typealias Model = PayrixSDK.PayCoreSampleModelObject

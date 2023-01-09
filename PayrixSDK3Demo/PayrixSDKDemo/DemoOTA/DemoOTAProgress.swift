@@ -11,214 +11,181 @@ import PayrixSDK
 
 enum OTAUpdateItem : String
 {
-    case config
-    case firmware
-    case encryptionKey
+  case config
+  case firmware
+  case encryptionKey
 }
 
 protocol OTACompleteDelegate : AnyObject
 {
-    func otaCompleted(message : String, info : String)
+  func otaCompleted(message : String, info : String)
 }
 
 class DemoOTAProgress: UIViewController
 {
+  
+  @IBOutlet weak var lblUpdateItem: UILabel!
+  @IBOutlet weak var lblUpdateProgress: UILabel!
+  @IBOutlet weak var updateProgress: UIProgressView!
+  
+  let otaUpdate = PayrixOTA.sharedInstance
+  let sharedUtils = SharedUtilities.init()
+  
+  //    var latestDeviceSettingVersion : String = ""
+  //    var latestFirmwareVersion : String = ""
+  //    var latestTerminalSettingVersion : String = ""
+  //    var latestEncryptionKey : String = ""
+  var bbPOSConfigData : PayrixOTAConfigData!
+  
+  var updateItem : OTAUpdateItem!
+  var delegateOTACompleted : OTACompleteDelegate!
+  
+  override func viewDidLoad()
+  {
+    super.viewDidLoad()
     
-    @IBOutlet weak var lblUpdateItem: UILabel!
-    @IBOutlet weak var lblUpdateProgress: UILabel!
-    @IBOutlet weak var updateProgress: UIProgressView!
-    
-    let otaUpdate = PayrixOTA.sharedInstance
-    let sharedUtils = SharedUtilities.init()
-    
-    var latestDeviceSettingVersion : String = ""
-    var latestFirmwareVersion : String = ""
-    var latestTerminalSettingVersion : String = ""
-    var latestEncryptionKey : String = ""
-    
-    var updateItem : OTAUpdateItem!
-    var delegateOTACompleted : OTACompleteDelegate!
-    
-    override func viewDidLoad()
+    otaUpdate.delegate = self
+    if updateItem == .config
     {
-        super.viewDidLoad()
-            
-        otaUpdate.delegate = self
-        if updateItem == .config
-        {
-            lblUpdateItem.text = "Updating Configuration"
-            self.doUpdateConfig()
-        }
-        else if updateItem == .firmware
-        {
-            lblUpdateItem.text = "Updating Firmware"
-            self.doUpdateFirmware()
-        }
-        else if updateItem == .encryptionKey
-        {
-            lblUpdateItem.text = "Updating Encryption Key"
-            self.doUpdateKeyInjection()
-        }
-        else
-        {
-            self.lblUpdateItem.text = "Updating" + "..."
-            self.dismiss(animated: true, completion: nil)
-        }
-        updateLabelWithPrecentage(percentUpdate: 0)
-        
+      lblUpdateItem.text = "Updating Configuration"
+      self.doUpdateConfig()
     }
-    
-//    var lastPercent = 0.0
-//    func dummyCodeForFirmware()
-//    {
-//        var timer = Timer()
-//
-//            //in a function or viewDidLoad()
-//        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
-//
-//
-//    }
-    
-    
-    //new function
-//    @objc func timerAction()
-//    {
-//        lastPercent += 10
-//        updateLabelWithPrecentage(percentUpdate: Float(lastPercent))
-//    }
-    
-    func updateLabelWithPrecentage(percentUpdate : Float)
+    else if updateItem == .firmware
     {
-        let progressValue = percentUpdate/100
-        updateProgress.progress = progressValue
-        let percentString = String(format: "%.1f", (progressValue * 100))
-        lblUpdateProgress.text = "\(percentString) %"
+      lblUpdateItem.text = "Updating Firmware"
+      self.doUpdateFirmware()
     }
-    
-    func doUpdateConfig()
+    else if updateItem == .encryptionKey
     {
-        otaUpdate.doOTAConfigUpdate(deviceSettingVersion: latestDeviceSettingVersion, terminalSettingVersion: latestTerminalSettingVersion)
+      lblUpdateItem.text = "Updating Encryption Key"
+      self.doUpdateKeyInjection()
     }
-    
-    func doUpdateFirmware()
+    else
     {
-        otaUpdate.doOTAFirmwareUpdate(firmwareVersion: latestFirmwareVersion)
+      self.lblUpdateItem.text = "Updating" + "..."
+      self.dismiss(animated: true, completion: nil)
     }
+    updateLabelWithPrecentage(percentUpdate: 0)
     
-    func doUpdateKeyInjection()
-    {
-        otaUpdate.doOTAKeyInjection(keyProfile: latestEncryptionKey)
+  }
+  
+  //    var lastPercent = 0.0
+  //    func dummyCodeForFirmware()
+  //    {
+  //        var timer = Timer()
+  //
+  //            //in a function or viewDidLoad()
+  //        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+  //
+  //
+  //    }
+  
+  
+  //new function
+  //    @objc func timerAction()
+  //    {
+  //        lastPercent += 10
+  //        updateLabelWithPrecentage(percentUpdate: Float(lastPercent))
+  //    }
+  
+  func updateLabelWithPrecentage(percentUpdate : Float)
+  {
+    let progressValue = percentUpdate/100
+    updateProgress.progress = progressValue
+    let percentString = String(format: "%.1f", (progressValue * 100))
+    lblUpdateProgress.text = "\(percentString) %"
+  }
+  
+  func doUpdateConfig()
+  {
+    otaUpdate.doOTAConfigUpdate(deviceSettingVersion: bbPOSConfigData.deviceSettingVersion, terminalSettingVersion: bbPOSConfigData.terminalSettingVersion)
+    //        otaUpdate.doOTAConfigUpdate(deviceSettingVersion: latestDeviceSettingVersion, terminalSettingVersion: latestTerminalSettingVersion)
+  }
+  
+  func doUpdateFirmware()
+  {
+    otaUpdate.doOTAFirmwareUpdate(firmwareVersion: bbPOSConfigData.firmwareVersion)
+    //        otaUpdate.doOTAFirmwareUpdate(firmwareVersion: latestFirmwareVersion)
+  }
+  
+  func doUpdateKeyInjection()
+  {
+    otaUpdate.doOTAKeyInjection(keyProfile: bbPOSConfigData.encryptionKey)
+    //        otaUpdate.doOTAKeyInjection(keyProfile: latestEncryptionKey)
+  }
+  
+  
+  func showAlert(title : String, message : String)
+  {
+    self.dismiss(animated: true) {
+      self.delegateOTACompleted.otaCompleted(message: title, info: message)
     }
-    
-    
-    func showAlert(title : String, message : String)
-    {
-        self.dismiss(animated: true) {
-            self.delegateOTACompleted.otaCompleted(message: title, info: message)
-        }
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+  }
+  
+  /*
+   // MARK: - Navigation
+   
+   // In a storyboard-based application, you will often want to do a little preparation before navigation
+   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+   // Get the new view controller using segue.destination.
+   // Pass the selected object to the new view controller.
+   }
+   */
+  
 }
 
 
 extension DemoOTAProgress : OTAUpdateDelegate
 {
-    func didReceiveRemoteFirmwareUpdate(success: Bool, otaResult: BBDeviceOTAResult, otaMessage: String!)
+  
+  func didReceiveRemoteFirmwareUpdate(success: Bool, otaResult: BBDeviceOTAResult, otaMessage: String!)
+  {
+    print("didReceiveRemoteFirmwareUpdate message : \(otaMessage) \n result: \(otaResult) \n isSuccess : \(success)")
+    if success
     {
-        print("didReceiveRemoteFirmwareUpdate message : \(otaMessage) \n result: \(otaResult) \n isSuccess : \(success)")
-        if success
-        {
-            self.showAlert(title: "Firmware Updated successfully.", message: "")
-        }
-        else
-        {
-            self.showAlert(title: "Firmware NOT Updated.", message: otaMessage)
-        }
-        
+      self.showAlert(title: "Firmware Updated successfully.", message: "")
     }
-    
-    func didReceiveRemoteConfigUpdate(success: Bool, otaResult: BBDeviceOTAResult, otaMessage: String!)
+    else
     {
-        if success
-        {
-            self.showAlert(title: "Configuration Updated successfully.", message: "")
-        }
-        else
-        {
-            self.showAlert(title: "Configuration NOT Updated.", message: otaMessage)
-        }
-        
-        print("didReceiveRemoteConfigUpdate message : \(otaMessage) \n result: \(otaResult) \n isSuccess : \(success)")
+      self.showAlert(title: "Firmware NOT Updated.", message: otaMessage)
     }
     
-    
-    func didReceiveRemoteKeyInjectionResult(success: Bool, otaResult: BBDeviceOTAResult, otaMessage: String!)
+  }
+  
+  func didReceiveRemoteConfigUpdate(success: Bool, otaResult: BBDeviceOTAResult, otaMessage: String!)
+  {
+    if success
     {
-        
-            if success
-            {
-                self.showAlert(title: "Encryption Key Updated successfully.", message: "")
-            }
-            else
-            {
-                self.showAlert(title: "Encryption Key NOT Updated.", message: otaMessage)
-            }
-            
-            print("didReceiveRemoteKeyInjectionResult message : \(otaMessage) \n result: \(otaResult) \n isSuccess : \(success)")
-        
+      self.showAlert(title: "Configuration Updated successfully.", message: "")
     }
-    
-    func didReceiveOTAProgress(percentProgress: Float)
+    else
     {
-        print("didReceiveOTAProgress percentage : \(percentProgress)")
-        self.updateLabelWithPrecentage(percentUpdate: percentProgress)
+      self.showAlert(title: "Configuration NOT Updated.", message: otaMessage)
     }
     
-    //Not needed delegates
+    print("didReceiveRemoteConfigUpdate message : \(otaMessage) \n result: \(otaResult) \n isSuccess : \(success)")
+  }
+  
+  
+  func didReceiveRemoteKeyInjectionResult(success: Bool, otaResult: BBDeviceOTAResult, otaMessage: String!)
+  {
     
-    func didReceiveOTAConnectResults(success: Bool!, theDevice: String!)
+    if success
     {
-        print("didReceiveOTAConnectResults thedevice : \(theDevice) \n isSuccess : \(success)")
+      self.showAlert(title: "Encryption Key Updated successfully.", message: "")
     }
-    
-    func didReceiveOTADisconnectResults(success: Bool!)
+    else
     {
-        print("didReceiveOTADisconnectResults : \(success)")
-        
-    }
-    func didReceiveOTAScanResults(success: Bool!, scanMsg: String!, payDevices: [AnyObject]?)
-    {
-        print("didReceiveOTAScanResults scanMsg : \(scanMsg) \n payDevices: \(payDevices) \n isSuccess : \(success)")
+      self.showAlert(title: "Encryption Key NOT Updated.", message: otaMessage)
     }
     
+    print("didReceiveRemoteKeyInjectionResult message : \(otaMessage) \n result: \(otaResult) \n isSuccess : \(success)")
     
-    func didReceiveLocalFirmwareUpdate(success: Bool, otaResult: BBDeviceOTAResult, otaMessage: String!) {
-        
-    }
-    
-    func didReceiveLocalConfigUpdate(success: Bool, otaResult: BBDeviceOTAResult, otaMessage: String!) {
-        
-    }
-    
-    func didReceiveTargetVersionResult(success: Bool, otaResult: BBDeviceOTAResult, otaData: [AnyHashable : Any]!) {
-        
-    }
-    
-    func didReceiveSetTargetVersionResult(success: Bool, otaResult: BBDeviceOTAResult, otaMessage: String!) {
-        
-    }
-    
-    func didReceiveTargetVersionListResult(success: Bool, otaResult: BBDeviceOTAResult, otaList: [Any]!, otaMessage: String!) {
-        
-    }
+  }
+  
+  func didReceiveOTAProgress(percentProgress: Float)
+  {
+    print("didReceiveOTAProgress percentage : \(percentProgress)")
+    self.updateLabelWithPrecentage(percentUpdate: percentProgress)
+  }
 }

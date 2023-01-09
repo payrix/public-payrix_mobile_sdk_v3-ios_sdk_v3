@@ -425,6 +425,12 @@ SWIFT_CLASS("_TtC9PayrixSDK19PaySharedAttributes")
 @end
 
 
+SWIFT_CLASS("_TtC9PayrixSDK13PaymentDevice")
+@interface PaymentDevice : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 SWIFT_CLASS("_TtC9PayrixSDK9PayrixOTA")
 @interface PayrixOTA : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -436,12 +442,16 @@ SWIFT_CLASS("_TtC9PayrixSDK9PayrixOTA")
 - (void)onReturnRemoteKeyInjectionResult:(BBDeviceOTAResult)result responseMessage:(NSString * _Null_unspecified)responseMessage;
 - (void)onReturnRemoteFirmwareUpdateResult:(BBDeviceOTAResult)result responseMessage:(NSString * _Null_unspecified)responseMessage;
 - (void)onReturnRemoteConfigUpdateResult:(BBDeviceOTAResult)result responseMessage:(NSString * _Null_unspecified)responseMessage;
-- (void)onReturnLocalFirmwareUpdateResult:(BBDeviceOTAResult)result responseMessage:(NSString * _Null_unspecified)responseMessage;
-- (void)onReturnLocalConfigUpdateResult:(BBDeviceOTAResult)result responseMessage:(NSString * _Null_unspecified)responseMessage;
 - (void)onReturnTargetVersionResult:(BBDeviceOTAResult)result data:(NSDictionary * _Null_unspecified)data;
 - (void)onReturnSetTargetVersionResult:(BBDeviceOTAResult)result responseMessage:(NSString * _Null_unspecified)responseMessage;
-- (void)onReturnTargetVersionListResult:(BBDeviceOTAResult)result list:(NSArray * _Null_unspecified)list responseMessage:(NSString * _Null_unspecified)responseMessage;
 - (void)onReturnOTAProgress:(float)percentage;
+@end
+
+
+SWIFT_CLASS("_TtC9PayrixSDK19PayrixOTAConfigData")
+@interface PayrixOTAConfigData : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 
@@ -499,6 +509,11 @@ SWIFT_CLASS("_TtC9PayrixSDK26TransactionControllerBBPOS")
 /// \param applicationArray The array of Application Info to be selected from.
 ///
 - (void)onRequestSelectApplication:(NSArray * _Nonnull)applicationArray;
+/// <em>onReturnCancelCheckCardResult</em>
+/// This method is a listener to handle Callback from doCancelCheckCardProcess
+/// \param isSuccess A result of type BBDevice Cancel Check Card Result
+///
+- (void)onReturnCancelCheckCardResult:(BOOL)isSuccess;
 /// <em>onReturnCheckCardResult</em>
 /// This method is a listener to handle Callback from bbPOS for magnetic strip event.
 /// \param result A result of type BBDeviceCheckCardResult

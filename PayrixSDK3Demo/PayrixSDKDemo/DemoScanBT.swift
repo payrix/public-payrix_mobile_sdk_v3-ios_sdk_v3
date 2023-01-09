@@ -16,10 +16,13 @@ class DemoScanBT: UIViewController, PayrixSDKDelegate
   @IBOutlet weak var btnScan: UIButton!
   @IBOutlet weak var lblScanLog: UITextView!
   @IBOutlet weak var lblSelectedReader: UILabel!
+  @IBOutlet weak var tblReaders: UITableView!
   
   var deviceCounter = 0
   var scanTimer: Timer!
-  var setOfDevices = Set<String>()
+//  var setOfDevices = Set<String>()
+  var readerDevices : [PayDevice] = []
+  var selectedReader : PayDevice!
   
   let sharedUtils = SharedUtilities.init()
   var payDevice = PayDevice.sharedInstance
@@ -47,6 +50,20 @@ class DemoScanBT: UIViewController, PayrixSDKDelegate
     payrixSDK.doSetPayrixPlatform(platform: theEnv, demoSandbox: isSandBox, deviceManfg: nil)
   }
   
+  @IBAction func goConnect(_ sender: Any)
+  {
+    if let reader = selectedReader
+    {
+      payrixSDK.doConnectBTReader(payDeviceObj: reader)
+    }
+    else
+    {
+      let useMsg = lblScanLog.text + "No Reader Selected"
+      updateLog(newMessage: useMsg)
+      lblScanLog.text = useMsg + "\n"
+    }
+    
+  }
   
   @IBAction func goBack(_ sender: Any)
   {
@@ -88,35 +105,87 @@ class DemoScanBT: UIViewController, PayrixSDKDelegate
   */
   public func didReceiveScanResults(scanSuccess: Bool!, scanMsg: String!, payDevices: [AnyObject]?)
   {
-    if let useDevices = payDevices
+    var useMsg: String = lblScanLog.text
+    if scanSuccess
     {
-      let rdrDevices = useDevices as! [PayDevice]
-      
-      for aDevice in rdrDevices
+      if let useDevices = payDevices
       {
-        if setOfDevices.contains(aDevice.deviceSerial ?? "")
+        let rdrDevices = useDevices as! [PayDevice]
+        self.readerDevices = rdrDevices
+        self.tblReaders.reloadData()
+        
+        for aDevice in rdrDevices
         {
-          // Do Nothing; Previously Found
-        }
-        else
-        {
-          setOfDevices.insert(aDevice.deviceSerial ?? "")
-          let useMsg = "BT Scanner Located: " + aDevice.deviceSerial!
+          let useMsg = lblScanLog.text + "BT Scanner Located: " + aDevice.deviceSerial!
           updateLog(newMessage: useMsg)
-          
-          if deviceCounter == 0
-          {
-            payDevice = aDevice
-            sharedUtils.setBTReader(btReaderKey: aDevice.deviceSerial ?? "")
-            sharedUtils.setBTManfg(btManfgKey: aDevice.deviceManfg ?? "")
-            lblSelectedReader.text = aDevice.deviceSerial ?? ""
-          }
+          lblScanLog.text = useMsg + "\n"
         }
-        deviceCounter = deviceCounter + 1
+        
+        
+      }
+      else
+      {
+        
+        useMsg = useMsg + "No Devices found."
+        lblScanLog.text = useMsg + "\n"
       }
     }
+    else
+    {
+      useMsg = useMsg + "The automatic connection of the Card Reader was unsuccessful."
+      lblScanLog.text = useMsg + "\n"
+    }
+    
+//    if let useDevices = payDevices
+//    {
+//      let rdrDevices = useDevices as! [PayDevice]
+//
+//      for aDevice in rdrDevices
+//      {
+//        if setOfDevices.contains(aDevice.deviceSerial ?? "")
+//        {
+//          // Do Nothing; Previously Found
+//        }
+//        else
+//        {
+//          setOfDevices.insert(aDevice.deviceSerial ?? "")
+//          let useMsg = "BT Scanner Located: " + aDevice.deviceSerial!
+//          updateLog(newMessage: useMsg)
+//
+//          if deviceCounter == 0
+//          {
+//            payDevice = aDevice
+//            sharedUtils.setBTReader(btReaderKey: aDevice.deviceSerial ?? "")
+//            sharedUtils.setBTManfg(btManfgKey: aDevice.deviceManfg ?? "")
+//            lblSelectedReader.text = aDevice.deviceSerial ?? ""
+//          }
+//        }
+//        deviceCounter = deviceCounter + 1
+//      }
+//    }
   }
   
+  /**
+   **didReceiveBTConnectResults**
+   (Step 6a)
+   This is the callback for the BT Connect request.  Once the device is connected the transaction can be processed.
+   */
+  public func didReceiveBTConnectResults(connectSuccess: Bool!, theDevice: String!)
+  {
+    var useMsg: String = lblScanLog.text
+    // Handle Successful Connection
+    if connectSuccess
+    {
+      useMsg = useMsg + "Connected to: \(selectedReader.deviceSerial!)"
+      lblScanLog.text = useMsg + "\n"
+    }
+    else
+    {
+      var useMsg: String = lblScanLog.text
+      useMsg = useMsg + "BT CONNECTION FAILED: Device: " + theDevice
+      lblScanLog.text = useMsg + "\n"
+    }
+  }
   
   /**
    **startScanTimer**
@@ -144,7 +213,8 @@ class DemoScanBT: UIViewController, PayrixSDKDelegate
     var useMsg: String = lblScanLog.text
     
     useMsg = useMsg + "\n\n" + "Scan Complete: " + String(deviceCounter) + " devices located"
-    lblScanLog.text = useMsg
+    print(useMsg)
+    lblScanLog.text = useMsg + "\n"
   }
   
   /**
@@ -157,6 +227,39 @@ class DemoScanBT: UIViewController, PayrixSDKDelegate
   {
     var currentLog = lblScanLog.text
     currentLog = currentLog! + "\n" + newMessage
-    lblScanLog.text = currentLog
+    print(currentLog!)
+    lblScanLog.text = currentLog! + "\n"
   }
 }
+
+
+extension DemoScanBT : UITableViewDataSource, UITableViewDelegate
+{
+  func numberOfSections(in tableView: UITableView) -> Int
+  {
+    return 1
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+  {
+    return readerDevices.count
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+  {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
+    let reader = readerDevices[indexPath.row]
+    cell.textLabel?.text = "Reader: \(reader.deviceSerial ?? "")"
+    return cell
+  }
+
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+  {
+    let aDevice = readerDevices[indexPath.row]
+    selectedReader = aDevice
+    sharedUtils.setBTReader(btReaderKey: aDevice.deviceSerial ?? "")
+    sharedUtils.setBTManfg(btManfgKey: aDevice.deviceManfg ?? "")
+    lblSelectedReader.text = aDevice.deviceSerial ?? ""
+  }
+}
+
