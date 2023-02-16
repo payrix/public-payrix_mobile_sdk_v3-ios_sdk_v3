@@ -1,5 +1,14 @@
-# Payrix iOS SDK Version 3.0.9
+# Payrix iOS SDK Version 3.0.14
 ## Release Note Summary:
+- Version 3.0.14 (EMV Certified)
+  * Skipped these versions - 3.0.11, 3.0.12, 3.0.13. to match the Android SDK version update.
+  * Fixed the delegate callback for connecting the readers - earlier no callback was returned from SDK if the given device is not found on scan result but now the desired error is being passed from SDK
+  * In order to connect relaibly from SDK, added multiple methods that supports to scan the reader effectively. Because of this the maximum waiting time for getting device data back is 40 seconds and minimum time is less than a second. To do this - Passed the deviceId too in BBPOS-SDK so that BBPOS-SDK search for given device first, if the scan results does not get back in 20 seconds then PayrixSDK will search for BLE devices using standard BLE protocol, that takes another 20 seconds, so in worst case scebario it takes 40 seconds in total for returing the device.   
+- Version 3.0.10 - 3.0.13 (EMV Certified)
+  * Fixed the Encryption Key issue for Chipper 3x BT
+  * Updated message for "Device Error: 28 - Peer removed pairing information"
+  * Fixed the issue with saved card type in case of failure
+
 - Version 3.0.9 (EMV Certified)
   * Fixed the callback for "Device Error: 28 - Peer removed pairing information" error. didReceiveBTConnectResults method is called with message for the error.
   
