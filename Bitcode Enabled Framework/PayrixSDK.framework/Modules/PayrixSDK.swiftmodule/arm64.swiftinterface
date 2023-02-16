@@ -476,7 +476,6 @@ public protocol PayrixSDKDelegate {
   public func doPaymentTransaction(payRequestObj: Swift.AnyObject)
   public func doInitiatePaymentRefund(payRequestObj: Swift.AnyObject)
   public func doPaymentRefund(refundRequestObj: Swift.AnyObject)
-  public func doSwipePaymentRefund(payRequestObj: Swift.AnyObject, refundRequestObj: Swift.AnyObject)
   public func doPaymentReversal(refundRequestObj: Swift.AnyObject)
   public func doTransactionDataRequest(txnRequestObj: Swift.AnyObject)
   public func doRefundTransaction(refundRequestObj: Swift.AnyObject, gatewayData: [Swift.String : Any]?)
@@ -982,7 +981,7 @@ public protocol DeviceControlBBPOSDelegate {
   func didReturnDeviceData(deviceInfo: [Swift.AnyHashable : Any]!)
   func didReturnDevError(errorType: Swift.Int, errorMessage: Swift.String)
 }
-@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class DeviceControllerBBPOS : ObjectiveC.NSObject, PayrixSDK.BBDeviceControllerDelegate {
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class DeviceControllerBBPOS : ObjectiveC.NSObject, PayrixSDK.BBDeviceControllerDelegate, PayrixSDK.PayCardRDRMgrDelegate {
   public static let sharedInstance: PayrixSDK.DeviceControllerBBPOS
   public var delegate: PayrixSDK.DeviceControlBBPOSDelegate?
   public typealias DeviceControllerDelegate = PayrixSDK.DeviceControlBBPOSDelegate
@@ -992,6 +991,7 @@ public protocol DeviceControlBBPOSDelegate {
   public func scanForReaders()
   public func stopScan()
   @objc public func onBTReturnScanResults(_ devices: [Any]!)
+  public func didFindRDRDevices(rdrDevices: [CoreBluetooth.CBPeripheral])
   @objc public func onBTConnected(_ connectedDevice: ObjectiveC.NSObject!)
   @objc public func onBTScanTimeout()
   public func disconnectBTReader()
@@ -1442,7 +1442,6 @@ public protocol PayCardMasterDelegate {
   public static let sharedInstance: PayrixSDK.PayCardMaster
   public var delegate: PayrixSDK.PayCardMasterDelegate?
   public func doReadCard(withTotalAmt: Swift.Int, withTax: Swift.Int, withTip: Swift.Int, withCurrency: Swift.String, withURL: Swift.String, posMode: PayrixSDK.PayCardSharedAttr.PayCardDeviceMode)
-  public func doCollectRefundData(forDevice: PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders?, posMode: PayrixSDK.PayCardSharedAttr.PayCardDeviceMode)
   public func doReadCard(withTotalAmt: Swift.Int, withTax: Swift.Int, withTip: Swift.Int, withCurrency: Swift.String, withURL: Swift.String, posMode: PayrixSDK.PayCardSharedAttr.PayCardDeviceMode, forDevice: PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders?)
   public func didWait(checkCardMode: Swift.Int)
   public func didRequestPinEntry(pinEntrySource: PayrixSDK.BBDevicePinEntrySource)
@@ -1497,6 +1496,7 @@ extension PayrixSDK.PayCardMasterDelegate {
 }
 public protocol PayCardRDRMgrDelegate {
   func didFindRDRDevices(rdrDevices: [Swift.String], btUUIDs: [Swift.String : Swift.String], manfgNames: [Swift.String : Swift.String])
+  func didFindRDRDevices(rdrDevices: [CoreBluetooth.CBPeripheral])
   func didSuccessfulBTConnect()
   func didReceiveBTConnectIssue(errMsg: Swift.String)
   func didReceiveBTScanTimeOut()
@@ -1511,6 +1511,7 @@ public protocol PayCardRDRMgrDelegate {
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayCardRDRMgr : ObjectiveC.NSObject, PayrixSDK.DeviceControlBBPOSDelegate, PayrixSDK.DeviceControlIDTCHDelegate {
   public static let sharedInstance: PayrixSDK.PayCardRDRMgr
   public var delegate: PayrixSDK.PayCardRDRMgrDelegate?
+  public var delegateForDeviceControllerBBPos: PayrixSDK.PayCardRDRMgrDelegate?
   public func startPayCardRDRMgr(forDevice: PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders?)
   public func stopScan()
   public func scanForReaders()
@@ -1538,6 +1539,7 @@ public protocol PayCardRDRMgrDelegate {
 }
 extension PayrixSDK.PayCardRDRMgrDelegate {
   public func didFindRDRDevices(rdrDevices: [Swift.String], btUUIDs: [Swift.String : Swift.String], manfgNames: [Swift.String : Swift.String])
+  public func didFindRDRDevices(rdrDevices: [CoreBluetooth.CBPeripheral])
   public func didSuccessfulBTConnect()
   public func didReceiveCardReaderError(errNumber: Swift.Int, errMessage: Swift.String)
   public func didReceiveCardReaderConnectionFailed(error: Swift.String)
@@ -1849,7 +1851,6 @@ public enum PayCoreTxnReserved : Swift.Int, Swift.Decodable {
   public var merchant: PayrixSDK.PayCoreMerchant?
   public var token: Swift.String?
   public var fortxn: Swift.String?
-  public var forTxn: Swift.String?
   public var fromtxn: PayrixSDK.PayCoreTxn?
   public var batch: PayrixSDK.PayCoreBatch?
   public var subscription: PayrixSDK.PayCoreSubscription?
