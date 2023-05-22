@@ -1,7 +1,13 @@
 # Payrix iOS SDK Version 3.0.15
 ## Release Note Summary:
+- Version 3.0.17 (EMV Certified)
+  * Resolved the issue for showing error for Timeout in case of Transaction.
+
+- Version 3.0.16 (EMV Certified)
+  * Resolved the issue for crash occurring when Payrix SDK finds the devices that has same UUID as BBPos but has no name on it.
+
 - Version 3.0.15 (EMV Certified)
-  * Resolved the issue for ReverseAuth occuring when Payrix API does not handle Tag 8A length correctly.
+  * Resolved the issue for ReverseAuth occurring when Payrix API does not handle Tag 8A length correctly.
   * Resolved decoding when a field can be presented as both Integer or String.
 
 - Version 3.0.14 (EMV Certified)
