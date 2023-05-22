@@ -1,4 +1,4 @@
-# Payrix iOS SDK Version 3.0.15
+# Payrix iOS SDK Version 3.0
 ## Release Note Summary:
 - Version 3.0.17 (EMV Certified)
   * Resolved the issue for showing error for Timeout in case of Transaction.
