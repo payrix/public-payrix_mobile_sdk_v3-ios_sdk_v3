@@ -62,6 +62,8 @@ class DemoDevices: UIViewController
   {
     activityIndicator.startAnimating()
     payrixOTA.doOTADisconnectAnyDevice()
+    //Uncomment below line to get logs from BBPOS as well as the PayrixOTA
+//    payrixOTA.setDebugLog(enable: true)
     payrixOTA.delegate = self
     //till app is not getting list of devices we need to clan the tableview so that user wont click on previous set of devices what may be disconnected
     self.payDevices.removeAll()

@@ -1,5 +1,10 @@
 # Payrix iOS SDK Version 3.0
 ## Release Note Summary:
+- Version 3.0.18 (EMV Certified)
+  * Successfully addressed the error in getTargetVersion function within the OTA SDK, predominantly observed for CHB2F devices.
+  * Introduced a new method, setDebugLog(enable:), facilitating enhanced logging within the OTA process.
+  * Exclusive compatibility with Xcode14 and higher versions, aligned with Apple's Bitcode Support deactivation announcement.
+  * To accommodate older versions, a BelowXcode14 folder is available, housing both BitcodeEnabled and Disabled SDKs. However, the folder lacks the fix for the getTargetVersion method related to CHB2F Devices.
 - Version 3.0.17 (EMV Certified)
   * Resolved the issue for showing error for Timeout in case of Transaction.
 

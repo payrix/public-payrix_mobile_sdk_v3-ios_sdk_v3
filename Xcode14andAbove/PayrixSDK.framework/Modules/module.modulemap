@@ -1,0 +1,11 @@
+framework module PayrixSDK {
+  umbrella header "PayrixSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module PayrixSDK.Swift {
+  header "PayrixSDK-Swift.h"
+  requires objc
+}
