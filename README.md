@@ -1,5 +1,7 @@
 # Payrix iOS SDK Version 3.0
 ## Release Note Summary:
+- Version 3.0.19 (EMV Certified)
+  * Successfully updated the SDK to include the added error message in the infoMsg parameter of the didReceivePayResults method.
 - Version 3.0.18 (EMV Certified)
   * Successfully addressed the error in getTargetVersion function within the OTA SDK, predominantly observed for CHB2F devices.
   * Introduced a new method, setDebugLog(enable:), facilitating enhanced logging within the OTA process.

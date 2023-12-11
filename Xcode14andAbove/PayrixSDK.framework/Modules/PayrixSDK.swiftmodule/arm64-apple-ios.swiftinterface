@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.7 (swiftlang-5.7.0.127.4 clang-1400.0.29.50)
+// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
 // swift-module-flags: -target arm64-apple-ios14.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name PayrixSDK
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import AVFoundation
@@ -10,6 +10,7 @@ import Swift
 import UIKit
 import _Concurrency
 import _StringProcessing
+import _SwiftConcurrencyShims
 @objc @_inheritsConvenienceInitializers public class PaySharedAttributes : ObjectiveC.NSObject {
   public enum CCType : Swift.Int {
     case AmericanExpress
@@ -281,7 +282,7 @@ public protocol TransactionControlBBPOSDelegate {
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class TransactionControllerBBPOS : ObjectiveC.NSObject, PayrixSDK.BBDeviceControllerDelegate {
   public static let sharedInstance: PayrixSDK.TransactionControllerBBPOS
-  public var delegate: PayrixSDK.TransactionControlBBPOSDelegate?
+  public var delegate: (any PayrixSDK.TransactionControlBBPOSDelegate)?
   public typealias TransactionControllerDelegate = PayrixSDK.TransactionControlBBPOSDelegate
   public func loadDynamicTransactionDriver()
   public func doCardReaderTransaction(withTxnData: [Swift.String : Any])
@@ -361,8 +362,8 @@ public enum PayCoreAccountStatus : Swift.Int, Swift.Decodable {
   public var frozen: Swift.Bool?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers public class PaymentDevice : ObjectiveC.NSObject {
@@ -399,8 +400,8 @@ public enum PayCoreAccountStatus : Swift.Int, Swift.Decodable {
   public var frozen: Swift.Bool?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 public struct PayCoreError : Swift.Decodable {
@@ -408,7 +409,7 @@ public struct PayCoreError : Swift.Decodable {
   public let severity: Swift.Int?
   public var message: Swift.String?
   public let field: Swift.String?
-  public init(from decoder: Swift.Decoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 public protocol DeviceControlIDTCHDelegate {
   func didBTConnect()
@@ -419,7 +420,7 @@ public protocol DeviceControlIDTCHDelegate {
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class DeviceControllerIDTCH : ObjectiveC.NSObject, PayrixSDK.IDT_VP3300_Delegate {
   public static let sharedInstance: PayrixSDK.DeviceControllerIDTCH
-  public var delegate: PayrixSDK.DeviceControlIDTCHDelegate?
+  public var delegate: (any PayrixSDK.DeviceControlIDTCHDelegate)?
   public typealias DeviceControllerDelegate = PayrixSDK.DeviceControlIDTCHDelegate
   public var connectionMode: PayrixSDK.SharedDriverAttr.PayCardDevConnectMode
   public var sharedUUID: Swift.String
@@ -450,7 +451,7 @@ public protocol PayrixSDKDelegate {
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayrixSDKMaster : ObjectiveC.NSObject, PayrixSDK.PayCoreRDRTransMgrDelegate, PayrixSDK.PayCardRDRMgrDelegate, PayrixSDK.PayCardMasterDelegate {
   public static let sharedInstance: PayrixSDK.PayrixSDKMaster
-  public var delegate: PayrixSDK.PayrixSDKDelegate?
+  public var delegate: (any PayrixSDK.PayrixSDKDelegate)?
   public func doSetPayrixPlatform(platform: Swift.String, demoSandbox: Swift.Bool, deviceManfg: PayrixSDK.PaySharedAttributes.PaySupportedReaders?)
   public func doDebugEnable(enableDebug: Swift.Bool) -> Swift.String?
   public func doSetConsoleToFile()
@@ -625,8 +626,8 @@ extension PayrixSDK.PayrixSDKDelegate {
   public var frozen: Swift.Bool?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   public static func sessionFromLogin(userName: Swift.String, password: Swift.String, withCompletion completion: @escaping (PayrixSDK.PayCoreSession?, PayrixSDK.PayCoreResponseDetails?, [PayrixSDK.PayCoreError]?) -> Swift.Void)
   @objc deinit
 }
@@ -634,12 +635,12 @@ extension PayrixSDK.PayrixSDKDelegate {
   public var current: Swift.Int?
   public var last: Swift.Int?
   @objc deinit
-  required public init(from decoder: Swift.Decoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
 }
 public class PayCoreResponseDetails : Swift.Decodable {
   public var requestID: Swift.String?
   public var page: PayrixSDK.PayCoreResponseDetailsPage?
-  required public init(from decoder: Swift.Decoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayEMVTags : ObjectiveC.NSObject {
@@ -700,8 +701,8 @@ public enum PayCoreChargebackDisputeState : Swift.String, Swift.Decodable {
   public var frozen: Swift.Bool?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayCoreJournal : ObjectiveC.NSObject {
@@ -725,8 +726,8 @@ public class PayCoreAccountDetails : Swift.Codable {
   public var number: Swift.String?
   public var routing: Swift.String?
   public init()
-  required public init(from decoder: Swift.Decoder) throws
-  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 @_hasMissingDesignatedInitializers public class PayCardSharedAttr {
@@ -985,7 +986,7 @@ public protocol DeviceControlBBPOSDelegate {
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class DeviceControllerBBPOS : ObjectiveC.NSObject, PayrixSDK.BBDeviceControllerDelegate, PayrixSDK.PayCardRDRMgrDelegate {
   public static let sharedInstance: PayrixSDK.DeviceControllerBBPOS
-  public var delegate: PayrixSDK.DeviceControlBBPOSDelegate?
+  public var delegate: (any PayrixSDK.DeviceControlBBPOSDelegate)?
   public typealias DeviceControllerDelegate = PayrixSDK.DeviceControlBBPOSDelegate
   public func loadDynamicDeviceDriver()
   public func connectBTReader(useNumber: Swift.String)
@@ -1030,8 +1031,8 @@ public enum PayCorePlanSchedule : Swift.Int, Swift.Codable {
   public var frozen: Swift.Bool?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 @_inheritsConvenienceInitializers public class PayCoreCustomer : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
@@ -1056,8 +1057,8 @@ public enum PayCorePlanSchedule : Swift.Int, Swift.Codable {
   public var frozen: Swift.Bool?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 public enum PayCoreMerchantStatus : Swift.Int, Swift.Codable {
@@ -1103,8 +1104,8 @@ public enum PayCoreTaxIDStatus : Swift.Int, Swift.Codable {
   public var frozen: Swift.Bool?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers public class PayCorePaymentObject : ObjectiveC.NSObject {
@@ -1369,8 +1370,8 @@ public struct PayCoreSearchParameter {
   public var frozen: Swift.Bool?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 public class PayCoreBase : Swift.Codable {
@@ -1380,9 +1381,9 @@ public class PayCoreBase : Swift.Codable {
   public var creator: PayrixSDK.PayCoreLogin?
   public var modifier: PayrixSDK.PayCoreLogin?
   public init()
-  required public init(from decoder: Swift.Decoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class RefundRequest : ObjectiveC.NSObject {
   public static let sharedInstance: PayrixSDK.RefundRequest
@@ -1418,8 +1419,8 @@ public enum PayCoreBatchStatus : Swift.Int, Swift.Codable {
   public var frozen: Swift.Bool?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 public struct CardStatus {
@@ -1442,7 +1443,7 @@ public protocol PayCardMasterDelegate {
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayCardMaster : ObjectiveC.NSObject, PayrixSDK.TransactionControlBBPOSDelegate, PayrixSDK.TransactionControlIDTCHDelegate {
   public static let sharedInstance: PayrixSDK.PayCardMaster
-  public var delegate: PayrixSDK.PayCardMasterDelegate?
+  public var delegate: (any PayrixSDK.PayCardMasterDelegate)?
   public func doReadCard(withTotalAmt: Swift.Int, withTax: Swift.Int, withTip: Swift.Int, withCurrency: Swift.String, withURL: Swift.String, posMode: PayrixSDK.PayCardSharedAttr.PayCardDeviceMode)
   public func doReadCard(withTotalAmt: Swift.Int, withTax: Swift.Int, withTip: Swift.Int, withCurrency: Swift.String, withURL: Swift.String, posMode: PayrixSDK.PayCardSharedAttr.PayCardDeviceMode, forDevice: PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders?)
   public func didWait(checkCardMode: Swift.Int)
@@ -1512,8 +1513,8 @@ public protocol PayCardRDRMgrDelegate {
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayCardRDRMgr : ObjectiveC.NSObject, PayrixSDK.DeviceControlBBPOSDelegate, PayrixSDK.DeviceControlIDTCHDelegate {
   public static let sharedInstance: PayrixSDK.PayCardRDRMgr
-  public var delegate: PayrixSDK.PayCardRDRMgrDelegate?
-  public var delegateForDeviceControllerBBPos: PayrixSDK.PayCardRDRMgrDelegate?
+  public var delegate: (any PayrixSDK.PayCardRDRMgrDelegate)?
+  public var delegateForDeviceControllerBBPos: (any PayrixSDK.PayCardRDRMgrDelegate)?
   public func startPayCardRDRMgr(forDevice: PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders?)
   public func stopScan()
   public func scanForReaders()
@@ -1587,8 +1588,8 @@ public enum PayCorePaymentMethod : Swift.Int, Swift.Decodable {
   public var emv: Swift.String?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 @_inheritsConvenienceInitializers public class PayCoreTxnMetadata : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
@@ -1600,8 +1601,8 @@ public enum PayCorePaymentMethod : Swift.Int, Swift.Decodable {
   public var value: Swift.String?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayRequest : ObjectiveC.NSObject {
@@ -1643,8 +1644,8 @@ public enum PayCorePaymentMethod : Swift.Int, Swift.Decodable {
   public var signature: Swift.String?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayResponse : ObjectiveC.NSObject {
@@ -1737,7 +1738,7 @@ public protocol TransactionControlIDTCHDelegate {
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class TransactionControllerIDTCH : ObjectiveC.NSObject, PayrixSDK.IDT_VP3300_Delegate {
   public static let sharedInstance: PayrixSDK.TransactionControllerIDTCH
-  public var delegate: PayrixSDK.TransactionControlIDTCHDelegate?
+  public var delegate: (any PayrixSDK.TransactionControlIDTCHDelegate)?
   public typealias TransactionControllerDelegate = PayrixSDK.TransactionControlIDTCHDelegate
   public func loadDynamicTransactionDriver()
   public func doCardReaderTransaction(withTxnData: [Swift.String : Any])
@@ -1767,8 +1768,8 @@ public protocol TransactionControlIDTCHDelegate {
   public var frozen: Swift.Bool?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 @_inheritsConvenienceInitializers public class PayCoreFund : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
@@ -1784,8 +1785,8 @@ public protocol TransactionControlIDTCHDelegate {
   public var frozen: Swift.Bool?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 public enum PayCoreTxnType : Swift.Int, Swift.Decodable {
@@ -1916,8 +1917,8 @@ public enum PayCoreTxnReserved : Swift.Int, Swift.Decodable {
   public var mid: Swift.String?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 public enum PayCoreEntityType : Swift.Int, Swift.Codable {
@@ -1967,8 +1968,8 @@ public enum PayCoreEntityType : Swift.Int, Swift.Codable {
   public var frozen: Swift.Bool?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 public struct CoreStatus {
@@ -1990,7 +1991,7 @@ public protocol PayCoreRDRTransMgrDelegate {
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayCoreRDRTransMgr : ObjectiveC.NSObject {
   public static let sharedInstance: PayrixSDK.PayCoreRDRTransMgr
-  public var delegate: PayrixSDK.PayCoreRDRTransMgrDelegate?
+  public var delegate: (any PayrixSDK.PayCoreRDRTransMgrDelegate)?
   public func doCardRDRTransaction(withGatewayDict: [Swift.String : Any], withSessionKey: Swift.String, withURL: Swift.String)
   public func doPrintObj(source: Swift.AnyObject!, title: Swift.String)
   public func setOrigTxnID(origTxnID: Swift.String)
@@ -2084,7 +2085,7 @@ public protocol OTAUpdateDelegate {
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayrixOTA : ObjectiveC.NSObject {
   public static let sharedInstance: PayrixSDK.PayrixOTA
-  public var delegate: PayrixSDK.OTAUpdateDelegate?
+  public var delegate: (any PayrixSDK.OTAUpdateDelegate)?
   public func doOTAStartup()
   public func setDebugLog(enable: Swift.Bool)
   public func doOTADisconnectAnyDevice()
@@ -2124,8 +2125,8 @@ extension PayrixSDK.OTAUpdateDelegate {
   public var CHANGEME: Swift.String?
   override public init()
   public init(id: Swift.String)
-  required public init(from decoder: Swift.Decoder) throws
-  override public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayDevice : ObjectiveC.NSObject {
