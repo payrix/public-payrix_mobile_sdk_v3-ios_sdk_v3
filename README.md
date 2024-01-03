@@ -1,5 +1,7 @@
 # Payrix iOS SDK Version 3.0
 ## Release Note Summary:
+- Version 3.0.20 (EMV Certified)
+  * Resolved the issue of iOS Mobile SDK Cannot Cancel Transaction After Decline
 - Version 3.0.19 (EMV Certified)
   * Successfully updated the SDK to include the added error message in the infoMsg parameter of the didReceivePayResults method.
 - Version 3.0.18 (EMV Certified)
