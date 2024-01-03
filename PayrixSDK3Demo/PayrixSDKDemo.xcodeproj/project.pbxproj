@@ -27,8 +27,8 @@
 		1746913627709D28008A9159 /* DemoUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1746913127709D28008A9159 /* DemoUpdate.swift */; };
 		1746913727709D28008A9159 /* DemoDeviceDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1746913227709D28008A9159 /* DemoDeviceDetailVC.swift */; };
 		17720A5127BE8E7B004F2DBF /* warningSign.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 17720A5027BE8E7B004F2DBF /* warningSign.jpg */; };
-		17C2B6A32B2312FF00C3C33A /* PayrixSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17C2B6A12B2312F200C3C33A /* PayrixSDK.framework */; };
-		17C2B6A42B2312FF00C3C33A /* PayrixSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 17C2B6A12B2312F200C3C33A /* PayrixSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		17AD71482B3AC8AF00719991 /* PayrixSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17AD71462B3AC8A600719991 /* PayrixSDK.framework */; };
+		17AD71492B3AC8AF00719991 /* PayrixSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 17AD71462B3AC8A600719991 /* PayrixSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		17CFC464278D6B8A0015562A /* DemoOTAProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFC463278D6B8A0015562A /* DemoOTAProgress.swift */; };
 		17E05B0427EAF8CE0013C1C9 /* DemoMerchantsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E05B0327EAF8CE0013C1C9 /* DemoMerchantsList.swift */; };
 		848660F7261DFDC700857577 /* ReceiptVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848660F6261DFDC700857577 /* ReceiptVC.swift */; };
@@ -43,7 +43,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				17C2B6A42B2312FF00C3C33A /* PayrixSDK.framework in Embed Frameworks */,
+				17AD71492B3AC8AF00719991 /* PayrixSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,7 +73,7 @@
 		1746913127709D28008A9159 /* DemoUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoUpdate.swift; sourceTree = "<group>"; };
 		1746913227709D28008A9159 /* DemoDeviceDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoDeviceDetailVC.swift; sourceTree = "<group>"; };
 		17720A5027BE8E7B004F2DBF /* warningSign.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = warningSign.jpg; sourceTree = "<group>"; };
-		17C2B6A12B2312F200C3C33A /* PayrixSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PayrixSDK.framework; path = 3.0.19/PayrixSDK.framework; sourceTree = "<group>"; };
+		17AD71462B3AC8A600719991 /* PayrixSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PayrixSDK.framework; path = 3.0.20/PayrixSDK.framework; sourceTree = "<group>"; };
 		17CFC463278D6B8A0015562A /* DemoOTAProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoOTAProgress.swift; sourceTree = "<group>"; };
 		17E05B0327EAF8CE0013C1C9 /* DemoMerchantsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoMerchantsList.swift; sourceTree = "<group>"; };
 		56352C5F16677DEE8EC9840A /* Pods-PayrixSDKDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PayrixSDKDemo.debug.xcconfig"; path = "Target Support Files/Pods-PayrixSDKDemo/Pods-PayrixSDKDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -88,7 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17C2B6A32B2312FF00C3C33A /* PayrixSDK.framework in Frameworks */,
+				17AD71482B3AC8AF00719991 /* PayrixSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,7 +153,7 @@
 		0BFA2A3224C9DBAD0006014E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				17C2B6A12B2312F200C3C33A /* PayrixSDK.framework */,
+				17AD71462B3AC8A600719991 /* PayrixSDK.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -431,7 +431,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2312.01;
+				CURRENT_PROJECT_VERSION = 2312.02;
 				DEVELOPMENT_TEAM = 4X73MJKD7A;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -439,6 +439,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 					"$(PROJECT_DIR)/Frameworks/3.0.18",
 					"$(PROJECT_DIR)/Frameworks/3.0.19",
+					"$(PROJECT_DIR)/Frameworks/3.0.20",
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)";
@@ -466,7 +467,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2312.01;
+				CURRENT_PROJECT_VERSION = 2312.02;
 				DEVELOPMENT_TEAM = 4X73MJKD7A;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -474,6 +475,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 					"$(PROJECT_DIR)/Frameworks/3.0.18",
 					"$(PROJECT_DIR)/Frameworks/3.0.19",
+					"$(PROJECT_DIR)/Frameworks/3.0.20",
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)";
