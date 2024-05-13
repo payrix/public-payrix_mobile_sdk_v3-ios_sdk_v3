@@ -22,7 +22,7 @@ class DemoStart: UIViewController, PayrixSDKDelegate
   
   let sharedUtils = SharedUtilities.init()
   let payrixSDK = PayrixSDKMaster.sharedInstance
-  
+	var useTxnSessionKey : Bool = false
   override func viewDidLoad()
   {
     super.viewDidLoad()
@@ -133,10 +133,55 @@ class DemoStart: UIViewController, PayrixSDKDelegate
   
   @IBAction func goRefundTxn(_ sender: Any)
   {
-     // performSegue(withIdentifier: "SegToRefundList", sender: self)
-    let theConsoleLog = payrixSDK.doDebugEnable(enableDebug: false)
-    payrixSDK.doWriteConsoleFile(fileName: "PayrixSDK-Console", fileData: theConsoleLog ?? "No Console Data")
+      askForKeyType()
+//    let theConsoleLog = payrixSDK.doDebugEnable(enableDebug: false)
+//    payrixSDK.doWriteConsoleFile(fileName: "PayrixSDK-Console", fileData: theConsoleLog ?? "No Console Data")
   }
+	
+	func askForKeyType()
+	{
+		let alertC = UIAlertController(title: "Txn key type", message: "", preferredStyle: .actionSheet)
+		let useLoginSessionKey = UIAlertAction(title: "Use Login Session Key", style: .default) { action in
+			self.useTxnSessionKey = false
+			guard let loginSessionKey = self.sharedUtils.getSessionKey()
+			else
+			{
+				print("No Login SessionKey Found")
+				self.sharedUtils.showMessage(theController: self, theTitle: "No Login SessionKey Found", theMessage: "Please authenticate again.")
+				return
+			}
+			if loginSessionKey.isEmpty{
+				self.sharedUtils.showMessage(theController: self, theTitle: "No Login SessionKey Found", theMessage: "Please authenticate again.")
+			}
+			else{
+				self.performSegue(withIdentifier: "SegToRefundList", sender: self)
+			}
+		}
+		let useTxnSessionKey = UIAlertAction(title: "Use Txn Session Key", style: .default) { action in
+			self.useTxnSessionKey = true
+			guard let txnSessionKey = self.sharedUtils.getTxnSessionKey()
+			else
+			{
+				print("No Txn SessionKey Found")
+				self.sharedUtils.showMessage(theController: self, theTitle: "No Txn SessionKey Found", theMessage: "Please get Txn Key again.")
+				return
+			}
+			if txnSessionKey.isEmpty{
+				self.sharedUtils.showMessage(theController: self, theTitle: "No Txn SessionKey Found", theMessage: "Please get Txn Key again.")
+			}
+			else{
+				self.performSegue(withIdentifier: "SegToRefundList", sender: self)
+			}
+		}
+		let cancelButton = UIAlertAction(title: "Cancel", style: .cancel) { action in
+			
+		}
+		alertC.addAction(useLoginSessionKey)
+		alertC.addAction(useTxnSessionKey)
+		alertC.addAction(cancelButton)
+		
+		present(alertC, animated: true)
+	}
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
   {
@@ -156,5 +201,22 @@ class DemoStart: UIViewController, PayrixSDKDelegate
         // Prep for Transaction Processing
         let _ = segue.destination as! DemoTransaction
     }
+		else if segID == "SegToRefundList"
+		{
+			let destination = segue.destination as! DemoRefundList
+			destination.useTxnSessionKey = useTxnSessionKey
+			if useTxnSessionKey{
+				destination.txnSessionKey = sharedUtils.getTxnSessionKey()
+				destination.useTxnSessionKey = true
+				destination.paySessionKey = nil
+			}
+			else
+			{
+				destination.txnSessionKey = nil
+				destination.useTxnSessionKey = false
+				destination.paySessionKey = sharedUtils.getSessionKey()
+			}
+			destination.merchantId = sharedUtils.getMerchantID()
+		}
   }
 }
