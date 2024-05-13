@@ -1,0 +1,2338 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)
+// swift-module-flags: -target arm64-apple-ios14.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -enable-bare-slash-regex -module-name PayrixSDK
+import AVFoundation
+import CoreBluetooth
+import Foundation
+@_exported import PayrixSDK
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@objc @_inheritsConvenienceInitializers public class PaySharedAttributes : ObjectiveC.NSObject {
+  public enum CCType : Swift.Int {
+    case AmericanExpress
+    case Visa
+    case MasterCard
+    case DinersClub
+    case Discover
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayTxnOrigin : Swift.Int, Swift.Decodable {
+    case creditCardTerminal
+    case eCommerceSystem
+    case mailOrderOrTelephoneOrder
+    case applePay
+    case txn3DSecureAuthorized
+    case txn3DSecure
+    case recurringTxnOnCard
+    case payframe
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PaySupportedReaders : Swift.String {
+    case reader_BBPOS
+    case reader_IDTECH
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum PayReaderEntryMode : Swift.String {
+    case read_Manual_Entry
+    case read_Track1
+    case read_Track2
+    case read_MagneticStrip
+    case read_EMV_ChipCard
+    case read_Contactless_EMV
+    case read_Fallback_Magnetic
+    case read_Fallback_Keyed
+    case read_ApplePay
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum PayIndustryEntryMode : Swift.String {
+    case read_Unknown
+    case read_Manual_Entry
+    case read_MagneticStrip
+    case read_BarCode
+    case read_OCR
+    case read_EMV_ChipCard
+    case read_Contactless_EMV
+    case read_Fallback_Magnetic
+    case read_MagneticStripFromTrack2
+    case read_ContactlessMagneticStrip
+    case read_ICCNoCVV
+    case read_SameAsOriginal
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum PayDevConnectMode : Swift.Int {
+    case devConnection_None
+    case devConnection_Audio
+    case devConnection_Bluetooth
+    case devConnection_USB
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayEMVOption : Swift.Int {
+    case emvOption_Start
+    case emvOption_StartWithForceOnline
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayTransactionType : Swift.Int {
+    case devTransactionType_Goods
+    case devTransactionType_Services
+    case devTransactionType_Cashback
+    case devTransactionType_Inquiry
+    case devTransactionType_Transfer
+    case devTransactionType_Payment
+    case devTransactionType_Refund
+    case devTransactionType_Void
+    case devTransactionType_Reversal
+    case devTransactionType_Cash
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCurrencyChars : Swift.Int {
+    case devCurrencyCharacter_A
+    case devCurrencyCharacter_B
+    case devCurrencyCharacter_C
+    case devCurrencyCharacter_D
+    case devCurrencyCharacter_E
+    case devCurrencyCharacter_F
+    case devCurrencyCharacter_G
+    case devCurrencyCharacter_H
+    case devCurrencyCharacter_I
+    case devCurrencyCharacter_J
+    case devCurrencyCharacter_K
+    case devCurrencyCharacter_L
+    case devCurrencyCharacter_M
+    case devCurrencyCharacter_N
+    case devCurrencyCharacter_O
+    case devCurrencyCharacter_P
+    case devCurrencyCharacter_Q
+    case devCurrencyCharacter_R
+    case devCurrencyCharacter_S
+    case devCurrencyCharacter_T
+    case devCurrencyCharacter_U
+    case devCurrencyCharacter_V
+    case devCurrencyCharacter_W
+    case devCurrencyCharacter_X
+    case devCurrencyCharacter_Y
+    case devCurrencyCharacter_Z
+    case devCurrencyCharacter_Space
+    case devCurrencyCharacter_Dirham
+    case devCurrencyCharacter_Dollar
+    case devCurrencyCharacter_Euro
+    case devCurrencyCharacter_IndianRupee
+    case devCurrencyCharacter_Pound
+    case devCurrencyCharacter_SaudiRiyal
+    case devCurrencyCharacter_SaudiRiyal2
+    case devCurrencyCharacter_Won
+    case devCurrencyCharacter_Yen
+    case devCurrencyCharacter_SlashAndDot
+    case devCurrencyCharacter_Dot
+    case devCurrencyCharacter_Yuan
+    case devCurrencyCharacter_NewShekel
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCheckCardResult : Swift.Int {
+    case devCheckCardResult_NoCard
+    case devCheckCardResult_InsertedCard
+    case devCheckCardResult_NotIccCard
+    case devCheckCardResult_BadSwipe
+    case devCheckCardResult_SwipedCard
+    case devCheckCardResult_MagHeadFail
+    case devCheckCardResult_UseIccCard
+    case devCheckCardResult_TapCardDetected
+    case devCheckCardResult_ManualPanEntry
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayTransactionResult : Swift.Int {
+    case devTransactionResult_Approved
+    case devTransactionResult_Terminated
+    case devTransactionResult_Declined
+    case devTransactionResult_CanceledOrTimeout
+    case devTransactionResult_CapkFail
+    case devTransactionResult_NotIcc
+    case devTransactionResult_CardBlocked
+    case devTransactionResult_DeviceError
+    case devTransactionResult_SelectApplicationFail
+    case devTransactionResult_CardNotSupported
+    case devTransactionResult_MissingMandatoryData
+    case devTransactionResult_NoEmvApps
+    case devTransactionResult_InvalidIccData
+    case devTransactionResult_ConditionsOfUseNotSatisfied
+    case devTransactionResult_ApplicationBlocked
+    case devTransactionResult_IccCardRemoved
+    case devTransactionResult_CardSchemeNotMatched
+    case devTransactionResult_Canceled
+    case devTransactionResult_Timeout
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayErrorType : Swift.Int {
+    case devErrorType_InvalidInput
+    case devErrorType_InvalidInput_NotNumeric
+    case devErrorType_InvalidInput_InputValueOutOfRange
+    case devErrorType_InvalidInput_InvalidDataFormat
+    case devErrorType_InvalidInput_NotAcceptAmountForThisTransactionType
+    case devErrorType_InvalidInput_NotAcceptCashbackForThisTransactionType
+    case devErrorType_Unknown
+    case devErrorType_IllegalStateException
+    case devErrorType_CommError
+    case devErrorType_CommandNotAvailable
+    case devErrorType_DeviceBusy
+    case devErrorType_CommLinkUninitialized
+    case devErrorType_InvalidFunctionInCurrentConnectionMode
+    case devErrorType_AudioFailToStart
+    case devErrorType_AudioFailToStart_OtherAudioIsPlaying
+    case devErrorType_AudioRecordingPermissionDenied
+    case devErrorType_AudioBackgroundTimeout
+    case devErrorType_BTv4NotSupported
+    case devErrorType_BTFailToStart
+    case devErrorType_BTAlreadyConnected
+    case devErrorType_HardwareNotSupported
+    case devErrorType_PCIError
+    case devErrorType_BLESecureConnectionNotSupported
+    case devErrorType_PairingError
+    case devErrorType_PairingError_IncorrectPasskey
+    case devErrorType_PairingError_AlreadyPairedWithAnotherDevice
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayDeviceMode : Swift.Int {
+    case cardDeviceMode_Swipe
+    case cardDeviceMode_Insert
+    case cardDeviceMode_Tap
+    case cardDeviceMode_SwipeOrInsert
+    case cardDeviceMode_SwipeOrTap
+    case cardDeviceMode_SwipeOrInsertOrTap
+    case cardDeviceMode_InsertOrTap
+    case cardDeviceMode_ManualEntry
+    case cardDeviceMode_QRCode
+    case cardDeviceMode_InsertNotSwipe
+    case cardDeviceMode_Confirm
+    case cardDeviceMode_Unknown
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public static let devBBPOS_Msgs: [Swift.String]
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayCoreTxnSession : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreTxnSession
+  public var methodPath: Swift.String
+  public var sessionId: Swift.String?
+  public var login: Swift.String?
+  public var merchant: Swift.String?
+  public var status: Swift.String?
+  public var configurations: PayrixSDK.TxnSessionConfiguration?
+  public var durationAvailable: Swift.Int?
+  public var maxTimesUse: Swift.Int?
+  public var maxTimesApproved: Swift.Int?
+  public var timesUsed: Swift.Int?
+  public var timesApproved: Swift.Int?
+  public var key: Swift.String?
+  public var txnApprovedList: [Swift.String]?
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+public protocol TransactionControlBBPOSDelegate {
+  func didWait(checkCardMode: Swift.Int)
+  func didRequestPinEntry(pinEntrySource: PayrixSDK.BBDevicePinEntrySource)
+  func didReceiveMessage(deviceMessage: Swift.String)
+  func didReturnCardResult(cardResult: Swift.Int, cardData: [Swift.AnyHashable : Any]!)
+  func didCancelCheckCardResult(isSuccess: Swift.Bool)
+  func didRequestFinalConfirm()
+  func didRequestOnlineProcess(tlv: Swift.String!, cardData: [Swift.AnyHashable : Any]?)
+  func didReturnBatchData(tlv: Swift.String)
+  func didReturnTxnResult(txnResult: Swift.Int)
+  func didReturnTxnError(errorType: Swift.Int, errorMessage: Swift.String)
+  func didReturnDeviceInfo(forTxn: [Swift.AnyHashable : Any]!)
+  func didRequestAppSelection(forApps: [[Swift.String : Swift.Int]]!)
+  func didReceiveReversalData(reversalTLV: Swift.String!)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class TransactionControllerBBPOS : ObjectiveC.NSObject, PayrixSDK.BBDeviceControllerDelegate {
+  public static let sharedInstance: PayrixSDK.TransactionControllerBBPOS
+  public var delegate: (any PayrixSDK.TransactionControlBBPOSDelegate)?
+  public typealias TransactionControllerDelegate = PayrixSDK.TransactionControlBBPOSDelegate
+  public func loadDynamicTransactionDriver()
+  public func doCardReaderTransaction(withTxnData: [Swift.String : Any])
+  @objc public func onWaiting(forCard checkCardMode: PayrixSDK.BBDeviceCheckCardMode)
+  @objc public func onRequest(_ displayMessage: PayrixSDK.BBDeviceDisplayText)
+  @objc public func onRequestSelectApplication(_ applicationArray: [Any])
+  public func doHandleSelectAppResponse(appIndex: Swift.Int, appName: Swift.String)
+  public func doCancelSelectAppResponse()
+  public func doCancelCheckCardProcess()
+  @objc public func onReturnCancelCheckCardResult(_ isSuccess: Swift.Bool)
+  @objc public func onReturn(_ result: PayrixSDK.BBDeviceCheckCardResult, cardData: [Swift.AnyHashable : Any]!)
+  @objc public func onRequestPinEntry(_ pinEntrySource: PayrixSDK.BBDevicePinEntrySource)
+  public func doPinEntry(pinData: Swift.String)
+  public func doPinSwipeEntry(pinData: [Swift.String : Any])
+  public func doPinEntryCancel()
+  @objc public func onReturnReversalData(_ tlv: Swift.String!)
+  @objc public func onRequestFinalConfirm()
+  public func doCardConfirm(confirmed: Swift.Bool)
+  @objc public func onRequestOnlineProcess(_ tlv: Swift.String!)
+  public func doSendHostEMVResponse(hostEMVData: [Swift.String : Swift.String])
+  @objc public func onReturnBatchData(_ tlv: Swift.String)
+  @objc public func onReturn(_ result: PayrixSDK.BBDeviceTransactionResult)
+  public func doDecodeTLV(tlv: Swift.String) -> [Swift.AnyHashable : Any]?
+  public func doEncodeTLV(tagsNvalues: [Swift.AnyHashable : Any]) -> Swift.String?
+  @objc public func onError(_ errorType: PayrixSDK.BBDeviceErrorType, errorMessage: Swift.String)
+  public func doVerifyDeviceStartProcess()
+  @objc public func onReturnDeviceInfo(_ deviceInfo: [Swift.AnyHashable : Any]!)
+  @objc deinit
+}
+public func PayCoreSetKeys(apiKey: Swift.String?, sessionKey: Swift.String?)
+public func PayCoreGetApiKey() -> Swift.String
+public func PayCoreSetApiKey(_ key: Swift.String)
+public func PayCoreGetSessionKey() -> Swift.String
+public func PayCoreSetSessionKey(_ key: Swift.String)
+public func PayCoreGetTxnSessionKey(_ key: Swift.String) -> Swift.String
+public func PayCoreSetTxnSessionKey(_ key: Swift.String)
+public func PayCoreGetTestMode() -> Swift.Bool
+public func PayCoreSetTestMode(_ mode: Swift.Bool)
+public func PayCoreGetAPIURL() -> Swift.String
+public func PayCoreGetAPIHostname() -> Swift.String
+public func PayCoreSetAPIHostname(_ host: Swift.String)
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayMerchant : ObjectiveC.NSObject {
+  public static let sharedInstance: PayrixSDK.PayMerchant
+  public var merchantID: Swift.String?
+  public var merchantDBA: Swift.String?
+  public var entityID: Swift.String?
+  public var addressLine1: Swift.String?
+  public var addressLine2: Swift.String?
+  public var city: Swift.String?
+  public var stateprovince: Swift.String?
+  public var postalCodezip: Swift.String?
+  public var countryCode: Swift.String?
+  @objc deinit
+}
+public enum PayCoreAccountStatus : Swift.Int, Swift.Decodable {
+  case notReady
+  case ready
+  case challenged
+  case verified
+  case manual
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class PayCoreAccount : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreAccount
+  final public let methodPath: Swift.String
+  public var entity: PayrixSDK.PayCoreEntity?
+  public var account: PayrixSDK.PayCoreAccountDetails?
+  public var token: Swift.String?
+  public var name: Swift.String?
+  public var description: Swift.String?
+  public var primary: Swift.Bool?
+  public var status: PayrixSDK.PayCoreAccountStatus?
+  public var currency: Swift.String?
+  public var inactive: Swift.Bool?
+  public var frozen: Swift.Bool?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class PaymentDevice : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  public var readerDevice: Swift.String?
+  public var deviceUUID: Swift.String?
+  public var deviceManfg: Swift.String?
+  public var deviceSerial: Swift.String?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class PayCoreLogin : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreLogin
+  final public let methodPath: Swift.String
+  public var login: PayrixSDK.PayCoreLogin?
+  public var lastLogin: Foundation.Date?
+  public var username: Swift.String?
+  public var password: Swift.String?
+  public var first: Swift.String?
+  public var middle: Swift.String?
+  public var last: Swift.String?
+  public var email: Swift.String?
+  public var fax: Swift.String?
+  public var phone: Swift.String?
+  public var country: Swift.String?
+  public var zip: Swift.String?
+  public var state: Swift.String?
+  public var city: Swift.String?
+  public var address1: Swift.String?
+  public var address2: Swift.String?
+  public var confirmed: Swift.Bool?
+  public var roles: Swift.Int?
+  public var division: Swift.String?
+  public var inactive: Swift.Bool?
+  public var frozen: Swift.Bool?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+public struct PayCoreError : Swift.Decodable {
+  public let code: Swift.Int?
+  public let severity: Swift.Int?
+  public var message: Swift.String?
+  public let field: Swift.String?
+  public init(from decoder: any Swift.Decoder) throws
+}
+public protocol DeviceControlIDTCHDelegate {
+  func didBTConnect()
+  func didBTDisconnect()
+  func didBTTimeout()
+  func didReturnDeviceData(deviceInfo: [Swift.AnyHashable : Any]!)
+  func didReturnDevError(errorType: Swift.Int, errorMessage: Swift.String)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class DeviceControllerIDTCH : ObjectiveC.NSObject, PayrixSDK.IDT_VP3300_Delegate {
+  public static let sharedInstance: PayrixSDK.DeviceControllerIDTCH
+  public var delegate: (any PayrixSDK.DeviceControlIDTCHDelegate)?
+  public typealias DeviceControllerDelegate = PayrixSDK.DeviceControlIDTCHDelegate
+  public var connectionMode: PayrixSDK.SharedDriverAttr.PayCardDevConnectMode
+  public var sharedUUID: Swift.String
+  public func loadDynamicDeviceDriver()
+  public func connectBTReader(useNumber: Swift.String)
+  public func plugStatusChange(deviceInserted: Swift.Bool)
+  @objc public func deviceMessage(_ message: Swift.String!)
+  @objc public func deviceConnected()
+  @objc public func deviceDisconnected()
+  public func disconnectBTReader()
+  public func connectAudioReader() -> Swift.Bool
+  public func disconnectAudioReader()
+  public func detectConnectionType() -> PayrixSDK.SharedDriverAttr.PayCardDevConnectMode
+  public func getDeviceData()
+  @objc deinit
+}
+public protocol PayrixSDKDelegate {
+  func didReceiveDeviceResults(responseType: Swift.Int!, actionMsg: Swift.String?, infoMsg: Swift.String?, deviceResponse: Swift.String?)
+  func didReceiveScanResults(scanSuccess: Swift.Bool!, scanMsg: Swift.String!, payDevices: [Swift.AnyObject]?)
+  func didReceiveBTConnectResults(connectSuccess: Swift.Bool!, theDevice: Swift.String!)
+  func didReceiveBTDisconnectResults(disconnectSuccess: Swift.Bool!)
+  func didReceiveLoginResults(loginSuccess: Swift.Bool!, theSessionKey: Swift.String?, theMerchants: [Swift.AnyObject]?, theMessage: Swift.String!)
+  func didReceiveTxnKeyResult(success: Swift.Bool!, txnSession: PayrixSDK.PayCoreTxnSession?, theMessage: Swift.String!)
+  func didReceiveSingleMerchantRetrievalResults(fetchSuccess: Swift.Bool!, theMerchant: PayrixSDK.PayMerchant?, theMessage: Swift.String!)
+  func didReceivePayResults(responseType: Swift.Int!, actionMsg: Swift.String?, infoMsg: Swift.String?, payResponse: Swift.AnyObject?)
+  func didReceiveRefundResults(success: Swift.Bool!, responseCode: Swift.Int!, refundMsg: Swift.String!, refundResponse: Swift.AnyObject?)
+  func didReceiveTxnDataResults(success: Swift.Bool!, responseCode: Swift.Int!, txnMsg: Swift.String!, txnResponse: Swift.AnyObject?)
+  func didReceiveOTADeviceData(deviceInfo: [Swift.AnyHashable : Any]!)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayrixSDKMaster : ObjectiveC.NSObject, PayrixSDK.PayCoreRDRTransMgrDelegate, PayrixSDK.PayCardRDRMgrDelegate, PayrixSDK.PayCardMasterDelegate {
+  public static let sharedInstance: PayrixSDK.PayrixSDKMaster
+  public var delegate: (any PayrixSDK.PayrixSDKDelegate)?
+  public func doSetPayrixPlatform(platform: Swift.String, demoSandbox: Swift.Bool, deviceManfg: PayrixSDK.PaySharedAttributes.PaySupportedReaders?)
+  public func doDebugEnable(enableDebug: Swift.Bool) -> Swift.String?
+  public func doSetConsoleToFile()
+  public func doWriteConsoleFile(fileName: Swift.String, fileData: Swift.String)
+  public func doScanForBTReaders()
+  public func didFindRDRDevices(rdrDevices: [Swift.String], btUUIDs: [Swift.String : Swift.String], manfgNames: [Swift.String : Swift.String])
+  public func didReceiveBTScanTimeOut()
+  public func doConnectBTReader(payDeviceObj: Swift.AnyObject!)
+  public func doStopBTScan()
+  public func didSuccessfulBTConnect()
+  public func didReceiveBTConnectIssue(theError: Swift.String)
+  public func didReceiveCardReaderError(errNumber: Swift.Int, errMessage: Swift.String)
+  public func doDisconnectBTReader()
+  public func didReceiveBTDisconnect()
+  public func doGetDeviceInfo()
+  public func didReceiveDeviceInfo(deviceInfo: [Swift.AnyHashable : Any]!)
+  public func didReceiveAppSelection(forApps: [[Swift.String : Swift.Int]])
+  public func doProcessAppSelection(appIndex: Swift.Int, appName: Swift.String)
+  public func doCancelCheckCard()
+  public func didCancelledCheckCard(success: Swift.Bool)
+  public func doValidateCredentials(userID: Swift.String, password: Swift.String)
+  public func doGetTxnSessionKey(apiKey: Swift.String, merchantID: Swift.String, configuration: PayrixSDK.TxnSessionConfiguration = TxnSessionConfiguration())
+  public func doGetTxnSession(apiKey: Swift.String, sessionId: Swift.String)
+  public func doDeleteTxnSession(apiKey: Swift.String, sessionId: Swift.String)
+  public func doGetSingleMerchant(merchantID: Swift.String, sessionKey: Swift.String)
+  public func doVerifySessionKey(sessionKey: Swift.String, completion: @escaping (Swift.Bool) -> Swift.Void)
+  public func doAddSignatureToTransaction(sessionKey: Swift.String, transactionID: Swift.String?, signatureBase64Enc: Swift.String?, completion: @escaping (Swift.Bool, [Swift.String]?) -> Swift.Void)
+  public func doPaymentTransaction(payRequestObj: Swift.AnyObject)
+  public func doInitiatePaymentRefund(payRequestObj: Swift.AnyObject)
+  public func doPaymentRefund(refundRequestObj: Swift.AnyObject)
+  public func doPaymentReversal(refundRequestObj: Swift.AnyObject)
+  public func doTransactionDataRequest(txnRequestObj: Swift.AnyObject)
+  public func doRefundTransaction(refundRequestObj: Swift.AnyObject, gatewayData: [Swift.String : Any]?)
+  public func doGetSubsequentTransactions(txnRequestObj: Swift.AnyObject)
+  public func didReceiveReaderModeUpdate(currentMode: PayrixSDK.PayCardSharedAttr.PayCardDeviceMode)
+  public func didReceiveMessageToDisplay(message: Swift.String)
+  public func didReceiveDeviceReversal(gatewayData: [Swift.String : Any])
+  public func didReceiveSwipeSuccess(gateWayData: [Swift.String : Any], cardInfo: [Swift.String : Swift.String?])
+  public func requestForHostEMVProcess(gatewayData: [Swift.String : Any], encEMV: Any, emvKSN: Any, encMethod: Swift.String, receiptTags: [Swift.String : Swift.String])
+  public func didReceiveCardReaderIssue(issueMsg: Swift.String)
+  public func didReceiveTransactionSuccess(response: PayrixSDK.PayCoreTransResponse, coreStatus: PayrixSDK.CoreStatus)
+  public func didReceiveTransactionFailed(response: PayrixSDK.PayCoreTransResponse, theErrors: [Swift.String], coreStatus: PayrixSDK.CoreStatus)
+  public func didReceiveFinalEMVBatchData(tlv: Swift.String, receiptData: [Swift.String : Swift.String])
+  public func didCompleteEMVCardTransaction(successful: Swift.Bool, transactionMsg: Swift.String?)
+  public func didCompleteAppSimulation()
+  public func doPrintObj(source: Swift.AnyObject!, title: Swift.String)
+  public func setDebugger(debugOn: Swift.Bool)
+  public func getDebugger() -> Swift.Bool?
+  public func setOrigTxnID(origTxnID: Swift.String)
+  public func getOrigTxnID() -> Swift.String?
+  public func delOrigTxnID()
+  public func setSavedTrack(origTrack: Swift.String)
+  public func getSavedTrack() -> Swift.String?
+  public func delSavedTrack()
+  public func setSavedKSN(origVal: Swift.String)
+  public func getSavedKSN() -> Swift.String?
+  public func delSavedKSN()
+  public func setSavedEMV(origVal: Swift.String)
+  public func getSavedEMV() -> Swift.String?
+  public func delSavedEMV()
+  public func setSavedEMV9F39(origVal: Swift.String)
+  public func getSavedEMV9F39() -> Swift.String?
+  public func delSavedEMV9F39()
+  @objc deinit
+}
+extension PayrixSDK.PayrixSDKDelegate {
+  public func didReceiveDeviceResults(responseType: Swift.Int!, actionMsg: Swift.String?, infoMsg: Swift.String?, deviceResponse: Swift.String?)
+  public func didReceiveScanResults(scanSuccess: Swift.Bool!, scanMsg: Swift.String!, payDevices: [Swift.AnyObject]?)
+  public func didReceiveBTConnectResults(connectSuccess: Swift.Bool!, theDevice: Swift.String!)
+  public func didReceiveBTDisconnectResults(disconnectSuccess: Swift.Bool!)
+  public func didReceiveLoginResults(loginSuccess: Swift.Bool!, theSessionKey: Swift.String?, theMerchants: [Swift.AnyObject]?, theMessage: Swift.String!)
+  public func didReceiveSingleMerchantRetrievalResults(fetchSuccess: Swift.Bool!, theMerchant: PayrixSDK.PayMerchant?, theMessage: Swift.String!)
+  public func didReceiveTxnKeyResult(success: Swift.Bool!, txnSession: PayrixSDK.PayCoreTxnSession?, theMessage: Swift.String!)
+  public func didReceivePayResults(responseType: Swift.Int!, actionMsg: Swift.String?, infoMsg: Swift.String?, payResponse: Swift.AnyObject?)
+  public func didReceiveRefundResults(success: Swift.Bool!, responseCode: Swift.Int!, refundMsg: Swift.String!, refundResponse: Swift.AnyObject?)
+  public func didReceiveTxnDataResults(success: Swift.Bool!, responseCode: Swift.Int!, txnMsg: Swift.String!, txnResponse: Swift.AnyObject?)
+  public func didReceiveOTADeviceData(deviceInfo: [Swift.AnyHashable : Any]!)
+}
+@objc @_inheritsConvenienceInitializers public class TxnDataRequest : ObjectiveC.NSObject {
+  public static let sharedInstance: PayrixSDK.TxnDataRequest
+  @objc override dynamic public init()
+  public var requestType: Swift.Int!
+  public var payHostURL: Swift.String!
+  public var paySessionKey: Swift.String!
+  public var payTxnSessionKey: Swift.String!
+  public var useTxnSessionKey: Swift.Bool!
+  public var payrixMerchantID: Swift.String?
+  public var payrixSandoxDemoMode: Swift.Bool!
+  public var payrixTxnID: Swift.String?
+  public var payTxn: PayrixSDK.PayCoreTxn?
+  public var pagination: Swift.Int?
+  public var currentPage: Swift.Int?
+  public var totalPages: Swift.Int?
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class PayCoreTransResponse : ObjectiveC.NSObject {
+  public var address1: Swift.String?
+  public var address2: Swift.String?
+  public var allowPartial: Swift.String?
+  public var approved: Swift.Int?
+  public var authCode: Swift.String?
+  public var authDate: Swift.String?
+  public var authorization: Swift.String?
+  public var batch: Swift.String?
+  public var captured: Swift.String?
+  public var cashback: Swift.String?
+  public var checkStage: Swift.String?
+  public var city: Swift.String?
+  public var clientIp: Swift.String?
+  public var company: Swift.String?
+  public var country: Swift.String?
+  public var created: Swift.String?
+  public var creator: Swift.String?
+  public var currency: Swift.String?
+  public var cvv: Swift.String?
+  public var transDescription: Swift.String?
+  public var descriptor: Swift.String?
+  public var discount: Swift.String?
+  public var duty: Swift.String?
+  public var email: Swift.String?
+  public var emv: Swift.String?
+  public var entryMode: Swift.String?
+  public var expiration: Swift.String?
+  public var firstName: Swift.String?
+  public var lastName: Swift.String?
+  public var fortxn: Swift.String?
+  public var fromtxn: Swift.String?
+  public var frozen: Swift.String?
+  public var idString: Swift.String?
+  public var inactive: Swift.String?
+  public var ipCreated: Swift.String?
+  public var ipModified: Swift.String?
+  public var merchant: Swift.String?
+  public var middle: Swift.String?
+  public var misused: Swift.String?
+  public var modified: Swift.String?
+  public var modifier: Swift.String?
+  public var order: Swift.String?
+  public var origin: Swift.String?
+  public var payments: PayrixSDK.PayCorePaymentObject?
+  public var phone: Swift.String?
+  public var refunded: Swift.String?
+  public var reserverd: Swift.String?
+  public var settled: Swift.String?
+  public var settledCurrency: Swift.String?
+  public var settledTotal: Swift.String?
+  public var shipping: Swift.String?
+  public var signature: Swift.String?
+  public var state: Swift.String?
+  public var status: Swift.String?
+  public var subscription: Swift.String?
+  public var swiped: Swift.String?
+  public var tax: Swift.String?
+  public var terminal: Swift.String?
+  public var terminalCapability: Swift.String?
+  public var token: Swift.String?
+  public var total: Swift.String?
+  public var type: Swift.String?
+  public var unattended: Swift.String?
+  public var zip: Swift.String?
+  public var emvResponseCode: Swift.String?
+  public var emvAuthData: Swift.String?
+  public var emvIssuerScript1: Swift.String?
+  public var emvIssuerScript2: Swift.String?
+  public var pinEntryCapability: Swift.String?
+  public var emvCVMResult: Swift.String?
+  public var payrixTxns: PayrixSDK.PayCoreTxn?
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class PayCoreSession : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreSession
+  final public let methodPath: Swift.String
+  public var login: PayrixSDK.PayCoreLogin?
+  public var key: Swift.String?
+  public var publicSession: Swift.Bool?
+  public var inactive: Swift.Bool?
+  public var frozen: Swift.Bool?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  public static func sessionFromLogin(userName: Swift.String, password: Swift.String, withCompletion completion: @escaping (PayrixSDK.PayCoreSession?, PayrixSDK.PayCoreResponseDetails?, [PayrixSDK.PayCoreError]?) -> Swift.Void)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class PayCoreResponseDetailsPage : Swift.Decodable {
+  public var current: Swift.Int?
+  public var last: Swift.Int?
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+public class PayCoreResponseDetails : Swift.Decodable {
+  public var requestID: Swift.String?
+  public var page: PayrixSDK.PayCoreResponseDetailsPage?
+  required public init(from decoder: any Swift.Decoder) throws
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayEMVTags : ObjectiveC.NSObject {
+  public static let sharedInstance: PayrixSDK.PayEMVTags
+  public var AID_4F: Swift.String?
+  public var EMVChipInd: Swift.String?
+  public var AIDName_9F12: Swift.String?
+  public var PINStmt: Swift.String?
+  public var TVRCVR_95: Swift.String?
+  public var ApprovedDeclined: Swift.String?
+  public var AuthApprovalCode: Swift.String?
+  public var TSI_9B: Swift.String?
+  public var CryptoCert_9F26: Swift.String?
+  @objc deinit
+}
+public enum PayCoreChargebackDisputeState : Swift.String, Swift.Decodable {
+  case retrieval
+  case first
+  case arbitration
+  case reversal
+  case representment
+  case preArbitration
+  case arbitrationLost
+  case arbitrationSplit
+  case arbitrationWon
+  case issuerAcceptPreArbitration
+  case issuerDeclinedPreArbitration
+  case responseToIssuerPreArbitration
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class PayCoreChargeback : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreChargeback
+  final public let methodPath: Swift.String
+  public var merchant: PayrixSDK.PayCoreMerchant?
+  public var txn: PayrixSDK.PayCoreTxn?
+  public var mid: Swift.String?
+  public var description: Swift.String?
+  public var total: Swift.Int?
+  public var representedTotal: Swift.Int?
+  public var cycle: Swift.String?
+  public var currency: Swift.String?
+  public var platform: Swift.String?
+  public var ref: Swift.String?
+  public var reason: Swift.String?
+  public var reasonCode: Swift.String?
+  public var issued: Swift.Int?
+  public var received: Swift.Int?
+  public var reply: Swift.Int?
+  public var bankRef: Swift.String?
+  public var chargebackRef: Swift.String?
+  public var status: Swift.String?
+  public var lastStatusChange: Swift.String?
+  public var inactive: Swift.Bool?
+  public var frozen: Swift.Bool?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayCoreJournal : ObjectiveC.NSObject {
+  public static let sharedInstance: PayrixSDK.PayCoreJournal
+  public func logToConsole(inSource: Swift.AnyObject, inMessage: Swift.String)
+  @objc deinit
+}
+public enum PayCoreAccountMethod : Swift.Int, Swift.Codable {
+  case checkingAccount
+  case savingsAccount
+  case corporateCheckingAccount
+  case corporateSavingsAccount
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public class PayCoreAccountDetails : Swift.Codable {
+  public var method: PayrixSDK.PayCoreAccountMethod?
+  public var number: Swift.String?
+  public var routing: Swift.String?
+  public init()
+  required public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class PayCardSharedAttr {
+  public static let bluetoothReaderStateKey: Swift.String
+  public static let bluetoothReaderSerialNumberKey: Swift.String
+  public static let bluetoothReaderManfgKey: Swift.String
+  public static let bluetoothReaderUUIDKey: Swift.String
+  public static let cardReaderTerminalIDKey: Swift.String
+  public static let cardReaderTerminalPwdKey: Swift.String
+  public static let bluetoothReaderAvailableKey: Swift.String
+  public static let audioReaderAvailableKey: Swift.String
+  public static let cardReaderDeviceTypeKey: Swift.String
+  public static let bluetoothReaderDisconnectNotice: Swift.String
+  public static let bluetoothReaderDeviceReadyNotice: Swift.String
+  public static let deviceBBPOS_Messages: [Swift.String]
+  public enum PayCardConnectMode : Swift.Int {
+    case Connection_None
+    case Connection_Audio
+    case Connection_Bluetooth
+    case Connection_USB
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum readerEntryMode : Swift.String {
+    case read_Manual_Entry
+    case read_Track1
+    case read_Track2
+    case read_MagneticStrip
+    case read_EMV_ChipCard
+    case read_Contactless_EMV
+    case read_Fallback_Magnetic
+    case read_Fallback_Keyed
+    case read_ApplePay
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum industryPOSEntryMode : Swift.String {
+    case ind_Unknown
+    case ind_Manual_Entry
+    case ind_MagneticStrip
+    case ind_BarCode
+    case ind_OCR
+    case ind_EMV_ChipCard
+    case ind_Contactless_EMV
+    case ind_Fallback_Magnetic
+    case ind_MagneticStripFromTrack2
+    case ind_ContactlessMagneticStrip
+    case ind_ICCNoCVV
+    case ind_SameAsOriginal
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum PayCardDeviceMode : Swift.Int {
+    case cardDeviceMode_Swipe
+    case cardDeviceMode_Insert
+    case cardDeviceMode_Tap
+    case cardDeviceMode_SwipeOrInsert
+    case cardDeviceMode_SwipeOrTap
+    case cardDeviceMode_SwipeOrInsertOrTap
+    case cardDeviceMode_InsertOrTap
+    case cardDeviceMode_ManualEntry
+    case cardDeviceMode_QRCode
+    case cardDeviceMode_InsertNotSwipe
+    case cardDeviceMode_Confirm
+    case cardDeviceMode_Unknown
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCardSupportedReaders : Swift.String {
+    case reader_BBPOS
+    case reader_IDTECH
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum PayCardReaderUUID : Swift.String {
+    case uuid_BBPOS
+    case uuid_IDTECH
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum PayCardBBPOSErrorType : Swift.Int {
+    case devErrorType_InvalidInput
+    case devErrorType_InvalidInput_NotNumeric
+    case devErrorType_InvalidInput_InputValueOutOfRange
+    case devErrorType_InvalidInput_InvalidDataFormat
+    case devErrorType_InvalidInput_NotAcceptAmountForThisTransactionType
+    case devErrorType_InvalidInput_NotAcceptCashbackForThisTransactionType
+    case devErrorType_Unknown
+    case devErrorType_IllegalStateException
+    case devErrorType_CommError
+    case devErrorType_CommandNotAvailable
+    case devErrorType_DeviceBusy
+    case devErrorType_CommLinkUninitialized
+    case devErrorType_InvalidFunctionInCurrentConnectionMode
+    case devErrorType_AudioFailToStart
+    case devErrorType_AudioFailToStart_OtherAudioIsPlaying
+    case devErrorType_AudioRecordingPermissionDenied
+    case devErrorType_AudioBackgroundTimeout
+    case devErrorType_BTv4NotSupported
+    case devErrorType_BTFailToStart
+    case devErrorType_BTAlreadyConnected
+    case devErrorType_HardwareNotSupported
+    case devErrorType_PCIError
+    case devErrorType_BLESecureConnectionNotSupported
+    case devErrorType_PairingError
+    case devErrorType_PairingError_IncorrectPasskey
+    case devErrorType_PairingError_AlreadyPairedWithAnotherDevice
+    case devErrorType_PairingError_RemovedPairingInformation
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCardBBPOSEMVOption : Swift.Int {
+    case emvOption_Start
+    case emvOption_StartWithForceOnline
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCardBBPOSTransactionType : Swift.Int {
+    case devTransactionType_Goods
+    case devTransactionType_Services
+    case devTransactionType_Cashback
+    case devTransactionType_Inquiry
+    case devTransactionType_Transfer
+    case devTransactionType_Payment
+    case devTransactionType_Refund
+    case devTransactionType_Void
+    case devTransactionType_Reversal
+    case devTransactionType_Cash
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCardBBPOSCurrencyChars : Swift.Int {
+    case devCurrencyCharacter_A
+    case devCurrencyCharacter_B
+    case devCurrencyCharacter_C
+    case devCurrencyCharacter_D
+    case devCurrencyCharacter_E
+    case devCurrencyCharacter_F
+    case devCurrencyCharacter_G
+    case devCurrencyCharacter_H
+    case devCurrencyCharacter_I
+    case devCurrencyCharacter_J
+    case devCurrencyCharacter_K
+    case devCurrencyCharacter_L
+    case devCurrencyCharacter_M
+    case devCurrencyCharacter_N
+    case devCurrencyCharacter_O
+    case devCurrencyCharacter_P
+    case devCurrencyCharacter_Q
+    case devCurrencyCharacter_R
+    case devCurrencyCharacter_S
+    case devCurrencyCharacter_T
+    case devCurrencyCharacter_U
+    case devCurrencyCharacter_V
+    case devCurrencyCharacter_W
+    case devCurrencyCharacter_X
+    case devCurrencyCharacter_Y
+    case devCurrencyCharacter_Z
+    case devCurrencyCharacter_Space
+    case devCurrencyCharacter_Dirham
+    case devCurrencyCharacter_Dollar
+    case devCurrencyCharacter_Euro
+    case devCurrencyCharacter_IndianRupee
+    case devCurrencyCharacter_Pound
+    case devCurrencyCharacter_SaudiRiyal
+    case devCurrencyCharacter_SaudiRiyal2
+    case devCurrencyCharacter_Won
+    case devCurrencyCharacter_Yen
+    case devCurrencyCharacter_SlashAndDot
+    case devCurrencyCharacter_Dot
+    case devCurrencyCharacter_Yuan
+    case devCurrencyCharacter_NewShekel
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCardBBPOSCheckCardResult : Swift.Int {
+    case devCheckCardResult_NoCard
+    case devCheckCardResult_InsertedCard
+    case devCheckCardResult_NotIccCard
+    case devCheckCardResult_BadSwipe
+    case devCheckCardResult_SwipedCard
+    case devCheckCardResult_MagHeadFail
+    case devCheckCardResult_UseIccCard
+    case devCheckCardResult_TapCardDetected
+    case devCheckCardResult_ManualPanEntry
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCardBBPOSTransactionResult : Swift.Int {
+    case devTransactionResult_Approved
+    case devTransactionResult_Terminated
+    case devTransactionResult_Declined
+    case devTransactionResult_CanceledOrTimeout
+    case devTransactionResult_CapkFail
+    case devTransactionResult_NotIcc
+    case devTransactionResult_CardBlocked
+    case devTransactionResult_DeviceError
+    case devTransactionResult_SelectApplicationFail
+    case devTransactionResult_CardNotSupported
+    case devTransactionResult_MissingMandatoryData
+    case devTransactionResult_NoEmvApps
+    case devTransactionResult_InvalidIccData
+    case devTransactionResult_ConditionsOfUseNotSatisfied
+    case devTransactionResult_ApplicationBlocked
+    case devTransactionResult_IccCardRemoved
+    case devTransactionResult_CardSchemeNotMatched
+    case devTransactionResult_Canceled
+    case devTransactionResult_Timeout
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc deinit
+}
+public protocol DeviceControlBBPOSDelegate {
+  func didBTConnect()
+  func didBTDisconnect()
+  func didBTTimeout()
+  func didReturnDeviceData(deviceInfo: [Swift.AnyHashable : Any]!)
+  func didReturnDevError(errorType: Swift.Int, errorMessage: Swift.String)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class DeviceControllerBBPOS : ObjectiveC.NSObject, PayrixSDK.BBDeviceControllerDelegate, PayrixSDK.PayCardRDRMgrDelegate {
+  public static let sharedInstance: PayrixSDK.DeviceControllerBBPOS
+  public var delegate: (any PayrixSDK.DeviceControlBBPOSDelegate)?
+  public typealias DeviceControllerDelegate = PayrixSDK.DeviceControlBBPOSDelegate
+  public func loadDynamicDeviceDriver()
+  public func connectBTReader(useNumber: Swift.String)
+  public func debugEnable(enableDebug: Swift.Bool)
+  public func scanForReaders()
+  public func stopScan()
+  @objc public func onBTReturnScanResults(_ devices: [Any]!)
+  public func didFindRDRDevices(rdrDevices: [CoreBluetooth.CBPeripheral])
+  @objc public func onBTConnected(_ connectedDevice: ObjectiveC.NSObject!)
+  @objc public func onBTScanTimeout()
+  public func disconnectBTReader()
+  @objc public func onBTDisconnected()
+  public func connectAudioReader() -> Swift.Bool
+  public func disconnectAudioReader()
+  public func detectConnectionType() -> PayrixSDK.SharedDriverAttr.PayCardDevConnectMode
+  public func getDeviceData()
+  @objc public func onReturnDeviceInfo(_ deviceInfo: [Swift.AnyHashable : Any]!)
+  @objc public func onError(_ errorType: PayrixSDK.BBDeviceErrorType, errorMessage: Swift.String)
+  @objc deinit
+}
+public enum PayCorePlanSchedule : Swift.Int, Swift.Codable {
+  case daily
+  case weekly
+  case monthly
+  case annually
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class PayCorePlan : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCorePlan
+  final public let methodPath: Swift.String
+  public var merchant: PayrixSDK.PayCoreMerchant?
+  public var name: Swift.String?
+  public var description: Swift.String?
+  public var schedule: PayrixSDK.PayCorePlanSchedule?
+  public var scheduleFactor: Swift.Int?
+  public var amount: Swift.Int?
+  public var inactive: Swift.Bool?
+  public var frozen: Swift.Bool?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class PayCoreCustomer : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreCustomer
+  final public let methodPath: Swift.String
+  public var login: PayrixSDK.PayCoreLogin?
+  public var merchant: PayrixSDK.PayCoreMerchant?
+  public var first: Swift.String?
+  public var middle: Swift.String?
+  public var last: Swift.String?
+  public var company: Swift.String?
+  public var email: Swift.String?
+  public var fax: Swift.String?
+  public var phone: Swift.String?
+  public var country: Swift.String?
+  public var zip: Swift.String?
+  public var state: Swift.String?
+  public var city: Swift.String?
+  public var address1: Swift.String?
+  public var address2: Swift.String?
+  public var inactive: Swift.Bool?
+  public var frozen: Swift.Bool?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+public enum PayCoreMerchantStatus : Swift.Int, Swift.Codable {
+  case notReady
+  case ready
+  case boarded
+  case manual
+  case denied
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum PayCoreTaxIDStatus : Swift.Int, Swift.Codable {
+  case pending
+  case valid
+  case invalid
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class PayCoreMerchant : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreMerchant
+  final public let methodPath: Swift.String
+  public var lastActivity: Foundation.Date?
+  public var entity: PayrixSDK.PayCoreEntity?
+  public var dba: Swift.String?
+  public var new: Swift.Bool?
+  public var established: Swift.Int?
+  public var annualCCSales: Swift.Int?
+  public var avgTicket: Swift.Int?
+  public var amex: Swift.String?
+  public var discover: Swift.String?
+  public var mcc: Swift.String?
+  public var status: PayrixSDK.PayCoreMerchantStatus?
+  public var boarded: Swift.Int?
+  public var tnStatus: PayrixSDK.PayCoreTaxIDStatus?
+  public var tcVersion: Swift.Int?
+  public var inactive: Swift.Bool?
+  public var frozen: Swift.Bool?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class PayCorePaymentObject : ObjectiveC.NSObject {
+  public var bin: Swift.String?
+  public var method: Swift.Int?
+  public var payment: Swift.String?
+  public var routing: Swift.String?
+  public var number: Swift.String?
+  public var cvv: Swift.String?
+  public var track: Swift.String?
+  public var ksn: Swift.String?
+  public var encrypted: Swift.String?
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class SharedDriverAttr : ObjectiveC.NSObject {
+  public enum industryEntryMode : Swift.String {
+    case read_Unknown
+    case read_Manual_Entry
+    case read_MagneticStrip
+    case read_BarCode
+    case read_OCR
+    case read_EMV_ChipCard
+    case read_Contactless_EMV
+    case read_Fallback_Magnetic
+    case read_MagneticStripFromTrack2
+    case read_ContactlessMagneticStrip
+    case read_ICCNoCVV
+    case read_SameAsOriginal
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum PayCardDevConnectMode : Swift.Int {
+    case devConnection_None
+    case devConnection_Audio
+    case devConnection_Bluetooth
+    case devConnection_USB
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCardEMVOption : Swift.Int {
+    case emvOption_Start
+    case emvOption_StartWithForceOnline
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCardTransactionType : Swift.Int {
+    case devTransactionType_Goods
+    case devTransactionType_Services
+    case devTransactionType_Cashback
+    case devTransactionType_Inquiry
+    case devTransactionType_Transfer
+    case devTransactionType_Payment
+    case devTransactionType_Refund
+    case devTransactionType_Void
+    case devTransactionType_Reversal
+    case devTransactionType_Cash
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCardCurrencyChars : Swift.Int {
+    case devCurrencyCharacter_A
+    case devCurrencyCharacter_B
+    case devCurrencyCharacter_C
+    case devCurrencyCharacter_D
+    case devCurrencyCharacter_E
+    case devCurrencyCharacter_F
+    case devCurrencyCharacter_G
+    case devCurrencyCharacter_H
+    case devCurrencyCharacter_I
+    case devCurrencyCharacter_J
+    case devCurrencyCharacter_K
+    case devCurrencyCharacter_L
+    case devCurrencyCharacter_M
+    case devCurrencyCharacter_N
+    case devCurrencyCharacter_O
+    case devCurrencyCharacter_P
+    case devCurrencyCharacter_Q
+    case devCurrencyCharacter_R
+    case devCurrencyCharacter_S
+    case devCurrencyCharacter_T
+    case devCurrencyCharacter_U
+    case devCurrencyCharacter_V
+    case devCurrencyCharacter_W
+    case devCurrencyCharacter_X
+    case devCurrencyCharacter_Y
+    case devCurrencyCharacter_Z
+    case devCurrencyCharacter_Space
+    case devCurrencyCharacter_Dirham
+    case devCurrencyCharacter_Dollar
+    case devCurrencyCharacter_Euro
+    case devCurrencyCharacter_IndianRupee
+    case devCurrencyCharacter_Pound
+    case devCurrencyCharacter_SaudiRiyal
+    case devCurrencyCharacter_SaudiRiyal2
+    case devCurrencyCharacter_Won
+    case devCurrencyCharacter_Yen
+    case devCurrencyCharacter_SlashAndDot
+    case devCurrencyCharacter_Dot
+    case devCurrencyCharacter_Yuan
+    case devCurrencyCharacter_NewShekel
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCardCheckCardResult : Swift.Int {
+    case devCheckCardResult_NoCard
+    case devCheckCardResult_InsertedCard
+    case devCheckCardResult_NotIccCard
+    case devCheckCardResult_BadSwipe
+    case devCheckCardResult_SwipedCard
+    case devCheckCardResult_MagHeadFail
+    case devCheckCardResult_UseIccCard
+    case devCheckCardResult_TapCardDetected
+    case devCheckCardResult_ManualPanEntry
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCardTransactionResult : Swift.Int {
+    case devTransactionResult_Approved
+    case devTransactionResult_Terminated
+    case devTransactionResult_Declined
+    case devTransactionResult_CanceledOrTimeout
+    case devTransactionResult_CapkFail
+    case devTransactionResult_NotIcc
+    case devTransactionResult_CardBlocked
+    case devTransactionResult_DeviceError
+    case devTransactionResult_SelectApplicationFail
+    case devTransactionResult_CardNotSupported
+    case devTransactionResult_MissingMandatoryData
+    case devTransactionResult_NoEmvApps
+    case devTransactionResult_InvalidIccData
+    case devTransactionResult_ConditionsOfUseNotSatisfied
+    case devTransactionResult_ApplicationBlocked
+    case devTransactionResult_IccCardRemoved
+    case devTransactionResult_CardSchemeNotMatched
+    case devTransactionResult_Canceled
+    case devTransactionResult_Timeout
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCardErrorType : Swift.Int {
+    case devErrorType_InvalidInput
+    case devErrorType_InvalidInput_NotNumeric
+    case devErrorType_InvalidInput_InputValueOutOfRange
+    case devErrorType_InvalidInput_InvalidDataFormat
+    case devErrorType_InvalidInput_NotAcceptAmountForThisTransactionType
+    case devErrorType_InvalidInput_NotAcceptCashbackForThisTransactionType
+    case devErrorType_Unknown
+    case devErrorType_IllegalStateException
+    case devErrorType_CommError
+    case devErrorType_CommandNotAvailable
+    case devErrorType_DeviceBusy
+    case devErrorType_CommLinkUninitialized
+    case devErrorType_InvalidFunctionInCurrentConnectionMode
+    case devErrorType_AudioFailToStart
+    case devErrorType_AudioFailToStart_OtherAudioIsPlaying
+    case devErrorType_AudioRecordingPermissionDenied
+    case devErrorType_AudioBackgroundTimeout
+    case devErrorType_BTv4NotSupported
+    case devErrorType_BTFailToStart
+    case devErrorType_BTAlreadyConnected
+    case devErrorType_HardwareNotSupported
+    case devErrorType_PCIError
+    case devErrorType_BLESecureConnectionNotSupported
+    case devErrorType_PairingError
+    case devErrorType_PairingError_IncorrectPasskey
+    case devErrorType_PairingError_AlreadyPairedWithAnotherDevice
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum PayCardDeviceMode : Swift.Int {
+    case cardDeviceMode_Swipe
+    case cardDeviceMode_Insert
+    case cardDeviceMode_Tap
+    case cardDeviceMode_SwipeOrInsert
+    case cardDeviceMode_SwipeOrTap
+    case cardDeviceMode_SwipeOrInsertOrTap
+    case cardDeviceMode_InsertOrTap
+    case cardDeviceMode_ManualEntry
+    case cardDeviceMode_QRCode
+    case cardDeviceMode_InsertNotSwipe
+    case cardDeviceMode_Confirm
+    case cardDeviceMode_Unknown
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public static let devBBPOS_Messages: [Swift.String]
+  @objc override dynamic public init()
+  @objc deinit
+}
+public struct PayCoreSearchParameter {
+  public enum PayCoreSearchFunction : Swift.String {
+    case sort
+    case equals
+    case exact
+    case less
+    case greater
+    case like
+    case `in`
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public var propertyName: Swift.String
+  public var searchFunction: PayrixSDK.PayCoreSearchParameter.PayCoreSearchFunction
+  public var parameterValue: Swift.String
+  public init(_ propertyName: Swift.String, _ searchFunction: PayrixSDK.PayCoreSearchParameter.PayCoreSearchFunction, _ parameterValue: Swift.String)
+}
+@_inheritsConvenienceInitializers public class PayCoreMember : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreMember
+  final public let methodPath: Swift.String
+  public var merchant: PayrixSDK.PayCoreMerchant?
+  public var title: Swift.String?
+  public var first: Swift.String?
+  public var middle: Swift.String?
+  public var last: Swift.String?
+  public var ssn: Swift.String?
+  public var dob: Swift.Int?
+  public var dl: Swift.String?
+  public var dlstate: Swift.String?
+  public var ownership: Swift.Int?
+  public var email: Swift.String?
+  public var fax: Swift.String?
+  public var phone: Swift.String?
+  public var address1: Swift.String?
+  public var address2: Swift.String?
+  public var city: Swift.String?
+  public var state: Swift.String?
+  public var zip: Swift.String?
+  public var country: Swift.String?
+  public var primary: Swift.Bool?
+  public var inactive: Swift.Bool?
+  public var frozen: Swift.Bool?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+public class PayCoreBase : Swift.Codable {
+  public var id: Swift.String?
+  public var created: Foundation.Date?
+  public var modified: Foundation.Date?
+  public var creator: PayrixSDK.PayCoreLogin?
+  public var modifier: PayrixSDK.PayCoreLogin?
+  public init()
+  required public init(from decoder: any Swift.Decoder) throws
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class RefundRequest : ObjectiveC.NSObject {
+  public static let sharedInstance: PayrixSDK.RefundRequest
+  public var requestType: Swift.Int!
+  public var payrixMerchantID: Swift.String!
+  public var refundAmt: Swift.Int!
+  public var originalTxnID: Swift.String!
+  public var payTxn: PayrixSDK.PayCoreTxn?
+  public var payHostURL: Swift.String!
+  public var paySessionKey: Swift.String!
+  public var payTxnSessionKey: Swift.String!
+  public var useTxnSessionKey: Swift.Bool!
+  public var payrixSandoxDemoMode: Swift.Bool!
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class TxnSessionConfiguration : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.TxnSessionConfiguration
+  final public let methodPath: Swift.String
+  public var duration: Swift.Int?
+  public var maxTimesApproved: Swift.Int?
+  public var maxTimesUse: Swift.Int?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+public enum PayCoreBatchStatus : Swift.Int, Swift.Codable {
+  case open
+  case closed
+  case processing
+  case processed
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class PayCoreBatch : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreBatch
+  final public let methodPath: Swift.String
+  public var merchant: PayrixSDK.PayCoreMerchant?
+  public var date: Foundation.Date?
+  public var status: PayrixSDK.PayCoreBatchStatus?
+  public var clientRef: Swift.String?
+  public var inactive: Swift.Bool?
+  public var frozen: Swift.Bool?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+public struct CardStatus {
+  public var value: Swift.UInt
+}
+public protocol PayCardMasterDelegate {
+  func didReceiveSwipeSuccess(gateWayData: [Swift.String : Any], cardInfo: [Swift.String : Swift.String?])
+  func didReceiveCardReaderIssue(issueMsg: Swift.String)
+  func didReceiveReaderModeUpdate(currentMode: PayrixSDK.PayCardSharedAttr.PayCardDeviceMode)
+  func requestForHostEMVProcess(gatewayData: [Swift.String : Any], encEMV: Any, emvKSN: Any, encMethod: Swift.String, receiptTags: [Swift.String : Swift.String])
+  func didReceiveFinalEMVBatchData(tlv: Swift.String, receiptData: [Swift.String : Swift.String])
+  func didCompleteEMVCardTransaction(successful: Swift.Bool, transactionMsg: Swift.String?)
+  func didReceiveMessageToDisplay(message: Swift.String)
+  func didReceivePINEntryRequest(message: Swift.String)
+  func didReceiveAppSelection(forApps: [[Swift.String : Swift.Int]])
+  func didCompleteAppSimulation()
+  func didReceiveDeviceReversal(gatewayData: [Swift.String : Any])
+  func didReceiveCardSuccess(gateWayData: [Swift.String : Any], cardStatus: PayrixSDK.CardStatus, cardInfo: [Swift.String : Swift.String?])
+  func didReceiveCardIssue(issueMsg: Swift.String, cardStatus: PayrixSDK.CardStatus)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayCardMaster : ObjectiveC.NSObject, PayrixSDK.TransactionControlBBPOSDelegate, PayrixSDK.TransactionControlIDTCHDelegate {
+  public static let sharedInstance: PayrixSDK.PayCardMaster
+  public var delegate: (any PayrixSDK.PayCardMasterDelegate)?
+  public func doReadCard(withTotalAmt: Swift.Int, withTax: Swift.Int, withTip: Swift.Int, withCurrency: Swift.String, withURL: Swift.String, posMode: PayrixSDK.PayCardSharedAttr.PayCardDeviceMode)
+  public func doReadCard(withTotalAmt: Swift.Int, withTax: Swift.Int, withTip: Swift.Int, withCurrency: Swift.String, withURL: Swift.String, posMode: PayrixSDK.PayCardSharedAttr.PayCardDeviceMode, forDevice: PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders?)
+  public func didWait(checkCardMode: Swift.Int)
+  public func didRequestPinEntry(pinEntrySource: PayrixSDK.BBDevicePinEntrySource)
+  public func doHandlePINEntry(enteredPIN: Swift.String)
+  public func doCancelCheckCardResult()
+  public func didCancelCheckCardResult(isSuccess: Swift.Bool)
+  public func didRequestAppSelection(forApps: [[Swift.String : Swift.Int]]!)
+  public func doSelectedAppResponse(appIndex: Swift.Int, appName: Swift.String)
+  public func doCancelSelectedApp()
+  public func didReturnSevereError(errorMsg: Swift.String)
+  public func didReceiveMessage(deviceMessage: Swift.String)
+  public func didReturnCardResult(cardResult: Swift.Int, cardData: [Swift.AnyHashable : Any]!)
+  public func doDetermineCardType(maskedPAN: Swift.String) -> Swift.String
+  public func didRequestFinalConfirm()
+  public func didReceiveReversalData(reversalTLV: Swift.String!)
+  public func doCardConfirm(confirmed: Swift.Bool)
+  public func didRequestOnlineProcess(tlv: Swift.String!, cardData: [Swift.AnyHashable : Any]?)
+  public func responseFromHostEMVProcess(tag8AAuthCode: Any?, tag91AuthData: Any?, tag71Script1: Any?, tag72Script2: Any?)
+  public func didReturnBatchData(tlv: Swift.String)
+  public func didReturnTxnResult(txnResult: Swift.Int)
+  public func doDecodeTLV(tlv: Swift.String) -> [Swift.AnyHashable : Any]?
+  public func doEncodeTLV(tagsNvalues: [Swift.AnyHashable : Any]) -> Swift.String?
+  public func didReturnTxnError(errorType: Swift.Int, errorMessage: Swift.String)
+  public func didReturnDeviceInfo(forTxn: [Swift.AnyHashable : Any]!)
+  public func doPrintObj(source: Swift.AnyObject!, title: Swift.String)
+  public func didReturnNoDeviceInfo()
+  public func setSavedTrack(origTrack: Swift.String)
+  public func getSavedTrack() -> Swift.String?
+  public func delSavedTrack()
+  public func setSavedKSN(origVal: Swift.String)
+  public func getSavedKSN() -> Swift.String?
+  public func delSavedKSN()
+  public func setSavedEMV(origVal: Swift.String)
+  public func getSavedEMV() -> Swift.String?
+  public func delSavedEMV()
+  @objc deinit
+}
+extension PayrixSDK.PayCardMasterDelegate {
+  public func didReceiveSwipeSuccess(gateWayData: [Swift.String : Any], cardInfo: [Swift.String : Swift.String?])
+  public func didReceiveCardReaderIssue(issueMsg: Swift.String)
+  public func didReceiveReaderModeUpdate(currentMode: PayrixSDK.PayCardSharedAttr.PayCardDeviceMode)
+  public func requestForHostEMVProcess(gatewayData: [Swift.String : Any], encEMV: Any, emvKSN: Any, encMethod: Swift.String, receiptTags: [Swift.String : Swift.String])
+  public func didReceiveFinalEMVBatchData(tlv: Swift.String, receiptData: [Swift.String : Swift.String])
+  public func didCompleteEMVCardTransaction(successful: Swift.Bool, transactionMsg: Swift.String?)
+  public func didReceiveMessageToDisplay(message: Swift.String)
+  public func didReceivePINEntryRequest(message: Swift.String)
+  public func didReceiveAppSelection(forApps: [[Swift.String : Swift.Int]])
+  public func didCompleteAppSimulation()
+  public func didReceiveDeviceReversal(gatewayData: [Swift.String : Any])
+  public func didReceiveCardSuccess(gateWayData: [Swift.String : Any], cardStatus: PayrixSDK.CardStatus, cardInfo: [Swift.String : Swift.String?])
+  public func didReceiveCardIssue(issueMsg: Swift.String, cardStatus: PayrixSDK.CardStatus)
+}
+public protocol PayCardRDRMgrDelegate {
+  func didFindRDRDevices(rdrDevices: [Swift.String], btUUIDs: [Swift.String : Swift.String], manfgNames: [Swift.String : Swift.String])
+  func didFindRDRDevices(rdrDevices: [CoreBluetooth.CBPeripheral])
+  func didSuccessfulBTConnect()
+  func didReceiveBTConnectIssue(errMsg: Swift.String)
+  func didReceiveBTScanTimeOut()
+  func didReceiveBTDisconnect()
+  func didReceiveCardReaderError(errNumber: Swift.Int, errMessage: Swift.String)
+  func didReceiveCardReaderConnectionFailed(error: Swift.String)
+  func didReceiveAudioConnectedNotice()
+  func didReceiveAudioAttachedNotice()
+  func didReceiveAudioDisconnectedNotice()
+  func didReceiveDeviceInfo(deviceInfo: [Swift.AnyHashable : Any]!)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayCardRDRMgr : ObjectiveC.NSObject, PayrixSDK.DeviceControlBBPOSDelegate, PayrixSDK.DeviceControlIDTCHDelegate {
+  public static let sharedInstance: PayrixSDK.PayCardRDRMgr
+  public var delegate: (any PayrixSDK.PayCardRDRMgrDelegate)?
+  public var delegateForDeviceControllerBBPos: (any PayrixSDK.PayCardRDRMgrDelegate)?
+  public func startPayCardRDRMgr(forDevice: PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders?)
+  public func stopScan()
+  public func scanForReaders()
+  public func didReturnDeviceList(deviceList: [Swift.String], peripheralList: [Swift.String : Swift.String], manfgList: [Swift.String : Swift.String])
+  public func connectBTReader(useSerialNumber: Swift.String)
+  public func connectBTReader(useDeviceID: Swift.String)
+  public func enableDebugger(debugOn: Swift.Bool)
+  public func connectAudioReader()
+  public func disconnectAudioReader()
+  public func detectConnectionType() -> PayrixSDK.PayCardSharedAttr.PayCardConnectMode
+  public func detectAudioReaderChange(detectOn: Swift.Bool)
+  public func isAudioReaderAttached() -> Swift.Bool
+  public func isAudioReaderConnected() -> Swift.Bool
+  public func isReaderConnected() -> Swift.Bool
+  public func isBTReaderConnected() -> Swift.Bool
+  public func disconnectReader()
+  public func disconnectBTReader()
+  public func getDeviceData()
+  public func didReturnDeviceData(deviceInfo: [Swift.AnyHashable : Any]!)
+  public func didBTConnect()
+  public func didBTTimeout()
+  public func didBTDisconnect()
+  public func didReturnDevError(errorType: Swift.Int, errorMessage: Swift.String)
+  @objc deinit
+}
+extension PayrixSDK.PayCardRDRMgrDelegate {
+  public func didFindRDRDevices(rdrDevices: [Swift.String], btUUIDs: [Swift.String : Swift.String], manfgNames: [Swift.String : Swift.String])
+  public func didFindRDRDevices(rdrDevices: [CoreBluetooth.CBPeripheral])
+  public func didSuccessfulBTConnect()
+  public func didReceiveCardReaderError(errNumber: Swift.Int, errMessage: Swift.String)
+  public func didReceiveCardReaderConnectionFailed(error: Swift.String)
+  public func didReceiveAudioConnectedNotice()
+  public func didReceiveAudioDisconnectedNotice()
+  public func didReceiveDeviceInfo(deviceInfo: [Swift.AnyHashable : Any]!)
+  public func didReceiveBTConnectIssue(errMsg: Swift.String)
+  public func didReceiveBTDisconnect()
+  public func didReceiveBTScanTimeOut()
+  public func didReceiveAudioAttachedNotice()
+}
+extension PayrixSDK.PayCardRDRMgr : CoreBluetooth.CBCentralManagerDelegate, CoreBluetooth.CBPeripheralDelegate {
+  @objc dynamic public func centralManagerDidUpdateState(_ central: CoreBluetooth.CBCentralManager)
+  public func paycardReaderScan(withCBUUIDs: [CoreBluetooth.CBUUID]?)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didDiscover peripheral: CoreBluetooth.CBPeripheral, advertisementData: [Swift.String : Any], rssi RSSI: Foundation.NSNumber)
+}
+public enum PayCorePaymentMethod : Swift.Int, Swift.Decodable {
+  case AmericanExpress
+  case Visa
+  case MasterCard
+  case DinersClub
+  case Discover
+  case CheckingAccount
+  case SavingsAccount
+  case CorporateCheckingAccount
+  case CorporateSavingsAccount
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class PayCorePayment : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCorePayment
+  final public let methodPath: Swift.String
+  public var method: PayrixSDK.PayCorePaymentMethod?
+  public var number: Swift.String?
+  public var routing: Swift.String?
+  public var cvv: Swift.Int?
+  public var track: Swift.String?
+  public var ksn: Swift.String?
+  public var encrypted: Swift.String?
+  public var emv: Swift.String?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class PayCoreTxnMetadata : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreTxnMetadata
+  final public let methodPath: Swift.String
+  public var txn: PayrixSDK.PayCoreTxn?
+  public var type: Swift.String?
+  public var field: Swift.String?
+  public var value: Swift.String?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayRequest : ObjectiveC.NSObject {
+  public static let sharedInstance: PayrixSDK.PayRequest
+  public func doPayInit()
+  public var payTotalAmt: Swift.Int!
+  public var payTaxAmt: Swift.Int!
+  public var payTipAmt: Swift.Int!
+  public var payCurrencyCode: Swift.String!
+  public var payHostURL: Swift.String!
+  public var payDeviceMode: PayrixSDK.PaySharedAttributes.PayDeviceMode!
+  public var paySessionKey: Swift.String!
+  public var payrixMerchantID: Swift.String!
+  public var payrixSandoxDemoMode: Swift.Bool!
+  public var payManualEntry: Swift.Bool?
+  public var order: Swift.String?
+  public var payAmount: Swift.Int?
+  public var payTaxPercent: Swift.Int?
+  public var payTipPercent: Swift.Int?
+  public var payCardHolder: Swift.String?
+  public var payCCNumber: Swift.String?
+  public var payCardType: PayrixSDK.PaySharedAttributes.CCType?
+  public var payCardCVV: Swift.String?
+  public var payCardExp: Swift.String?
+  public var payOrigin: PayrixSDK.PaySharedAttributes.PayTxnOrigin?
+  public var payAddress1: Swift.String?
+  public var payAddress2: Swift.String?
+  public var payCity: Swift.String?
+  public var payStateProvince: Swift.String?
+  public var payPostalCodeZip: Swift.String?
+  public var appSelectionIndex: Swift.Int?
+  public var appSelectionName: Swift.String?
+  public var txnSessionKey: Swift.String?
+  public var useTxnSessionKey: Swift.Bool?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class PayCoreTxnData : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreTxnData
+  final public let methodPath: Swift.String
+  public var txn: PayrixSDK.PayCoreTxn?
+  public var signature: Swift.String?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayResponse : ObjectiveC.NSObject {
+  public static let sharedInstance: PayrixSDK.PayResponse
+  public var merchantID: Swift.String?
+  public var merchantDBA: Swift.String?
+  public var transactionID: Swift.String?
+  public var amount: Swift.Int?
+  public var ccNumber: Swift.String?
+  public var ccCardType: PayrixSDK.PaySharedAttributes.CCType?
+  public var ccName: Swift.String?
+  public var ccEXP: Swift.String?
+  public var ccCVV: Swift.String?
+  public var ccZip: Swift.String?
+  public var tipAbsoluteAmount: Swift.Int?
+  public var taxPercentage: Swift.Int?
+  public var signature: UIKit.UIImage?
+  public var signatureBase64Encoded: Swift.String?
+  public var errorMessages: [Swift.String]?
+  public var tag8ARespCode: Swift.String?
+  public var tag91AuthData: Swift.String?
+  public var tag71Script1: Swift.String?
+  public var tag72Script2: Swift.String?
+  public var appSelection: [[Swift.String : Swift.Int]]?
+  public var tenderType: Swift.String?
+  public var posEntryMode: Swift.String?
+  public var receiptAID_4F: Swift.String?
+  public var receiptEMVChipInd: Swift.String?
+  public var receiptAIDName_9F12: Swift.String?
+  public var receiptPINStmt: Swift.String?
+  public var receiptTVRCVR_95: Swift.String?
+  public var receiptApprovedDeclined: Swift.String?
+  public var receiptAuthApprovalCode: Swift.String?
+  public var receiptTSI_9B: Swift.String?
+  public var receiptCryptoCert_9F26: Swift.String?
+  public var receiptAppLabel: Swift.String?
+  public var receiptSignLineRequired: Swift.Bool?
+  public var receiptAddressLine1: Swift.String?
+  public var receiptAddressLine2: Swift.String?
+  public var receiptCity: Swift.String?
+  public var receiptStateprovince: Swift.String?
+  public var receiptPostalCodezip: Swift.String?
+  public var receiptCountryCode: Swift.String?
+  public var receiptTerminal: Swift.String?
+  public var receiptCardBrandName: Swift.String?
+  public var finalEMVTags: [Swift.AnyHashable : Any]?
+  public var payTxn: PayrixSDK.PayCoreTransResponse?
+  public var originalPayRequest: PayrixSDK.PayRequest?
+  public var appSelectionIndex: Swift.Int?
+  public var appSelectionName: Swift.String?
+  public var debugSDKData: [Swift.String : Swift.String]?
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class TxnDataResponse : ObjectiveC.NSObject {
+  public static let sharedInstance: PayrixSDK.TxnDataResponse
+  public func doInit(merchantID: Swift.String?, TransactionID: Swift.String?)
+  public var merchantID: Swift.String?
+  public var TransactionID: Swift.String?
+  public var currentPage: Swift.Int?
+  public var totalPages: Swift.Int?
+  public var requestErrors: [Swift.String]?
+  public var payrixTxns: [PayrixSDK.PayCoreTxn]?
+  public var txnsRefundEligible: Swift.Bool?
+  @objc deinit
+}
+public enum PayCoreCCType : Swift.Int {
+  case AmericanExpress
+  case Visa
+  case MasterCard
+  case DinersClub
+  case Discover
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public protocol TransactionControlIDTCHDelegate {
+  func didWait(checkCardMode: Swift.Int)
+  func didReceiveMessage(deviceMessage: Swift.String)
+  func didReturnCardResult(cardResult: Swift.Int, cardData: [Swift.AnyHashable : Any]!)
+  func didRequestFinalConfirm()
+  func didRequestOnlineProcess(tlv: Swift.String!, cardData: [Swift.AnyHashable : Any]?)
+  func didReturnBatchData(tlv: Swift.String)
+  func didReturnTxnResult(txnResult: Swift.Int)
+  func didReturnTxnError(errorType: Swift.Int, errorMessage: Swift.String)
+  func didReturnDeviceInfo(forTxn: [Swift.AnyHashable : Any]!)
+  func didReturnNoDeviceInfo()
+  func didReturnSevereError(errorMsg: Swift.String)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class TransactionControllerIDTCH : ObjectiveC.NSObject, PayrixSDK.IDT_VP3300_Delegate {
+  public static let sharedInstance: PayrixSDK.TransactionControllerIDTCH
+  public var delegate: (any PayrixSDK.TransactionControlIDTCHDelegate)?
+  public typealias TransactionControllerDelegate = PayrixSDK.TransactionControlIDTCHDelegate
+  public func loadDynamicTransactionDriver()
+  public func doCardReaderTransaction(withTxnData: [Swift.String : Any])
+  @objc public func deviceConnected()
+  @objc public func deviceMessage(_ message: Swift.String!)
+  @objc public func swipeMSRData(_ cardData: PayrixSDK.IDTMSRData!)
+  public func swipeMSRDataEMV(emvData: PayrixSDK.IDTEMVData!)
+  @objc public func emvTransactionData(_ emvData: PayrixSDK.IDTEMVData!, errorCode error: Swift.Int32)
+  public func doPinEntry(pinData: [Swift.String : Any])
+  public func doCardConfirm(confirmed: Swift.Bool)
+  public func doSendHostEMVResponse(hostEMVData: [Swift.AnyHashable : Any])
+  public func doDecodeTLV(tlv: Swift.String) -> [Swift.AnyHashable : Any]?
+  public func doEncodeTLV(tagsNvalues: [Swift.AnyHashable : Any]) -> Swift.String?
+  public func doVerifyDeviceStartProcess()
+  @objc public func deviceDisconnected()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class PayCoreSubscription : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreSubscription
+  final public let methodPath: Swift.String
+  public var plan: PayrixSDK.PayCorePlan?
+  public var start: Swift.Int?
+  public var finish: Swift.Int?
+  public var tax: Swift.Int?
+  public var descriptor: Swift.String?
+  public var inactive: Swift.Bool?
+  public var frozen: Swift.Bool?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class PayCoreFund : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreFund
+  final public let methodPath: Swift.String
+  public var entity: PayrixSDK.PayCoreEntity?
+  public var currency: Swift.String?
+  public var reserved: Swift.Int?
+  public var pending: Swift.String?
+  public var available: Swift.Int?
+  public var total: Swift.Int?
+  public var inactive: Swift.Bool?
+  public var frozen: Swift.Bool?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+public enum PayCoreTxnType : Swift.Int, Swift.Decodable {
+  case saleTransaction
+  case authTransaction
+  case captureTransaction
+  case reverseAuthorization
+  case refundTransaction
+  case echeckSaleTransaction
+  case eCheckRefundTransaction
+  case echeckPreSaleTransaction
+  case echeckPreRefundTransaction
+  case echeckRedepositTransaction
+  case echeckAccountVerificationTransaction
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum PayCoreTxnOrigin : Swift.Int, Swift.Decodable {
+  case creditCardTerminal
+  case eCommerceSystem
+  case mailOrderOrTelephoneOrder
+  case applePay
+  case txn3DSecureAuthorized
+  case txn3DSecure
+  case recurringTxnOnCard
+  case payframe
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum PayCoreTxnStatus : Swift.Int, Swift.Decodable {
+  case pending
+  case approved
+  case failed
+  case captured
+  case settled
+  case returned
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum PayCoreTxnReserved : Swift.Int, Swift.Decodable {
+  case notReserved
+  case blockCapture
+  case manualOverride
+  case moveIntoReserve
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class PayCoreTxn : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreTxn
+  final public let methodPath: Swift.String
+  public var ipCreated: Swift.String?
+  public var ipModified: Swift.String?
+  public var merchant: PayrixSDK.PayCoreMerchant?
+  public var token: Swift.String?
+  public var fortxn: Swift.String?
+  public var fromtxn: PayrixSDK.PayCoreTxn?
+  public var batch: PayrixSDK.PayCoreBatch?
+  public var subscription: PayrixSDK.PayCoreSubscription?
+  public var type: PayrixSDK.PayCoreTxnType?
+  public var expiration: Swift.String?
+  public var currency: Swift.String?
+  public var authDate: Swift.Int?
+  public var authCode: Swift.String?
+  public var captured: Foundation.Date?
+  public var settled: Swift.Int?
+  public var settledCurrency: Swift.String?
+  public var settledTotal: Swift.Int?
+  public var allowPartial: Swift.Bool?
+  public var order: Swift.String?
+  public var description: Swift.String?
+  public var descriptor: Swift.String?
+  public var terminal: Swift.String?
+  public var terminalCapability: Swift.String?
+  public var entryMode: Swift.String?
+  public var origin: PayrixSDK.PayCoreTxnOrigin?
+  public var tax: Swift.Int?
+  public var total: Swift.Int?
+  public var cashback: Swift.Int?
+  public var authorization: Swift.String?
+  public var approved: Swift.Int?
+  public var cvv: Swift.Bool?
+  public var swiped: Swift.Bool?
+  public var emv: Swift.Bool?
+  public var signature: Swift.Bool?
+  public var txnData: PayrixSDK.PayCoreTxnData?
+  public var payment: PayrixSDK.PayCorePayment?
+  public var unattended: Swift.Bool?
+  public var clientIp: Swift.String?
+  public var first: Swift.String?
+  public var middle: Swift.String?
+  public var last: Swift.String?
+  public var company: Swift.String?
+  public var email: Swift.String?
+  public var address1: Swift.String?
+  public var address2: Swift.String?
+  public var city: Swift.String?
+  public var state: Swift.String?
+  public var zip: Swift.String?
+  public var country: Swift.String?
+  public var phone: Swift.String?
+  public var status: PayrixSDK.PayCoreTxnStatus?
+  public var refunded: Swift.Int?
+  public var reserved: PayrixSDK.PayCoreTxnReserved?
+  public var misused: Swift.Int?
+  public var checkStage: Swift.String?
+  public var inactive: Swift.Bool?
+  public var frozen: Swift.Bool?
+  public var imported: Swift.Bool?
+  public var emvResponseCode: Swift.String?
+  public var emvAuthData: Swift.String?
+  public var emvIssuerScript1: Swift.String?
+  public var emvIssuerScript2: Swift.String?
+  public var mobile: Swift.Bool?
+  public var pinEntryCapability: Swift.String?
+  public var platform: Swift.String?
+  public var mid: Swift.String?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+public enum PayCoreEntityType : Swift.Int, Swift.Codable {
+  case soleProprietor
+  case corporation
+  case limitedLiabilityCompany
+  case partnership
+  case association
+  case nonProfitOrganization
+  case governmentOrganization
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class PayCoreEntity : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreEntity
+  final public let methodPath: Swift.String
+  public var ipCreated: Swift.String?
+  public var ipModified: Swift.String?
+  public var clientIp: Swift.String?
+  public var login: PayrixSDK.PayCoreLogin?
+  public var parameter: Swift.String?
+  public var type: PayrixSDK.PayCoreEntityType?
+  public var name: Swift.String?
+  public var address1: Swift.String?
+  public var address2: Swift.String?
+  public var city: Swift.String?
+  public var state: Swift.String?
+  public var zip: Swift.String?
+  public var country: Swift.String?
+  public var timezone: Swift.Int?
+  public var phone: Swift.String?
+  public var fax: Swift.String?
+  public var email: Swift.String?
+  public var website: Swift.String?
+  public var ein: Swift.String?
+  public var tcVersion: Swift.String?
+  public var tcDate: Foundation.Date?
+  public var tcIp: Swift.String?
+  public var tcAcceptDate: Swift.Int?
+  public var tcAcceptIp: Swift.String?
+  public var currency: Swift.String?
+  public var custom: Swift.String?
+  public var inactive: Swift.Bool?
+  public var frozen: Swift.Bool?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+public struct CoreStatus {
+  public var value: Swift.UInt
+}
+public let waitingForSwipe: PayrixSDK.CoreStatus
+public let transactionTimeout: PayrixSDK.CoreStatus
+public let swipeCompleted: PayrixSDK.CoreStatus
+public let transactionSuccessful: PayrixSDK.CoreStatus
+public let transactionFailed: PayrixSDK.CoreStatus
+public let swiperDisconnected: PayrixSDK.CoreStatus
+public let transactionCancelled: PayrixSDK.CoreStatus
+public let cardReaderNotConnected: PayrixSDK.CoreStatus
+public let swiperUnResponsive: PayrixSDK.CoreStatus
+public let transactionProcessing: PayrixSDK.CoreStatus
+public protocol PayCoreRDRTransMgrDelegate {
+  func didReceiveTransactionSuccess(response: PayrixSDK.PayCoreTransResponse, coreStatus: PayrixSDK.CoreStatus)
+  func didReceiveTransactionFailed(response: PayrixSDK.PayCoreTransResponse, theErrors: [Swift.String], coreStatus: PayrixSDK.CoreStatus)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayCoreRDRTransMgr : ObjectiveC.NSObject {
+  public static let sharedInstance: PayrixSDK.PayCoreRDRTransMgr
+  public var delegate: (any PayrixSDK.PayCoreRDRTransMgrDelegate)?
+  public func doCardRDRTransaction(withGatewayDict: [Swift.String : Any], withSessionKey: Swift.String, withURL: Swift.String)
+  public func doCardRDRTransaction(withGatewayDict: [Swift.String : Any], withTxnSessionKey: Swift.String, withURL: Swift.String)
+  public func doPrintObj(source: Swift.AnyObject!, title: Swift.String)
+  public func setOrigTxnID(origTxnID: Swift.String)
+  public func getOrigTxnID() -> Swift.String?
+  public func delOrigTxnID()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayCoreMaster : ObjectiveC.NSObject {
+  public static let sharedInstance: PayrixSDK.PayCoreMaster
+  public func validateLoginCredentials(userName: Swift.String, password: Swift.String, completion: @escaping (Swift.Bool, Swift.String?) -> Swift.Void)
+  public func verifySessionKey(sessionKey: Swift.String, completion: @escaping (Swift.Bool) -> Swift.Void)
+  public func getMerchantId(sessionKey: Swift.String, completion: @escaping (Swift.Bool, [PayrixSDK.PayCoreMerchant]?) -> Swift.Void)
+  public func getSingleMerchant(merchantId: Swift.String, sessionKey: Swift.String, completion: @escaping (Swift.Bool, PayrixSDK.PayCoreMerchant?) -> Swift.Void)
+  public func processTransaction(merchantID: Swift.String, sessionKey: Swift.String?, amount: Swift.Int?, taxPercent: Swift.Int?, tipPercent: Swift.Int?, tipAmt: Swift.Int?, calcTotAmt: Swift.Int?, ccName: Swift.String?, ccNumber: Swift.String?, ccCardType: PayrixSDK.PayCoreCCType?, ccCVV: Swift.String?, ccExp: Swift.String?, ccOrigin: PayrixSDK.PayCoreTxnOrigin?, zip: Swift.String?, payRequest: PayrixSDK.PayRequest?, completion: @escaping (Swift.Bool, Swift.String?, Swift.String?, [Swift.String]?, PayrixSDK.PayCoreTxn?) -> Swift.Void)
+  public func addSignatureToTransaction(transactionID: Swift.String?, signatureBase64Enc: Swift.String?, sessionKey: Swift.String?, completion: @escaping (Swift.Bool, [Swift.String]?) -> Swift.Void)
+  public func retrieveSpecificTxnsFor(merchantID: Swift.String, transactionID: Swift.String, completion: @escaping ([PayrixSDK.PayCoreTxn]?, PayrixSDK.PayCoreResponseDetails?, [PayrixSDK.PayCoreError]?) -> Swift.Void)
+  public func retrieveTransactionsFor(merchantID: Swift.String, onPage: Swift.Int, recordsPerPage: Swift.Int, completion: @escaping ([PayrixSDK.PayCoreTxn]?, PayrixSDK.PayCoreResponseDetails?, [PayrixSDK.PayCoreError]?) -> Swift.Void)
+  public func retrieveRefundReadyTxnsFor(merchantID: Swift.String, onPage: Swift.Int, recordsPerPage: Swift.Int, completion: @escaping ([PayrixSDK.PayCoreTxn]?, PayrixSDK.PayCoreResponseDetails?, [PayrixSDK.PayCoreError]?) -> Swift.Void)
+  public func processRefund(requestType: PayrixSDK.PayCoreTxnType, merchantID: Swift.String, sessionKey: Swift.String?, refundAmount: Swift.Int?, refundData: [Swift.String : Any]?, originalTransaction: PayrixSDK.PayCoreTxn, completion: @escaping (Swift.Bool, PayrixSDK.PayCoreTxn?, [Swift.String]?) -> Swift.Void)
+  public func processAppRefund(requestType: PayrixSDK.PayCoreTxnType, merchantID: Swift.String, sessionKey: Swift.String?, refundAmount: Swift.Int?, originalTransaction: PayrixSDK.PayCoreTxn, completion: @escaping (Swift.Bool, PayrixSDK.PayCoreTxn?, [Swift.String]?) -> Swift.Void)
+  public func retrieveSubsequentTransactionsFor(merchantID: Swift.String, sessionKey: Swift.String?, originalTransaction: PayrixSDK.PayCoreTxn, onPage: Swift.Int, recordsPerPage: Swift.Int, completion: @escaping ([PayrixSDK.PayCoreTxn]?, PayrixSDK.PayCoreResponseDetails?, [PayrixSDK.PayCoreError]?) -> Swift.Void)
+  public func retrieveChargebacksFor(originalTransaction: PayrixSDK.PayCoreTxn, completion: @escaping ([PayrixSDK.PayCoreChargeback]?, PayrixSDK.PayCoreResponseDetails?, [PayrixSDK.PayCoreError]?) -> Swift.Void)
+  public func checkTXNRefundEligible(usingTxnSessionKey: Swift.Bool, sessionKey: Swift.String, originalTxn: PayrixSDK.PayCoreTxn, completion: @escaping (Swift.Bool) -> Swift.Void)
+  public func setSavedTrack(origTrack: Swift.String)
+  public func getSavedTrack() -> Swift.String?
+  public func delSavedTrack()
+  public func setSavedKSN(origVal: Swift.String)
+  public func getSavedKSN() -> Swift.String?
+  public func delSavedKSN()
+  public func setSavedEMV(origVal: Swift.String)
+  public func getSavedEMV() -> Swift.String?
+  public func delSavedEMV()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayrixOTAConfigData : ObjectiveC.NSObject {
+  public var encryptionKey: Swift.String
+  public var firmwareVersion: Swift.String
+  public var deviceSettingVersion: Swift.String
+  public var terminalSettingVersion: Swift.String
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class PDeviceLoader : ObjectiveC.NSObject {
+  public func loadCardReaderDriver(forManfg: PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders) -> (PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders?, Any?, Any?)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class RefundResponse : ObjectiveC.NSObject {
+  public static let sharedInstance: PayrixSDK.RefundResponse
+  public var merchantID: Swift.String?
+  public var originalTransactionID: Swift.String?
+  public var refundTransactionID: Swift.String?
+  public var refundTxn: PayrixSDK.PayCoreTxn?
+  public var originalTxn: PayrixSDK.PayCoreTxn?
+  public var originalTxnRefundEligible: Swift.Bool?
+  public var originalRefundRequestType: Swift.Int!
+  public var refundError: Swift.String?
+  public func doInit(merchantID: Swift.String, txnID: Swift.String, origTxn: PayrixSDK.PayCoreTxn, origType: Swift.Int) -> PayrixSDK.RefundResponse
+  @objc deinit
+}
+public class PayCoreRequest<Resource> where Resource : PayrixSDK.PayCoreResource {
+  public typealias PayCoreRequestCompletion = (_ theModels: [Resource.Model]?, _ theDetails: PayrixSDK.PayCoreResponseDetails?, _ theErrors: [PayrixSDK.PayCoreError]?) -> Swift.Void
+  public var lastURL: Swift.String?
+  public var id: Swift.String?
+  public var pageNumber: Swift.Int?
+  public var pageLimit: Swift.Int?
+  public init(using resource: Resource)
+  public func addPropertyExpansion(_ expands: [Swift.String])
+  public func clearPropertyExpansions()
+  public func addHTTPHeader(header: Swift.String, value: Swift.String)
+  public func clearHTTPHeaders(header: Swift.String, value: Swift.String)
+  public func addSearchParameter(_ parameter: PayrixSDK.PayCoreSearchParameter)
+  public func forceSearchParameters(_ forcedParams: Swift.String)
+  public func clearSearchParameters()
+  public func load(withCompletion completion: @escaping PayrixSDK.PayCoreRequest<Resource>.PayCoreRequestCompletion)
+  public func load(fromId id: Swift.String, withCompletion completion: @escaping PayrixSDK.PayCoreRequest<Resource>.PayCoreRequestCompletion)
+  public func create(object: Resource.Model?, withCompletion completion: @escaping PayrixSDK.PayCoreRequest<Resource>.PayCoreRequestCompletion)
+  public func update(object: Resource.Model, withCompletion completion: @escaping PayrixSDK.PayCoreRequest<Resource>.PayCoreRequestCompletion)
+  public func delete(object: Resource.Model, withCompletion completion: @escaping PayrixSDK.PayCoreRequest<Resource>.PayCoreRequestCompletion)
+  public func delete(fromId id: Swift.String, withCompletion completion: @escaping PayrixSDK.PayCoreRequest<Resource>.PayCoreRequestCompletion)
+  @objc deinit
+}
+public protocol OTAUpdateDelegate {
+  func didReceiveRemoteKeyInjectionResult(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
+  func didReceiveRemoteFirmwareUpdate(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
+  func didReceiveRemoteConfigUpdate(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
+  func didReceiveTargetVersionResult(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, passOTAConfigData: PayrixSDK.PayrixOTAConfigData!, passBBPOSConfigData: PayrixSDK.PayrixOTAConfigData!)
+  func didReceiveOTAProgress(percentProgress: Swift.Float)
+  func didReceiveOTAScanResults(success: Swift.Bool!, scanMsg: Swift.String!, payDevices: [Swift.AnyObject]?)
+  func didReceiveOTAConnectResults(success: Swift.Bool!, theDevice: Swift.String!)
+  func didReceiveOTADisconnectResults(success: Swift.Bool!)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayrixOTA : ObjectiveC.NSObject {
+  public static let sharedInstance: PayrixSDK.PayrixOTA
+  public var delegate: (any PayrixSDK.OTAUpdateDelegate)?
+  public func doOTAStartup()
+  public func setDebugLog(enable: Swift.Bool)
+  public func doOTADisconnectAnyDevice()
+  public func doOTAConnectReader(payDeviceObj: PayrixSDK.PayDevice)
+  public func doOTAScanForReaders()
+  public func doGetTargetVersion()
+  public func doOTAKeyInjection(keyProfile: Swift.String)
+  public func doOTAFirmwareUpdate(firmwareVersion: Swift.String)
+  public func doOTAConfigUpdate(deviceSettingVersion: Swift.String, terminalSettingVersion: Swift.String)
+  @objc deinit
+}
+extension PayrixSDK.PayrixOTA : PayrixSDK.BBDeviceOTAControllerDelegate, PayrixSDK.PayrixSDKDelegate {
+  @objc dynamic public func onReturnRemoteKeyInjectionResult(_ result: PayrixSDK.BBDeviceOTAResult, responseMessage: Swift.String!)
+  @objc dynamic public func onReturnRemoteFirmwareUpdate(_ result: PayrixSDK.BBDeviceOTAResult, responseMessage: Swift.String!)
+  @objc dynamic public func onReturnRemoteConfigUpdate(_ result: PayrixSDK.BBDeviceOTAResult, responseMessage: Swift.String!)
+  @objc dynamic public func onReturnTargetVersionResult(_ result: PayrixSDK.BBDeviceOTAResult, data: [Swift.AnyHashable : Any]!)
+  @objc dynamic public func onReturnSetTargetVersionResult(_ result: PayrixSDK.BBDeviceOTAResult, responseMessage: Swift.String!)
+  @objc dynamic public func onReturnOTAProgress(_ percentage: Swift.Float)
+  @objc dynamic public func onReturnOTADebugLog(_ data: [Swift.AnyHashable : Any]!)
+  public func didReceiveScanResults(scanSuccess: Swift.Bool!, scanMsg: Swift.String!, payDevices: [Swift.AnyObject]?)
+  public func didReceiveBTConnectResults(connectSuccess: Swift.Bool!, theDevice: Swift.String!)
+  public func didReceiveBTDisconnectResults(disconnectSuccess: Swift.Bool!)
+}
+extension PayrixSDK.OTAUpdateDelegate {
+  public func didReceiveRemoteKeyInjectionResult(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
+  public func didReceiveRemoteFirmwareUpdate(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
+  public func didReceiveRemoteConfigUpdate(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, otaMessage: Swift.String!)
+  public func didReceiveTargetVersionResult(success: Swift.Bool, otaResult: PayrixSDK.BBDeviceOTAResult, passOTAConfigData: PayrixSDK.PayrixOTAConfigData!, passBBPOSConfigData: PayrixSDK.PayrixOTAConfigData!)
+  public func didReceiveOTAProgress(percentProgress: Swift.Float)
+  public func didReceiveOTAScanResults(success: Swift.Bool!, scanMsg: Swift.String!, payDevices: [Swift.AnyObject]?)
+  public func didReceiveOTAConnectResults(success: Swift.Bool!, theDevice: Swift.String!)
+  public func didReceiveOTADisconnectResults(success: Swift.Bool!)
+}
+@_inheritsConvenienceInitializers public class PayCoreSampleModelObject : PayrixSDK.PayCoreBase, PayrixSDK.PayCoreResource {
+  public typealias Model = PayrixSDK.PayCoreSampleModelObject
+  final public let methodPath: Swift.String
+  public var CHANGEME: Swift.String?
+  override public init()
+  public init(id: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PayDevice : ObjectiveC.NSObject {
+  public static let sharedInstance: PayrixSDK.PayDevice
+  public var readerDevice: Swift.String?
+  public var deviceUUID: Swift.String?
+  public var deviceManfg: Swift.String?
+  public var deviceSerial: Swift.String?
+  @objc deinit
+}
+public protocol PayCoreResource {
+  associatedtype Model : Swift.Decodable, Swift.Encodable
+  var methodPath: Swift.String { get }
+}
+extension PayrixSDK.PayCoreResource {
+  public var url: Swift.String {
+    get
+  }
+}
+extension PayrixSDK.PaySharedAttributes.CCType : Swift.Equatable {}
+extension PayrixSDK.PaySharedAttributes.CCType : Swift.Hashable {}
+extension PayrixSDK.PaySharedAttributes.CCType : Swift.RawRepresentable {}
+extension PayrixSDK.PaySharedAttributes.PayTxnOrigin : Swift.Equatable {}
+extension PayrixSDK.PaySharedAttributes.PayTxnOrigin : Swift.Hashable {}
+extension PayrixSDK.PaySharedAttributes.PayTxnOrigin : Swift.RawRepresentable {}
+extension PayrixSDK.PaySharedAttributes.PaySupportedReaders : Swift.Equatable {}
+extension PayrixSDK.PaySharedAttributes.PaySupportedReaders : Swift.Hashable {}
+extension PayrixSDK.PaySharedAttributes.PaySupportedReaders : Swift.RawRepresentable {}
+extension PayrixSDK.PaySharedAttributes.PayReaderEntryMode : Swift.Equatable {}
+extension PayrixSDK.PaySharedAttributes.PayReaderEntryMode : Swift.Hashable {}
+extension PayrixSDK.PaySharedAttributes.PayReaderEntryMode : Swift.RawRepresentable {}
+extension PayrixSDK.PaySharedAttributes.PayIndustryEntryMode : Swift.Equatable {}
+extension PayrixSDK.PaySharedAttributes.PayIndustryEntryMode : Swift.Hashable {}
+extension PayrixSDK.PaySharedAttributes.PayIndustryEntryMode : Swift.RawRepresentable {}
+extension PayrixSDK.PaySharedAttributes.PayDevConnectMode : Swift.Equatable {}
+extension PayrixSDK.PaySharedAttributes.PayDevConnectMode : Swift.Hashable {}
+extension PayrixSDK.PaySharedAttributes.PayDevConnectMode : Swift.RawRepresentable {}
+extension PayrixSDK.PaySharedAttributes.PayEMVOption : Swift.Equatable {}
+extension PayrixSDK.PaySharedAttributes.PayEMVOption : Swift.Hashable {}
+extension PayrixSDK.PaySharedAttributes.PayEMVOption : Swift.RawRepresentable {}
+extension PayrixSDK.PaySharedAttributes.PayTransactionType : Swift.Equatable {}
+extension PayrixSDK.PaySharedAttributes.PayTransactionType : Swift.Hashable {}
+extension PayrixSDK.PaySharedAttributes.PayTransactionType : Swift.RawRepresentable {}
+extension PayrixSDK.PaySharedAttributes.PayCurrencyChars : Swift.Equatable {}
+extension PayrixSDK.PaySharedAttributes.PayCurrencyChars : Swift.Hashable {}
+extension PayrixSDK.PaySharedAttributes.PayCurrencyChars : Swift.RawRepresentable {}
+extension PayrixSDK.PaySharedAttributes.PayCheckCardResult : Swift.Equatable {}
+extension PayrixSDK.PaySharedAttributes.PayCheckCardResult : Swift.Hashable {}
+extension PayrixSDK.PaySharedAttributes.PayCheckCardResult : Swift.RawRepresentable {}
+extension PayrixSDK.PaySharedAttributes.PayTransactionResult : Swift.Equatable {}
+extension PayrixSDK.PaySharedAttributes.PayTransactionResult : Swift.Hashable {}
+extension PayrixSDK.PaySharedAttributes.PayTransactionResult : Swift.RawRepresentable {}
+extension PayrixSDK.PaySharedAttributes.PayErrorType : Swift.Equatable {}
+extension PayrixSDK.PaySharedAttributes.PayErrorType : Swift.Hashable {}
+extension PayrixSDK.PaySharedAttributes.PayErrorType : Swift.RawRepresentable {}
+extension PayrixSDK.PaySharedAttributes.PayDeviceMode : Swift.Equatable {}
+extension PayrixSDK.PaySharedAttributes.PayDeviceMode : Swift.Hashable {}
+extension PayrixSDK.PaySharedAttributes.PayDeviceMode : Swift.RawRepresentable {}
+extension PayrixSDK.PayCoreAccountStatus : Swift.Equatable {}
+extension PayrixSDK.PayCoreAccountStatus : Swift.Hashable {}
+extension PayrixSDK.PayCoreAccountStatus : Swift.RawRepresentable {}
+extension PayrixSDK.PayCoreChargebackDisputeState : Swift.Equatable {}
+extension PayrixSDK.PayCoreChargebackDisputeState : Swift.Hashable {}
+extension PayrixSDK.PayCoreChargebackDisputeState : Swift.RawRepresentable {}
+extension PayrixSDK.PayCoreAccountMethod : Swift.Equatable {}
+extension PayrixSDK.PayCoreAccountMethod : Swift.Hashable {}
+extension PayrixSDK.PayCoreAccountMethod : Swift.RawRepresentable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardConnectMode : Swift.Equatable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardConnectMode : Swift.Hashable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardConnectMode : Swift.RawRepresentable {}
+extension PayrixSDK.PayCardSharedAttr.readerEntryMode : Swift.Equatable {}
+extension PayrixSDK.PayCardSharedAttr.readerEntryMode : Swift.Hashable {}
+extension PayrixSDK.PayCardSharedAttr.readerEntryMode : Swift.RawRepresentable {}
+extension PayrixSDK.PayCardSharedAttr.industryPOSEntryMode : Swift.Equatable {}
+extension PayrixSDK.PayCardSharedAttr.industryPOSEntryMode : Swift.Hashable {}
+extension PayrixSDK.PayCardSharedAttr.industryPOSEntryMode : Swift.RawRepresentable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardDeviceMode : Swift.Equatable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardDeviceMode : Swift.Hashable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardDeviceMode : Swift.RawRepresentable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders : Swift.Equatable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders : Swift.Hashable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardSupportedReaders : Swift.RawRepresentable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardReaderUUID : Swift.Equatable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardReaderUUID : Swift.Hashable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardReaderUUID : Swift.RawRepresentable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSErrorType : Swift.Equatable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSErrorType : Swift.Hashable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSErrorType : Swift.RawRepresentable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSEMVOption : Swift.Equatable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSEMVOption : Swift.Hashable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSEMVOption : Swift.RawRepresentable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSTransactionType : Swift.Equatable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSTransactionType : Swift.Hashable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSTransactionType : Swift.RawRepresentable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSCurrencyChars : Swift.Equatable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSCurrencyChars : Swift.Hashable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSCurrencyChars : Swift.RawRepresentable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSCheckCardResult : Swift.Equatable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSCheckCardResult : Swift.Hashable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSCheckCardResult : Swift.RawRepresentable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSTransactionResult : Swift.Equatable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSTransactionResult : Swift.Hashable {}
+extension PayrixSDK.PayCardSharedAttr.PayCardBBPOSTransactionResult : Swift.RawRepresentable {}
+extension PayrixSDK.PayCorePlanSchedule : Swift.Equatable {}
+extension PayrixSDK.PayCorePlanSchedule : Swift.Hashable {}
+extension PayrixSDK.PayCorePlanSchedule : Swift.RawRepresentable {}
+extension PayrixSDK.PayCoreMerchantStatus : Swift.Equatable {}
+extension PayrixSDK.PayCoreMerchantStatus : Swift.Hashable {}
+extension PayrixSDK.PayCoreMerchantStatus : Swift.RawRepresentable {}
+extension PayrixSDK.PayCoreTaxIDStatus : Swift.Equatable {}
+extension PayrixSDK.PayCoreTaxIDStatus : Swift.Hashable {}
+extension PayrixSDK.PayCoreTaxIDStatus : Swift.RawRepresentable {}
+extension PayrixSDK.SharedDriverAttr.industryEntryMode : Swift.Equatable {}
+extension PayrixSDK.SharedDriverAttr.industryEntryMode : Swift.Hashable {}
+extension PayrixSDK.SharedDriverAttr.industryEntryMode : Swift.RawRepresentable {}
+extension PayrixSDK.SharedDriverAttr.PayCardDevConnectMode : Swift.Equatable {}
+extension PayrixSDK.SharedDriverAttr.PayCardDevConnectMode : Swift.Hashable {}
+extension PayrixSDK.SharedDriverAttr.PayCardDevConnectMode : Swift.RawRepresentable {}
+extension PayrixSDK.SharedDriverAttr.PayCardEMVOption : Swift.Equatable {}
+extension PayrixSDK.SharedDriverAttr.PayCardEMVOption : Swift.Hashable {}
+extension PayrixSDK.SharedDriverAttr.PayCardEMVOption : Swift.RawRepresentable {}
+extension PayrixSDK.SharedDriverAttr.PayCardTransactionType : Swift.Equatable {}
+extension PayrixSDK.SharedDriverAttr.PayCardTransactionType : Swift.Hashable {}
+extension PayrixSDK.SharedDriverAttr.PayCardTransactionType : Swift.RawRepresentable {}
+extension PayrixSDK.SharedDriverAttr.PayCardCurrencyChars : Swift.Equatable {}
+extension PayrixSDK.SharedDriverAttr.PayCardCurrencyChars : Swift.Hashable {}
+extension PayrixSDK.SharedDriverAttr.PayCardCurrencyChars : Swift.RawRepresentable {}
+extension PayrixSDK.SharedDriverAttr.PayCardCheckCardResult : Swift.Equatable {}
+extension PayrixSDK.SharedDriverAttr.PayCardCheckCardResult : Swift.Hashable {}
+extension PayrixSDK.SharedDriverAttr.PayCardCheckCardResult : Swift.RawRepresentable {}
+extension PayrixSDK.SharedDriverAttr.PayCardTransactionResult : Swift.Equatable {}
+extension PayrixSDK.SharedDriverAttr.PayCardTransactionResult : Swift.Hashable {}
+extension PayrixSDK.SharedDriverAttr.PayCardTransactionResult : Swift.RawRepresentable {}
+extension PayrixSDK.SharedDriverAttr.PayCardErrorType : Swift.Equatable {}
+extension PayrixSDK.SharedDriverAttr.PayCardErrorType : Swift.Hashable {}
+extension PayrixSDK.SharedDriverAttr.PayCardErrorType : Swift.RawRepresentable {}
+extension PayrixSDK.SharedDriverAttr.PayCardDeviceMode : Swift.Equatable {}
+extension PayrixSDK.SharedDriverAttr.PayCardDeviceMode : Swift.Hashable {}
+extension PayrixSDK.SharedDriverAttr.PayCardDeviceMode : Swift.RawRepresentable {}
+extension PayrixSDK.PayCoreSearchParameter.PayCoreSearchFunction : Swift.Equatable {}
+extension PayrixSDK.PayCoreSearchParameter.PayCoreSearchFunction : Swift.Hashable {}
+extension PayrixSDK.PayCoreSearchParameter.PayCoreSearchFunction : Swift.RawRepresentable {}
+extension PayrixSDK.PayCoreBatchStatus : Swift.Equatable {}
+extension PayrixSDK.PayCoreBatchStatus : Swift.Hashable {}
+extension PayrixSDK.PayCoreBatchStatus : Swift.RawRepresentable {}
+extension PayrixSDK.PayCorePaymentMethod : Swift.Equatable {}
+extension PayrixSDK.PayCorePaymentMethod : Swift.Hashable {}
+extension PayrixSDK.PayCorePaymentMethod : Swift.RawRepresentable {}
+extension PayrixSDK.PayCoreCCType : Swift.Equatable {}
+extension PayrixSDK.PayCoreCCType : Swift.Hashable {}
+extension PayrixSDK.PayCoreCCType : Swift.RawRepresentable {}
+extension PayrixSDK.PayCoreTxnType : Swift.Equatable {}
+extension PayrixSDK.PayCoreTxnType : Swift.Hashable {}
+extension PayrixSDK.PayCoreTxnType : Swift.RawRepresentable {}
+extension PayrixSDK.PayCoreTxnOrigin : Swift.Equatable {}
+extension PayrixSDK.PayCoreTxnOrigin : Swift.Hashable {}
+extension PayrixSDK.PayCoreTxnOrigin : Swift.RawRepresentable {}
+extension PayrixSDK.PayCoreTxnStatus : Swift.Equatable {}
+extension PayrixSDK.PayCoreTxnStatus : Swift.Hashable {}
+extension PayrixSDK.PayCoreTxnStatus : Swift.RawRepresentable {}
+extension PayrixSDK.PayCoreTxnReserved : Swift.Equatable {}
+extension PayrixSDK.PayCoreTxnReserved : Swift.Hashable {}
+extension PayrixSDK.PayCoreTxnReserved : Swift.RawRepresentable {}
+extension PayrixSDK.PayCoreEntityType : Swift.Equatable {}
+extension PayrixSDK.PayCoreEntityType : Swift.Hashable {}
+extension PayrixSDK.PayCoreEntityType : Swift.RawRepresentable {}

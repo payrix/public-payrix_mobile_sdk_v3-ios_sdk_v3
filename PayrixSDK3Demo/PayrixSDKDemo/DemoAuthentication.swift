@@ -11,6 +11,12 @@ import PayrixSDK
 
 class DemoAuthentication: UIViewController, UITextFieldDelegate, PayrixSDKDelegate
 {
+	//hardcode stuff
+	let username = ""
+	let password = ""
+	let merchantId = ""
+	let APIKey = ""
+	
   @IBOutlet weak var txtUserID: UITextField!
   @IBOutlet weak var txtUserPwd: UITextField!
   @IBOutlet weak var lblResults: UITextView!
@@ -47,20 +53,20 @@ class DemoAuthentication: UIViewController, UITextFieldDelegate, PayrixSDKDelega
     payrixSDK.doSetPayrixPlatform(platform: theEnv, demoSandbox: isSandBox, deviceManfg: nil)
         
     sharedUtils.setDemoMode(modeKey: isSandBox)
-      if sharedUtils.getIsMerchantSelected()
-      {
-          let logMsg = "Authentication Successful: \n" + "- Merchant ID: " + sharedUtils.getMerchantID()! + "\n- Merchant DBA: " + sharedUtils.getMerchantDBA()!
-          updateLog(newMessage: logMsg)
-          sharedUtils.setIsMerchantSelected(selected: false)
-      }
-      else
-      {
-          lblResults.text = ""
+    if sharedUtils.getIsMerchantSelected()
+    {
+       let logMsg = "Authentication Successful: \n" + "- Merchant ID: " + sharedUtils.getMerchantID()! + "\n- Merchant DBA: " + sharedUtils.getMerchantDBA()!
+       updateLog(newMessage: logMsg)
+       sharedUtils.setIsMerchantSelected(selected: false)
+    }
+    else
+    {
+       lblResults.text = ""
 
-          txtUserID.text = ""
-          txtUserPwd.text = ""
-      }
-    
+       txtUserID.text = username//""
+       txtUserPwd.text = password//""
+    }
+      
     txtUserID.delegate = self
     txtUserPwd.delegate = self
   }
@@ -91,53 +97,124 @@ class DemoAuthentication: UIViewController, UITextFieldDelegate, PayrixSDKDelega
       payrixSDK.doValidateCredentials(userID: txtUserID.text ?? "", password: txtUserPwd.text ?? "")
     }
   }
-  
-  
+	
+	@IBAction func goGetTxnSessionKey(_ sender: Any)
+	{
+		
+		let configuration = TxnSessionConfiguration()
+		configuration.duration = 3000// The number of times this key can be used for requests. Default is 8.
+		configuration.maxTimesApproved = 200// The maximum number of approved transactions that can be associated with this key. Default is 4.
+		configuration.maxTimesUse = 100 // The time in minutes the key remains valid; it's automatically voided when expired. Default is 10.
+		
+		payrixSDK.delegate = self
+		payrixSDK.doGetTxnSessionKey(
+			apiKey: APIKey,
+			merchantID: merchantId,
+		configuration: configuration)
+	}
+	
+	@IBAction func goGetTxnSessionDeatil(_ sender: Any)
+	{
+		if let sessionId = sharedUtils.getTxnSessionID()
+		{
+			payrixSDK.delegate = self
+			payrixSDK.doGetTxnSession(apiKey: APIKey, sessionId: sessionId)
+		}
+		else
+		{
+			print("No SessionId")
+		}
+	}
+	
+	@IBAction func goDeleteTxnSession(_ sender: Any)
+	{
+		if let sessionId = sharedUtils.getTxnSessionID()
+		{
+			payrixSDK.delegate = self
+			payrixSDK.doDeleteTxnSession(apiKey: APIKey, sessionId: sessionId)
+		}
+		else
+		{
+			print("No SessionId")
+		}
+	}
+	
+	
+	
+	public func didReceiveTxnKeyResult(success: Bool!, txnSession: PayCoreTxnSession?, theMessage: String!)
+	{
+		if success,
+			 let session = txnSession,
+			 let txnSessionKey = session.key,
+			 let txnSessionID = session.sessionId
+		{
+			//set all values to nil what are being set while using Login with username and password
+			sharedUtils.setSessionKey(sessionKey: "")
+			sharedUtils.setMerchantID(merchantKey: "")
+			sharedUtils.setMerchantDBA(merchantDBA: "")
+			sharedUtils.setTxnSessionID(key: "")
+			sharedUtils.setTxnSessionKey(key: "")
+			//setting new values to shared utils what can use for TxnSessionKey
+			self.sharedUtils.setTxnSessionKey(key: txnSessionKey)
+			self.sharedUtils.setTxnSessionID(key: txnSessionID)
+			//setting up the merchant
+			self.sharedUtils.setMerchantID(merchantKey: merchantId)
+			let logMsg = "Fetched Transaction Session Key: \n" + "- TxnSessonKey: " + txnSessionKey + "\n- SessionId: " + txnSessionID
+			self.updateLog(newMessage: logMsg)
+		}
+		else
+		{
+			let logMsg = "Error on Fetching Transaction Session Key: \n" + (theMessage ?? "")
+			self.updateLog(newMessage: logMsg)
+		}
+	}
+	
   public func didReceiveLoginResults(loginSuccess: Bool!, theSessionKey: String?, theMerchants: [AnyObject]?, theMessage: String!)
-  {
-    if loginSuccess
-    {
-      sharedUtils.setSessionKey(sessionKey: theSessionKey!)
-        var payMerchant = PayMerchant.sharedInstance
-        if let useMerchants = theMerchants as? [PayMerchant]
-        {
-            if useMerchants.count > 1
-            {
-                self.payMerchants = useMerchants
-                self.performSegue(withIdentifier: "SegToMerchants", sender: nil)
-            }
-            else
-            {
-                payMerchant = useMerchants[0]
-                // Save Merchant Info
-                sharedUtils.setMerchantID(merchantKey: payMerchant.merchantID!)
-                sharedUtils.setMerchantDBA(merchantDBA: payMerchant.merchantDBA!)
-                let logMsg = "Authentication Successful: \n" + "- Merchant ID: " + payMerchant.merchantID! + "\n- Merchant DBA: " + payMerchant.merchantDBA!
-                updateLog(newMessage: logMsg)
-            }
-        }
-      hideKeyboard()
-    }
-    else
-    {
-      let useError = "Error: " + theMessage;
-      sharedUtils.showMessage(theController: self, theTitle: "Authentication", theMessage: useError)
-      
-      let logMsg = "Authentication Error: \n" + theMessage
-      updateLog(newMessage: logMsg)
-    }
-  }
+	{
+		if loginSuccess
+		{
+			sharedUtils.setSessionKey(sessionKey: theSessionKey!)
+			sharedUtils.setTxnSessionID(key: "")
+			sharedUtils.setTxnSessionKey(key: "")
+			var payMerchant = PayMerchant.sharedInstance
+			if let useMerchants = theMerchants as? [PayMerchant]
+			{
+				if useMerchants.count > 1
+				{
+					self.payMerchants = useMerchants
+					self.performSegue(withIdentifier: "SegToMerchants", sender: nil)
+				}
+				else
+				{
+					payMerchant = useMerchants[0]
+					// Save Merchant Info
+					sharedUtils.setMerchantID(merchantKey: payMerchant.merchantID!)
+					sharedUtils.setMerchantDBA(merchantDBA: payMerchant.merchantDBA!)
+					let logMsg = "Authentication Successful: \n" + "- Merchant ID: " + payMerchant.merchantID! + "\n- Merchant DBA: " + payMerchant.merchantDBA!
+					updateLog(newMessage: logMsg)
+				}
+			}
+			hideKeyboard()
+		}
+		else
+		{
+			let useError = "Error: " + theMessage;
+			sharedUtils.showMessage(theController: self, theTitle: "Authentication", theMessage: useError)
+			
+			let logMsg = "Authentication Error: \n" + theMessage
+			updateLog(newMessage: logMsg)
+		}
+	}
   
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-        guard let segID = segue.identifier else { return }
-        if segID == "SegToMerchants"
-        {
-            // Prep for Authentication Processing
-            let merchantLists : DemoMerchantsList = segue.destination as! DemoMerchantsList
-            merchantLists.payMerchants = payMerchants
-        }
-    }
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+		guard let segID = segue.identifier else { return }
+		if segID == "SegToMerchants"
+		{
+			// Prep for Authentication Processing
+			let merchantLists : DemoMerchantsList = segue.destination as! DemoMerchantsList
+			merchantLists.payMerchants = payMerchants
+		}	
+	}
   
   /**
   **updateLog**
