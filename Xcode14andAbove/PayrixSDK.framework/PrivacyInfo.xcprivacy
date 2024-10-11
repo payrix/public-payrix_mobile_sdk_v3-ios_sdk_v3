@@ -10,18 +10,12 @@
 			<key>NSPrivacyCollectedDataTypeLinked</key>
 			<true/>
 			<key>NSPrivacyCollectedDataTypeTracking</key>
-			<true/>
+			<false/>
 			<key>NSPrivacyCollectedDataTypePurposes</key>
 			<array>
 				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
 			</array>
 		</dict>
-	</array>
-	<key>NSPrivacyTrackingDomains</key>
-	<array>
-		<string>NSPrivacyCollectedDataTypeName</string>
-		<string>NSPrivacyCollectedDataTypePhysicalAddress</string>
-		<string>NSPrivacyCollectedDataTypePaymentInfo</string>
 	</array>
 	<key>NSPrivacyTracking</key>
 	<true/>

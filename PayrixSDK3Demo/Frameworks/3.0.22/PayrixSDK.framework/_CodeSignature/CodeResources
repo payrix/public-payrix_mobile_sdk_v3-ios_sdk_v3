@@ -166,11 +166,11 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		djHoG+RXRMqOwOGmNPAQ2vs88Ms=
+		vQQ3K/FGhWxng/AH09dMv8f4FD4=
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		5fnVKeRfQW4mSzIKUu01pOBTC14=
+		j7eCmI+SSapaszTFzTDD4HaQjUM=
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
@@ -186,7 +186,7 @@
 		</data>
 		<key>Modules/PayrixSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		5mjf7N+sBp4yjuh8w+UBQRFLNAw=
+		yDVVS0qqxMTLQEC0GRKwLv8O8Uk=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -194,7 +194,7 @@
 		</data>
 		<key>PrivacyInfo.xcprivacy</key>
 		<data>
-		krZdE7/oHJ67MSXfYe2R4tR2BlU=
+		fSjfHSpVdg2qswfbZH+4njEyjy8=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -483,7 +483,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			M33euNtvxNkvfyyNUqQ9R/ZQphfp1fHO5jAHOwtK7E4=
+			NS+jBeERDSTaHpPFK4m05if1wF81lmkTovM3NeMEbJc=
 			</data>
 		</dict>
 		<key>Modules/PayrixSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
@@ -511,7 +511,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			VPEiwBDReUQcR1jr9Zz1QO68eoX3S8vvhwjhD898GxE=
+			oxIIRSg7AVYO7QJfGleyquqGXCSq4Knifb+7QnZvhpo=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -525,7 +525,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			VtuFxsPinFLzzIg8c4AAHXU/MATUiYe8QXvtU3/gO+g=
+			BNfNWddwEZqKablzg9IdN0yMhZzUo+02Pu8Yhic1mik=
 			</data>
 		</dict>
 	</dict>
