@@ -1,7 +1,7 @@
 # Payrix iOS SDK Version 3.0
 ## Release Note Summary:
 - Version 3.0.22 (EMV Certified)
-  * Updated PrivacyInfo.xcprivacy with NSPrivacyCollectedDataTypeTracking and NSPrivacyTracking to true
+  * Updated PrivacyInfo.xcprivacy with NSPrivacyTracking to true
 - Version 3.0.21 (EMV Certified)
   * Successfully updated the SDK to use to utilize TxnSessionKey for transaction operations. This enables transactions, refunds, reverse authentication, and transaction history retrieval using both TxnSessionKey and LoginSessionKey.
   * Updated PrivacyInfo.xcprivacy file to comply with Apple's new privacy regulations.
