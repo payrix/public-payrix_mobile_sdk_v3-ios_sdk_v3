@@ -73,7 +73,7 @@ class DemoTransaction: UIViewController, PayrixSDKDelegate
 		super.viewDidLoad()
 		
 		payrixSDK.delegate = self
-		
+                numberFmt.locale = Locale(identifier: "en_US")
 		numberFmt.maximumFractionDigits = 2
 		
 		/* (Step 2)

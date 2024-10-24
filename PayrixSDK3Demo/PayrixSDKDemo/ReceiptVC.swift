@@ -51,7 +51,7 @@ class ReceiptVC: UIViewController
     var theTip: Double = 0.00
     let numberFmt = NumberFormatter()
     numberFmt.maximumFractionDigits = 2
-    
+    numberFmt.locale = Locale(identifier: "en_US")
     if let useAmt = payResponse.amount
     {
       let strPayAmt = NSString(format: "%.2f",(Double(useAmt) / 100))
