@@ -1,5 +1,7 @@
 # Payrix iOS SDK Version 3.0
 ## Release Note Summary:
+- Version 3.0.23 (EMV Certified)
+  * Fixed crash when searching for non-Payrix devices.
 - Version 3.0.22 (EMV Certified)
   * Updated PrivacyInfo.xcprivacy with NSPrivacyTracking to true
 - Version 3.0.21 (EMV Certified)
